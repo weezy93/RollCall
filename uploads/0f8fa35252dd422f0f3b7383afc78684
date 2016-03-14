@@ -1,0 +1,113 @@
+Id,Title,Labels,Iteration,Iteration Start,Iteration End,Type,Estimate,Current State,Created at,Accepted at,Deadline,Requested By,Description,URL,Owned By,Task,Task Status,Task,Task Status,Task,Task Status,Task,Task Status,Task,Task Status,Task,Task Status,Task,Task Status
+114447663,"As a Site Admin, I want my restaurants to be populated by a database",crud & database manipulation,,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"Instead of restaurants being hardcoded, they should be pulled from a database!
+
+When a user goes to the homepage, the restaurants shown are all restaurants from the database. If you were to go into psql and add a new restaurant, then refresh the home page, that new restaurant should be visible.
+
+__Acceptance Criteria:__
+* A restaurants database exists with sufficient columns to display all the information currently shown for each restaurant
+* When the user goes to the home page, all the restaurants are shown dynamically from the database",https://www.pivotaltracker.com/story/show/114447663,Wes Reid,Create a restaurant_crud database,not completed,Create a restaurant table with fields matching what is currently hardcoded on the app,not completed,"When a GET is sent to `/`, all of the restaurants are pulled from the database and then rendered to the view",not completed
+114447991,"As a User, when I click the delete button on the restaurant show page, that restaurant is deleted","crud & database manipulation, routing",,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"When a user clicks the delete button on the restaurant show page, that restaurant should be deleted from the restaurants database and the user should be redirected to the home page.
+
+__Acceptance Criteria:__
+* When the user clicks on the Delete button, a POST is sent to `/restaurants/:id/delete`
+* The user is then redirected to the home page
+* The restaurant should be deleted from the database",https://www.pivotaltracker.com/story/show/114447991,,"When the user clicks on the Delete button, a DELETE is sent to /restaurants/:id/delete",not completed,The user is then redirected to the home page,not completed,The restaurant should be deleted from the database,not completed
+114447603,"As a User, when I click submit on the new restaurant form a new restaurant is created","crud & database manipulation, routing",,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"When a user clicks submit on the new restaurant page, a new restaurant should be created. The user is then redirected to the show page for that restaurant.
+
+__Acceptance Criteria:__
+* When a user clicks submit on the new restaurant page, a POST to `/restaurants` is sent
+* A new row is created in the restaurants database
+* The user is then redirected to that restaurants show page",https://www.pivotaltracker.com/story/show/114447603,,"When a user clicks submit on the new restaurant page, a POST to `/restaurants` is sent",not completed,A new row is created in the restaurants database,not completed,The user is then redirected to that restaurants show page,not completed
+114447605,"As a User, when I click submit on the edit restaurant form that restaurant is updated","crud & database manipulation, routing",,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"When a restaurant is edited on the edit page, the submit button should cause those changes to take effect. The user is then redirected to the show page of the edited restaurant.
+
+__Acceptance Criteria:__
+* On the restaurant's edit page, information about the restaurant should be pulled from the database and be populated into the present fields
+* When a user hits submit, a POST should be sent to `/restaurants/:id/edit`
+* Any changed information should be updated in the database
+* The user should then be redirected to that restaurants show page",https://www.pivotaltracker.com/story/show/114447605,,"On the restaurant's edit page, information about the restaurant should be pulled from the database and be populated into the present fields",not completed,"When a user hits submit, a POST should be sent to /restaurants/:id/edit",not completed,Any changed information should be updated in the database,not completed,The user should then be redirected to that restaurants show page,not completed
+114453661,"As a User, when I go to /restaurants/:id/reviews I should get the new review page",routing,,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"When a user goes to:
+
+> /restaurants/:id/reviews/new
+
+they should be shown the page for new reviews for that particular restaurant.
+
+__Acceptance Criteria:__
+* A route should exist at `/restaurants/:id/reviews/new` where :id is the id of the restaurant that is being reviewed",https://www.pivotaltracker.com/story/show/114453661,,A route should exist at /restaurants/:id/reviews/new where :id is the id of the restaurant that is being reviewed,not completed
+114451163,"As a User, I want a page where I can create a new review about a restaurant",html & css,,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"A new review page should exist where users can enter in a review of the restaurant. For a mockup, see `review.jpg`. If the user clicks `Cancel`, they should be sent back to that restaurants show page.
+
+__Acceptance Criteria:__
+* The title in the navbar should be ""New Review for "" + the restaurant name
+* There should be a text input for name
+* There should be radio buttons for rating
+* There should be a date field for date
+* There should be a text area for review
+* Two buttons should be present: Submit and Cancel; Cancel should bring you back to the restaurant's page and Submit should submit the form
+
+__Validations:__
+The following should be validated:
+  * name: required, min character length is 3, max character length is 20
+  * date: required, defaults to today's date
+  * rating: required
+  * review: required, must be longer than 20 characters",https://www.pivotaltracker.com/story/show/114451163,,"The title in the navbar should be ""New Review for "" + the restaurant name",not completed,There should be a text input for name,not completed,There should be radio buttons for rating,not completed,There should be a date field for date,not completed,There should be a text area for review,not completed,Two buttons should be present: Submit and Cancel; Cancel should bring you back to the restaurant's page and Submit should submit the form,not completed,"Validations should be implemented, as mentioned above",not completed
+114453577,"As a User, I want to be able to create a new review from the new review page","crud & database manipulation, routing",,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"When the user hits submit on the new review page, the new review is created and they are taken back to the reviewed restaurants page.
+
+__Acceptance Criteria:__
+* A table should exist for reviews
+* A restaurant can have many reviews; add columns as necessary
+* When the submit button is pressed, a POST to `/restaurants/:id/reviews` is sent by the form
+* When the submit button is pressed, a new review is created associated with that restaurant
+* After successfully submitting, the user is redirected to the restaurant's page",https://www.pivotaltracker.com/story/show/114453577,,Create a table for reviews,not completed,Create any necessary relationship columns/tables so that restaurants can have many reviews,not completed,"When the submit button is pressed, a POST to /restaurants/:id/reviews is sent by the form",not completed,"When the submit button is pressed, a new review is created associated with that restaurant",not completed,"After successfully submitting, the user is redirected to the restaurant's page",not completed
+114451353,"As a User, I want to be able to see other user's reviews of the restaurants on the restaurant page","crud & database manipulation, html & css",,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"See the `show.jpg` page for a mockup. ""Employees"" will be a stretch goal, so you may ignore the two column layout if you like.
+
+When the user goes to a restaurant's show page, they should also see all the reviews for that restaurant.
+
+Each review should include the review, the rating, the date, and the reviewer's name. An edit button should be present somewhere on the review.
+
+__Acceptance Criteria:__
+* When the user goes to `/restaurants/:id`, all reviews for that restaurant are shown on the page
+* Reviews include a name, date, review text, rating, and an edit link
+* Review text is shortened to 35 characters. If the review is longer a '. . .' is placed after the last full word before the cutoff; the rest of the text is hidden
+* When a user clicks on '. . .', the rest of the review is shown",https://www.pivotaltracker.com/story/show/114451353,,"When the user goes to `/restaurants/:id`, all reviews for that restaurant are shown on the page",not completed,"Reviews include a name, date, review text, rating, and an edit link",not completed,Review text is shortened to 35 characters. If the review is longer a '. . .' is placed after the last full word before the cutoff; the rest of the text is hidden,not completed,"When a user clicks on '. . .', the rest of the review is shown",not completed
+114451235,"As a User, I want to be able to get to the new review page via a button on the restaurant's show page",html & css,,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"See the `show.jpg` image for mockup.
+
+A button should exist on a restaurants show page that takes them to the `/restaurants/:id/reviews/new` route.
+
+__Acceptance Criteria:__
+* A button on the show page redirects the user to the new review route",https://www.pivotaltracker.com/story/show/114451235,,A button on the show page redirects the user to the new review route,not completed
+114454315,"As a User, when I go to /restaurants/:id/reviews/:review-id/edit I should get the edit review page",routing,,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"When a user goes to:
+
+> /restaurants/:id/reviews/:review-id/edit
+
+they should be shown the page where they can edit the given review
+
+__Acceptance Criteria:__
+* A route should exist at `/restaurants/:id/reviews/:review-id/edit` where :id is the id of the restaurant that is being reviewed and :review-id is the id of the review being edited
+* The form should be pre-populated with information about the review",https://www.pivotaltracker.com/story/show/114454315,,A route should exist at /restaurants/:id/reviews/:review-id/edit where :id is the id of the restaurant that is being reviewed and :review-id is the id of the review being edited,not completed
+114454259,"As a User, I want to an edit review page where I can edit my reviews",html & css,,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"An edit review page should exist where users can edit an already existing review. it will look the same as the new review page. If the user clicks `Cancel`, they should be sent back to that restaurants home page.
+
+__Acceptance Criteria:__
+* The title in the navbar should be ""Editing "" + the reviewer's name + ""'s  Review for "" + the restaurant name
+* There should be a text input for name
+* There should be radio buttons for rating
+* There should be a date field for date
+* There should be a text area for review
+* Two buttons should be present: Submit and Cancel; Cancel should bring you back to the restaurant's page and Submit should submit the form
+
+__Validations:__
+The following should be validated:
+  * name: required, min character length is 3, max character length is 20
+  * date: required, defaults to today's date
+  * rating: required
+  * review: required, must be longer than 20 characters",https://www.pivotaltracker.com/story/show/114454259,,"The title in the navbar should be ""Editing "" + the reviewer's name + ""'s  Review for "" + the restaurant name",not completed,It looks just like the new review page,not completed
+114454267,"As a User, I want to be able to edit a new review from the edit review page","crud & database manipulation, routing",,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"When the user hits submit on the edit review page, the review is updated and they are taken back to the reviewed restaurants page.
+
+__Acceptance Criteria:__
+* When the submit button is pressed, a POST is sent to `/restaurants/:id/reviews/:review-id/edit`
+* When the submit button is pressed, that specific review is updated
+* After successfully submitting, the user is redirected to the restaurant's show page",https://www.pivotaltracker.com/story/show/114454267,,"When the submit button is pressed, a POST is sent to `/restaurants/:id/reviews/:review-id/edit`",not completed,"When the submit button is pressed, that review is updated with the changed information",not completed,"After successfully submitting, the user is redirected to the restaurant's page",not completed
+114452853,"As a User, I want the restaurant's rating to be dependent on the reviews given by users of the site",crud & database manipulation,,,,feature,,unscheduled,"Feb 24, 2016",,,Wes Reid,"Instead of hardcoding a rating, we want to generate ratings based on the reviews. This will require you to update information being displayed on the home page and the restaurant show page.
+
+__Acceptance Criteria:__
+* A rating column no longer exists in the restaurants table
+* The rating shown for the restaurant on the home page and the show page for the restaurant is dynamically created based on reviews
+* If there are no reviews, the default rating should be 0",https://www.pivotaltracker.com/story/show/114452853,,Drop the rating column from restaurants (if one exists),not completed,The rating shown on the home page and the restaurant's show page is based on reviews,not completed,"If there are no reviews, the rating is 0",not completed
