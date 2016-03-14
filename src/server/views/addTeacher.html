@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+{% if message %}
+  <div class="alert alert-danger">
+    {{ message }}
+  </div>
+{% endif %}
+
+<div class="container">
+  <form method="POST" action="/teacher/add">
+    <input type="text" name="email" placeholder="Email Address" />
+    <input type="password" name="password" placeholder="Enter password" />
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+{% endblock %}
