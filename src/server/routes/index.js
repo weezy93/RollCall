@@ -32,8 +32,10 @@ router.get('/sales', function (req, res, next) {
 });
 
 router.post('/sales', function (req, res, next) {
-
-  res.render('saleEnd', { title: 'Ticket sold' });
+  queries.sellTicket(req, res).then(function (ticketNum) {
+    console.log(ticketNum);
+    res.render('saleEnd', { title: 'Ticket Sold', tickets: ticketNum, max: eventquery });
+  });
 });
 
 router.get('/addStudent', function (req, res, next) {
@@ -42,6 +44,12 @@ router.get('/addStudent', function (req, res, next) {
 
 router.get('/addEvent', function (req, res, next) {
   res.render('addEvent', { title: 'Create Event' });
+});
+
+router.post('/addEvent', function (req, res, next) {
+  queries.addEvent(req, res).then(function (result) {
+    res.redirect('/');
+  });
 });
 
 // router.get('/teacher/add', function (req, res, next) {
