@@ -17,9 +17,9 @@
         {% for event in events %}
         <section>
           <ul>
-
-            <span class="label label-info"><li><h3>{{ event.name }}</h3></li></span>
-            <li><h4>{{ event.date }}</h4></li>
+            <li><h3>{{ event.name }}</h3></li>
+            <li><h4>{{ event.event_date|date('m-d-Y') }}</h4></li>
+            <li><h4>{{ event.address }}, {{ event.city_state_zip }}</h4></li>
           </ul>
           <p>{{ event.description }}</p>
         </section>
