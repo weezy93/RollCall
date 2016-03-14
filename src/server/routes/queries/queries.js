@@ -14,6 +14,13 @@ function getAllEvents(req, res) {
   });
 }
 
+function sellTicket(req, res) {
+  // on post
+    // insert into ticket table
+}
+
+
 module.exports = {
-  getAllEvents: getAllEvents
+  getAllEvents: getAllEvents,
+  sellTicket: sellTicket
 };
