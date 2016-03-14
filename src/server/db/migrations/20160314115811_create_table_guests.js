@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('first_name');
     table.string('last_name');
-    table.integer('student_id');
+    table.integer('students_id');
     table.string('school');
     table.foreign('student_id').references('id').inTable('students');
   });
