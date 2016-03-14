@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
+    <section id="sidebar">
+      <ul>
+        <li><a href="/sales">Sell</a></li>
+        <li><a href="/addStudent">Add Student</a></li>
+        <!-- if superAdmin -->
+        <li><a href="/addEvent">Add Event</a></li>
+        <!-- login teacher -->
+        <form class="" action="" method="post">
+          <input type="text" name="name" placeholder="username">
+          <input type="password" name="password" placeholder="secret..">
+          <input type="submit" placeholder="Log In">
+        </form>
+      </ul>
+    </section>
     {% block content %}
     {% endblock %}
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
