@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+  <div class="container">
+
+    <h1>{{ title }}</h1>
+    <section>
+      <form class="" action="/addStudent" method="post">
+        <input type="file" name="file" accept=".csv">
+        <input type="submit" value="GO">
+      </form>
+    </section>
+    <section>
+      <form class="" action="/addStudent" method="post">
+        <input type="text" name="name" placeholder="">
+        <input type="submit" value="GO">
+      </form>
+    </section>
+  </div>
+
+{% endblock %}
