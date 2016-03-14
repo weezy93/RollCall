@@ -5,14 +5,15 @@
 
 {% block content %}
 <form class="" action="/uploads/parsed" method="post">
-  <input type="checkbox" name="headers" value="">My data has headers
+  <input type="checkbox" name="ignoreHeaders" value="true">My data has headers
   <table>
     <tr>
       {% for column in columns %}
         <td>
-          <select class="" name="column">
+          <select class="" name="{{column}}">
+            <option value="">Ignore</option>
             <option value="firstname">First Name</option>
-            <option value="middlei">Middle Name</option>
+            <option value="middlename">Middle Name</option>
             <option value="lastname">Last Name</option>
             <option value="studentid">Student ID</option>
             <option value="grade">Grade</option>
