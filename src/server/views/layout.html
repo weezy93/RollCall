@@ -14,12 +14,24 @@
         <li><a href="/addStudent">Add Student</a></li>
         <!-- if superAdmin -->
         <li><a href="/addEvent">Add Event</a></li>
+        <!-- messages -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.status }}">
+              {{ message.value }}
+            </div>
+          {% endfor %}
+        {% endif %}
         <!-- login teacher -->
-        <form class="" action="" method="post">
-          <input type="text" name="name" placeholder="username">
-          <input type="password" name="password" placeholder="secret..">
-          <input type="submit" placeholder="Log In">
+        {% if user %}
+        <a href="/logout" class="btn btn-danger">Log Out</a>
+        {% else %}
+        <form action="/login" method="POST">
+          <input type="text" name="email" placeholder="Email Address">
+          <input type="password" name="password" placeholder="Password">
+          <button type="submit">Log In</button>
         </form>
+        {% endif %}
       </ul>
     </section>
     {% block content %}

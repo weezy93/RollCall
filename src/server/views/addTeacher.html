@@ -5,11 +5,11 @@
 
 {% block content %}
 
-{% if message %}
-  <div class="alert alert-danger">
-    {{ message }}
+{% for message in messages %}
+  <div class="alert alert-{{ message.status }}">
+    {{ message.value }}
   </div>
-{% endif %}
+{% endfor %}
 
 <div class="container">
   <form method="POST" action="/teacher/add">
