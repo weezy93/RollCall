@@ -14,7 +14,7 @@ router.get('/sales', function (req, res, next) {
 
 router.post('/sales', function (req, res, next) {
 
-  res.render('/saleEnd', { title: 'Ticket sold' });
+  res.render('saleEnd', { title: 'Ticket sold' });
 });
 
 router.get('/addStudent', function (req, res, next) {
