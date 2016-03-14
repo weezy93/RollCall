@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+  <div class="container">
+
+    <h1>{{ title }}</h1>
+    <main>
+      <form action="/addEvent" method="post">
+        <label for="name">Event Name</label>
+        <input type="text" name="event_name" placeholder="Homecoming">
+        <label for="date">Date</label>
+        <input type="date" name="event_date" placeholder="dd/mm/yyyy">
+        <label for="">description</label>
+        <input type="text" name="event_description" placeholder="">
+        <label for="address">Address</label>
+        <input type="address" name="event_address" placeholder="123 Main St.">
+        <label for="city_state_zip">City, State, Zip</label>
+        <textarea name="city_state_zip" rows="2" cols="40">Denver, CO, 80203</textarea>
+      </form>
+    </main>
+
+  </div>
+
+{% endblock %}
