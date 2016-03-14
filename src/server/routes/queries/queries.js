@@ -18,24 +18,37 @@ function getAllEvents(req, res) {
   });
 }
 
-function sellTicket(req, res) {
-  Tickets().insert({
-    student_id: req.body.studentId,
-
-    // event_id: ,
+function addEvent(req, res) {
+  return Events().insert({
+    name: req.body.event_name,
+    event_date: req.body.event_date,
+    // school_id:
+    description: req.body.description,
+    address: req.body.event_address,
+    city_state_zip: req.body.city_state_zip
   })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+// doesn't work
+
+function sellTicket(req, res) {
+  return Tickets().insert({ student_id: req.body.studentId })
   .then(function () {
-    Tickets().count('id')
+    return Tickets().count('id')
     .then(function (count) {
-      res.render('saleEnd', { title: 'Ticket sold', ticket:  count[0] });
+      return count[0];
     });
   })
   .catch(function (error) {
-
+    console.log(error);
   });
 }
 
 module.exports = {
   getAllEvents: getAllEvents,
+  addEvent: addEvent,
   sellTicket: sellTicket
 };
