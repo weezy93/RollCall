@@ -13,8 +13,18 @@ function Teachers() {
 router.get('/', function(req, res, next) {
   var user = req.user;
   var messages = req.flash('message');
-  res.render('index', { title: 'Express', user: user, messages: messages });
-  queries.getAllEvents(req, res);
+  queries.getAllEvents()
+  .then(function(result) {
+    console.log(result);
+    console.log(messages);
+    var params = {
+      title: 'Express',
+      user: user,
+      messages: messages,
+      events: result,
+    }
+    res.render('index', params);
+  })
 });
 
 router.get('/sales', function (req, res, next) {
@@ -49,9 +59,9 @@ router.get('/teacher/add', helpers.loginRedirect, function (req, res, next) {
 });
 
 router.post('/teacher/add', function (req, res, next) {
-  var username = req.body.username;
+  var email_address = req.body.email;
   var password = req.body.password;
-  Teachers().where('email', req.body.username).then(function( data) {
+  Teachers().where('email_address', req.body.email).then(function( data) {
     if (data.length) {
       req.flash('message', {
         status: 'danger',
@@ -62,7 +72,7 @@ router.post('/teacher/add', function (req, res, next) {
       // hash and salt the password
         var hashedPassword = helpers.hashing(password);
         Teachers().insert({
-            email_address: email,
+            email_address: email_address,
             password: hashedPassword
         }).then(function() {
             req.flash('message', {status: 'success', value: 'Successfully Registered.'});

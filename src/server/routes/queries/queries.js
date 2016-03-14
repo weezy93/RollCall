@@ -8,12 +8,9 @@ function Tickets() {
   return knex('tickets');
 }
 
-function getAllEvents(req, res) {
+function getAllEvents() {
   // query for school name?
-  Events().select().then(function (result) {
-    console.log(result);
-    res.render('index', { title: 'Events', events: result });
-  })
+  return Events().select()
   .catch(function (error) {
     console.log(error);
   });
