@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+  <div class="container">
+
+    <h1>{{ title }}</h1>
+    <article>
+      <section>
+        <h3>{{ student.name }} </h3>
+
+      </section>
+      <section>
+          <h3>Tickets left: {{ tickets }}</h3>
+      </section>
+    </article>
+
+  </div>
+
+{% endblock %}

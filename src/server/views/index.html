@@ -8,8 +8,25 @@
   <div class="container">
 
     <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
 
+    <article class="home-image">
+      <img src="{{ image }}" alt="" />
+    </article>
+    <main id="upcoming-events">
+
+        {% for event in events %}
+        <section>
+          <ul>
+
+            <span class="label label-info"><li><h3>{{ event.name }}</h3></li></span>
+            <li><h4>{{ event.date }}</h4></li>
+          </ul>
+          <p>{{ event.description }}</p>
+        </section>
+
+        {% endfor %}
+
+    </main>
   </div>
 
 {% endblock %}
