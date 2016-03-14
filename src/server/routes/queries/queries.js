@@ -1,6 +1,11 @@
 var knex = require('../../db/knex');
+
 function Events() {
   return knex('events');
+}
+
+function Tickets() {
+  return knex('tickets');
 }
 
 function getAllEvents(req, res) {
@@ -17,6 +22,16 @@ function getAllEvents(req, res) {
 function sellTicket(req, res) {
   // on post
     // insert into ticket table
+  Tickets().insert({
+    student_id: ,
+    event_id: ,
+    sold_date: 
+  }).then(function(result) {
+
+  })
+  .catch(function(error) {
+
+  });
 }
 
 
