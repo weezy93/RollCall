@@ -14,7 +14,8 @@ router.get('/sales', function (req, res, next) {
 
 router.post('/sales', function (req, res, next) {
   queries.sellTicket(req, res).then(function (ticketNum) {
-    res.render('saleEnd', { title: 'Ticket Sold', ticket: ticketNum });
+    console.log(ticketNum);
+    res.render('saleEnd', { title: 'Ticket Sold', tickets: ticketNum, max: eventquery });
   });
 });
 

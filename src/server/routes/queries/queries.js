@@ -8,6 +8,10 @@ function Tickets() {
   return knex('tickets');
 }
 
+function Students() {
+  return knex('students');
+}
+
 function getAllEvents(req, res) {
   // query for school name?
   Events().select().then(function (result) {
@@ -32,19 +36,24 @@ function addEvent(req, res) {
   });
 }
 
-// doesn't work
+
+// Need to query event table for max tickets, need event id somehow
 
 function sellTicket(req, res) {
-  return Tickets().insert({ student_id: req.body.studentId })
-  .then(function () {
-    return Tickets().count('id')
-    .then(function (count) {
-      return count[0];
+  return Students().where('student_id', req.body.studentId).select()
+  .then(function (student) {
+    return Tickets().insert({ student_id:  student[0].id })
+    .then(function () {
+      return Tickets().count('id')
+      .then(function (count) {
+        console.log(count);
+        return count[0].count;
+      });
     });
   })
-  .catch(function (error) {
-    console.log(error);
-  });
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
 module.exports = {
