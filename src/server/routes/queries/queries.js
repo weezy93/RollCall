@@ -23,11 +23,11 @@ function sellTicket(req, res) {
   // on post
     // insert into ticket table
   Tickets().insert({
-    student_id: ,
-    event_id: ,
-    sold_date: 
-  }).then(function(result) {
-
+    student_id: req.body.studentId
+    // event_id: ,
+  }).count('id')
+  .then(function(count) {
+    res.render('saleEnd', { title: 'Ticket sold', ticket:  count[0]} );
   })
   .catch(function(error) {
 
