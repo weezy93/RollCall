@@ -11,13 +11,11 @@ passport.use(new LocalStrategy({
     usernameField: 'email'
   },
   function(email, password, done) {
-    Teachers().where('email', email).then(function(data) {
-      console.log(data);
+    Teachers().where('email_address', email).then(function(data) {
       if (!data.length) {
         return done('Incorrect email');
       }
       var user = data[0];
-      console.log('user:', user);
       if (helpers.comparePassword(password, user.password)) {
           return done(null, user);
         } else {
