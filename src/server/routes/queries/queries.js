@@ -67,11 +67,14 @@ function getStudentsByEvent(searchFor) {
     .then(function(guestsObject) {
       var studentsIdsWithGuests = Object.keys(guestsObject);
       var count = -1;
+      var counter = 0;
       var returner = [];
       students.rows.forEach(function(student) {
+        console.log(student);
+        counter++;
         if (studentsIdsWithGuests.indexOf(student.id + '') != -1) {
           count++;
-          if (count > 0) {
+          if (guestsObject[student.id + ''][count - 1] && count > 0) {
             student['guest_first_name'] =
               guestsObject[student.id + ''][count - 1][0];
             student['guest_last_name'] =
@@ -79,11 +82,14 @@ function getStudentsByEvent(searchFor) {
             student['guest_id'] =
               guestsObject[student.id + ''][count - 1][2];
             returner.push(student)
+            console.log('a ' + counter);
           } else {
             returner.push(student);
+            console.log('b ' + counter);
           }
         } else {
           returner.push(student);
+          console.log('c ' + counter);
           count = -1;
         }
       });
