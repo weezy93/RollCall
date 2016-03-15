@@ -8,7 +8,7 @@ $(function() {
   $status = $('<div id="status">').appendTo('body');
   $status.slideUp();
   $('#addGuest').click(popUpAddGuest);
-})
+});
 
 function popUpAddGuest() {
   $status.slideDown();
@@ -32,7 +32,7 @@ function postGuest() {
     school: $('#guestSchool').val(),
     event_id: eventId,
     student_id: studentId,
-  }
+  };
   console.log(params);
   $.ajax({
     type: 'POST',
@@ -47,7 +47,7 @@ function postGuest() {
       $status.append('<p>' + data.error + '</p>');
       $status.delay(500).slideUp();
     }
-  })
+  });
 }
 function loadGuests() {
   $.ajax({
@@ -60,7 +60,7 @@ function loadGuests() {
       var dat = data[i];
       guestString += '<div>';
       guestString += '<p>' + dat.first_name + ' ' + dat.last_name + '</p>';
-      guestString += '<p>From: ' + dat.school + '</p></div>'
+      guestString += '<p>From: ' + dat.school + '</p></div>';
     }
     $('#guestsSection').html(guestString);
   });
