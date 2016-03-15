@@ -20,6 +20,33 @@
     </table>
   </div>
 </section>
+  <div class="modal" id="guest_modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+          <h4 class="modal-title">Edit Guest</h4>
+        </div>
+        <div class="modal-body">
+          <form method="POST" id="guest_edit">
+            <div class="row">
+              <div class="col-lg-6">
+                <input type="text" class="form-control" id="guest_first" placeholder="First"/>
+              </div>
+              <div class="col-lg-6">
+                <input type="text" class="form-control" id="guest_last" placeholder="Last"/>
+              </div>
+            </div>
+            <br />
+            <div class="col-lg-offset-5">
+              <button type="submit" class="update btn btn-success">Update</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="close" onclick="getStudents()" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  </div>
 <script>
   var eventId = {{eventId}};
 </script>
