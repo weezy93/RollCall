@@ -100,7 +100,7 @@ router.get('/events/:eventId/edit', function(req, res, next) {
   var params = {
     eventId: req.params.eventId,
     script: 'editEvent.js',
-    stylesheet: 'editEvent.css'
+    stylesheet: 'editEvent.css',
   }
   res.render('editevent', params)
 })
@@ -196,7 +196,7 @@ router.post('/login', function(req, res, next) {
         status: 'success',
         value: 'Welcome ' + user.first_name,
       });
-      return res.redirect('/'+user.school_id);
+      return res.redirect('/' + user.school_id);
     });
   })(req, res, next);
 });

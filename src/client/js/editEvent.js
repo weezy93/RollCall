@@ -37,8 +37,10 @@ function getStudents() {
       + '<td>' + stripNulls(dat.ticket_number) + '</td>'
       + '<td>' + formatDate(dat.sold_timestamp) + '</td>'
       + '<td>' + formatDate(dat.redeemed_on) + '</td>'
-      + '<td onclick="editGuest()" class="clickable">' + stripNulls(dat.guest_first_name) + '</td>'
-      + '<td onclick="editGuest()" class="clickable">' + stripNulls(dat.guest_last_name) + '</td>'
+      + '<td onclick="editGuest(' + dat.guest_id + ')" class="clickable">' +
+        stripNulls(dat.guest_first_name) + '</td>'
+      + '<td onclick="editGuest(' + dat.guest_id + ')" class="clickable">' +
+        stripNulls(dat.guest_last_name) + '</td>'
       + '</tr>';
       $students.append(row);
     }
@@ -57,6 +59,6 @@ function stripNulls(string) {
   }
   return string;
 }
-function editGuest() {
-  console.log('hey');
+function editGuest(guest_id) {
+  console.log(guest_id);
 }

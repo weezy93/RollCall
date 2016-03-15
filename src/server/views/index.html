@@ -26,6 +26,9 @@
           <th>
             Description
           </th>
+          <th>
+            TicketsSold/Max
+          </th>
         </thead>
         <tbody>
         {% for event in events %}
@@ -41,6 +44,9 @@
           </td>
           <td>
             {{ event.description }}
+          </td>
+          <td>
+            {{ event.count }} / {{ event.max_tickets }}
           </td>
         </tr>
         {% endfor %}

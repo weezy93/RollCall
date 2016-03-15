@@ -18,10 +18,17 @@ function Guests() {
 
 function getAllEvents(school_id) {
   // Query for school name?
-  return Events().select().where('school_id', school_id)
+  return knex.raw('select events.id, events.name, events.event_date, ' +
+  'school_id, description, address, count(tickets.id), max_tickets ' +
+  'from events left join tickets on tickets.event_id = events.id ' +
+  'group by events.id, events.name, school_id, description, address, ' +
+  'max_tickets')
+  .then(function(results) {
+    return results.rows;
+  })
   .catch(function(error) {
-    console.log(error);
-  });
+    console.log('getAllEvents Error: ' + error);
+  })
 }
 
 function addGuest(params) {
@@ -46,9 +53,12 @@ function getStudentsByEvent(searchFor) {
   + 'where events.id = ' + searchFor.eventId;
   if (searchFor.matcher) {
     queryString +=
-    ' AND (students.student_id like \'' + searchFor.matcher + '%\''
-    + ' OR students.first_name like \'' + searchFor.matcher + '%\''
-    + ' OR students.last_name like \'' + searchFor.matcher + '%\')';
+    ' AND (LOWER(students.student_id) like LOWER(\'' +
+      searchFor.matcher + '%\')'
+    + ' OR LOWER(students.first_name) like LOWER(\'' +
+      searchFor.matcher + '%\')'
+    + ' OR LOWER(students.last_name) like LOWER(\'' +
+      searchFor.matcher + '%\'))';
   }
   queryString += ' order by students.last_name, tickets.id limit 10';
   return knex.raw(queryString)
@@ -59,7 +69,6 @@ function getStudentsByEvent(searchFor) {
       var count = -1;
       var returner = [];
       students.rows.forEach(function(student) {
-        console.log(student.id);
         if (studentsIdsWithGuests.indexOf(student.id + '') != -1) {
           count++;
           if (count > 0) {
@@ -69,7 +78,6 @@ function getStudentsByEvent(searchFor) {
               guestsObject[student.id + ''][count - 1][1];
             student['guest_id'] =
               guestsObject[student.id + ''][count - 1][2];
-            console.log(student);
             returner.push(student)
           } else {
             returner.push(student);
