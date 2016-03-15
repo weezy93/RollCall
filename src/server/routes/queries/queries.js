@@ -47,8 +47,8 @@ function getStudentsByEvent(searchFor) {
   if (searchFor.matcher) {
     queryString +=
     ' AND (students.student_id like \'' + searchFor.matcher + '%\''
-    + ' OR students.first_name like \'' + searchFor.matcher + '%'
-    + ' OR students.last_name like \'' + searchFor.matcher + '%)';
+    + ' OR students.first_name like \'' + searchFor.matcher + '%\''
+    + ' OR students.last_name like \'' + searchFor.matcher + '%\')';
   }
   queryString += ' order by students.last_name, tickets.id limit 10';
   return knex.raw(queryString)
