@@ -44,27 +44,29 @@ function addEvent(req, res) {
 }
 
 
-// Need to query event table for max tickets, need event id somehow
+// This is going to be done in ajax, 
 
-function sellTicket(req, res) {
-  return Students().where('student_id', req.body.studentId).select()
-  .then(function(student) {
-    return Tickets().insert({ student_id:  student[0].id })
-    .then(function() {
-      return Tickets().count('id')
-      .then(function(count) {
-        console.log(count);
-        return count[0].count;
-      });
-    });
-  })
-    .catch(function(error) {
-      console.log(error);
-    });
-}
+// function sellTicket(req, res) {
+//   return Students().where('student_id', req.body.studentId).select()
+//   .then(function(student) {
+//     return Tickets().insert({ student_id:  student[0].id })
+//     .then(function() {
+//       return Tickets().count('id')
+//       .then(function(count) {
+//         console.log(count);
+//         return count[0].count;
+//       });
+//     });
+//   })
+//     .catch(function(error) {
+//       console.log(error);
+//     });
+// }
+
 function getGuests(params) {
   return Guests().where(params);
 }
+
 function addStudent(params) {
   return Students().insert(params);
 }

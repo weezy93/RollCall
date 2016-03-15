@@ -13,8 +13,8 @@ function Teachers() {
   return knex('teachers');
 }
 
-
-router.get('/', function(req, res, next) {
+// Up to the school if they display the events
+router.get('/:schoolId', function(req, res, next) {
   var user = req.user;
   var messages = req.flash('message');
   queries.getAllEvents()
@@ -31,14 +31,14 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/sales/:eventId', function(req, res, next) {
+router.get('/event/:eventId/sales', function(req, res, next) {
   res.render('saleStart', {
     title: 'Sell Page',
     eventId: req.params.eventId,
   });
 });
 
-router.post('/sales/:eventId', function(req, res, next) {
+router.post('/event/:eventId/sales', function(req, res, next) {
   queries.sellTicket(req, res).then(function(ticketNum) {
     console.log(ticketNum);
     res.render('saleEnd', {
@@ -49,7 +49,9 @@ router.post('/sales/:eventId', function(req, res, next) {
     });
   });
 });
-router.post('/sales/:eventId/:studentId/addguest', function(req, res, next) {
+
+router.post('/event/:eventId/sales/:studentId/addguest',
+function(req, res, next) {
   queries.addGuest(req.body)
   .then(function(guestId) {
     res.json({success: 'Added guest #' + guestId})
@@ -59,7 +61,7 @@ router.post('/sales/:eventId/:studentId/addguest', function(req, res, next) {
   })
 });
 
-router.get('/sales/:eventId/:studentId/getguests', function(req, res, next) {
+router.get('/event/:eventId/sales/:studentId/getguests', function(req, res, next) {
   var params = {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
@@ -78,13 +80,15 @@ router.get('/:schoolId/addstudents', function(req, res) {
     title: 'I love files!',
     schoolId: req.params.schoolId,
   });
-})
+});
+
 router.post('/:schoolId/addstudent', function(req, res) {
   queries.addStudent(req.body)
   .then(function() {
     res.redirect('/' + req.params.schoolId);
   });
-})
+});
+
 router.post('/:schoolId/addstudents', upload.single('csv'),
   function(req, res, next) {
   studentCsv.uploadStudentCsv(req, res, next);
@@ -92,20 +96,20 @@ router.post('/:schoolId/addstudents', upload.single('csv'),
 router.post('/:schoolId/addstudents/parse', function(req, res, next) {
   studentCsv.studentCsvParser(req, res, next);
 });
-
-router.get('/addStudent', function(req, res, next) {
-  res.render('addStudent', { title: 'Add Student(s)' });
-});
-
-router.get('/addEvent', function(req, res, next) {
-  res.render('addEvent', { title: 'Create Event' });
-});
-
-router.post('/addEvent', function(req, res, next) {
-  queries.addEvent(req, res).then(function(result) {
-    res.redirect('/');
-  });
-});
+//
+// router.get('/addStudent', function(req, res, next) {
+//   res.render('addStudent', { title: 'Add Student(s)' });
+// });
+//
+// router.get('/addEvent', function(req, res, next) {
+//   res.render('addEvent', { title: 'Create Event' });
+// });
+//
+// router.post('/addEvent', function(req, res, next) {
+//   queries.addEvent(req, res).then(function(result) {
+//     res.redirect('/');
+//   });
+// });
 
 // router.get('/teacher/add', function (req, res, next) {
 //   res.render('addTeacher', {title: 'Add Teacher'});
