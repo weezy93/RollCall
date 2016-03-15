@@ -1,23 +1,26 @@
 {% extends 'layout.html' %}
-
 {% block title %}{% endblock %}
-
-
 {% block content %}
 
-  <div class="container">
+<div class="container">
 
-    <h1>{{ title }}</h1>
-    <article>
-      <section>
-        <h3>{{ student.name }} </h3>
+  <h1>{{ title }}</h1>
+  <article>
+    <section>
+      <h3>{{ student.name }} </h3>
 
-      </section>
-      <section>
-          <h3>{{ tickets }} tickets sold of {{ max }} </h3>
-      </section>
-    </article>
+    </section>
+    <section>
+      <h3>{{ tickets }} tickets sold of {{ max }} </h3>
+    </section>
+    <section>
+      <button type="button" id="addGuest">Add Guest</button>
+    </section>
+    <section id="guestsSection">
 
-  </div>
+    </section>
+  </article>
+
+</div>
 
 {% endblock %}
