@@ -35,6 +35,7 @@ router.get('/event/:eventId/sale_start', function(req, res, next) {
   res.render('saleStart', {
     title: 'Sell Page',
     eventId: req.params.eventId,
+    event_max_tix: '?', // Query event.max_tix
   });
 });
 
@@ -63,7 +64,6 @@ function(req, res, next) {
         studentId: student[0].id,
         script: 'saleEnd.js',
         stylesheet: 'saleEnd.css',
-        event_max_tix: '?', // Query event.max_tix
       });
     });
 });
