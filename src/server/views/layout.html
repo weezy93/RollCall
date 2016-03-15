@@ -21,8 +21,8 @@
         <li><a href="/{{ school_id }}/events">Events<span class="sub_icon glyphicon glyphicon-calendar"></span></a></li>
         <li><a href="/{{ school_id }}/students">Search<span class="sub_icon glyphicon glyphicon-search"></span></a></li>
         {% if user %}
-        <li><a href="/students/new">Import Students<span class="sub_icon glyphicon glyphicon-user"></span></a></li>
-        <li><a href="/logout">Log Out<span class="sub_icon glyphicon glyphicon-log-out"></span></a></li>
+        <li><a href="/{{ school_id }}/addstudents">Import Students<span class="sub_icon glyphicon glyphicon-user"></span></a></li>
+        <li><a href="/logout?redirect={{ school_id }}">Log Out<span class="sub_icon glyphicon glyphicon-log-out"></span></a></li>
         {% else %}
         <form action="/login" method="POST">
           <li><input type="text" name="email" class="form-control" placeholder="Email Address"></li>

@@ -13,22 +13,30 @@ function Teachers() {
   return knex('teachers');
 }
 
+router.get('/logout', function(req, res, next) {
+  var redirect = req.query.redirect;
+  console.log('redirect: ', redirect);
+  req.logout();
+  req.flash('message', {status: 'success', value: 'Successfully logged out.'});
+  res.redirect(redirect);
+});
+
 // Up to the school if they display the events
-router.get('/:schoolId', function(req, res, next) {
+router.get('/:school_id', function(req, res, next) {
   var user = req.user;
+  var school_id = req.params.school_id;
   var messages = req.flash('message');
-  queries.getAllEvents()
+  queries.getAllEvents(school_id)
   .then(function(result) {
-    console.log(result);
-    console.log(messages);
     var params = {
       title: 'Express',
       user: user,
+      school_id: school_id,
       messages: messages,
       events: result,
-    }
+    };
     res.render('index', params);
-  })
+  });
 });
 
 router.get('/event/:eventId/sales', function(req, res, next) {
@@ -40,7 +48,7 @@ router.get('/event/:eventId/sales', function(req, res, next) {
 
 router.post('/event/:eventId/sales', function(req, res, next) {
   queries.sellTicket(req, res).then(function(ticketNum) {
-    console.log(ticketNum);
+
     res.render('saleEnd', {
       title: 'Ticket Sold',
       tickets: ticketNum,
@@ -54,11 +62,11 @@ router.post('/event/:eventId/sales/:studentId/addguest',
 function(req, res, next) {
   queries.addGuest(req.body)
   .then(function(guestId) {
-    res.json({success: 'Added guest #' + guestId})
+    res.json({success: 'Added guest #' + guestId});
   })
   .catch(function(err) {
     res.json({error: err});
-  })
+  });
 });
 
 router.get('/event/:eventId/sales/:studentId/getguests', function(req, res, next) {
@@ -72,7 +80,7 @@ router.get('/event/:eventId/sales/:studentId/getguests', function(req, res, next
   })
   .catch(function(err) {
     res.json({error: err});
-  })
+  });
 });
 
 router.get('/:schoolId/addstudents', function(req, res) {
@@ -92,7 +100,7 @@ router.post('/:schoolId/addstudent', function(req, res) {
 router.post('/:schoolId/addstudents', upload.single('csv'),
   function(req, res, next) {
   studentCsv.uploadStudentCsv(req, res, next);
-})
+});
 router.post('/:schoolId/addstudents/parse', function(req, res, next) {
   studentCsv.studentCsvParser(req, res, next);
 });
@@ -166,16 +174,12 @@ router.post('/login', function(req, res, next) {
         status: 'success',
         value: 'Welcome ' + user.first_name,
       });
-      return res.redirect('/');
+      return res.redirect('/'+user.school_id);
     });
   })(req, res, next);
 });
 
-router.get('/logout', function(req, res, next) {
-  req.logout();
-  req.flash('message', {status: 'success', value: 'Successfully logged out.'});
-  res.redirect('/');
-});
+
 
 
 module.exports = router;
