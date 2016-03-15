@@ -60,11 +60,22 @@ function stripNulls(string) {
   return string;
 }
 function editGuest(id) {
-
   guest_id = id;
+
+  var url = '/guest/' + id;
+  $.ajax({
+    url: url,
+    type: 'GET'
+  }).done(function(data) {
+    $('#guest_first').val(data[0].first_name);
+    $('#guest_last').val(data[0].last_name);
+  });
+
+
   $modal.on('click', '.update', function(e){
     $modal.modal('loading');
     e.preventDefault();
+
     var params = {
       first_name: $('#guest_first').val(),
       last_name: $('#guest_last').val()
@@ -80,7 +91,7 @@ function editGuest(id) {
           $modal
             .modal('loading')
             .find('.modal-body')
-              .prepend('<div class="alert alert-info fade in">' +
+              .html('<div class="alert alert-info fade in">' +
                 'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
               '</div>');
         }, 1000);
