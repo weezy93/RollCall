@@ -84,9 +84,7 @@ function(req, res, next) {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
   }
-  console.log(params);
   queries.ticketCount(params).then(function(count) {
-    console.log(count);
     res.send(count[0].count);
   })
 })
