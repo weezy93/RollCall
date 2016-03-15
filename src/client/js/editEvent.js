@@ -1,3 +1,5 @@
+var guest_id;
+var $modal = $('#guest_modal');
 
 $(function() {
   getStudents();
@@ -37,8 +39,8 @@ function getStudents() {
       + '<td>' + stripNulls(dat.ticket_number) + '</td>'
       + '<td>' + formatDate(dat.sold_timestamp) + '</td>'
       + '<td>' + formatDate(dat.redeemed_on) + '</td>'
-      + '<td onclick="editGuest()" class="clickable">' + stripNulls(dat.guest_first_name) + '</td>'
-      + '<td onclick="editGuest()" class="clickable">' + stripNulls(dat.guest_last_name) + '</td>'
+      + '<td onclick="editGuest(' + dat.guest_id + ')" class="clickable">' + stripNulls(dat.guest_first_name) + '</td>'
+      + '<td onclick="editGuest(' + dat.guest_id + ')" class="clickable">' + stripNulls(dat.guest_last_name) + '</td>'
       + '</tr>';
       $students.append(row);
     }
@@ -57,17 +59,42 @@ function stripNulls(string) {
   }
   return string;
 }
-function editGuest() {
-  console.log('modal!');
-  $('body').append(
-  '<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">',
-  +      '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&close;</button>',
-  +      '<h4 class="modal-title">Edit Guest</h4>',
-  +    '</div>',
-  +   '<div class="modal-body">',
-  +   '</div>',
-  +   '<div class="modal-footer">',
-  +     '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
-  +     '<button type="button" class="btn btn-primary">Save changes</button>',
-  +   '</div></div></div></div>');
+function editGuest(id) {
+
+  guest_id = id;
+  $modal.on('click', '.update', function(e){
+    $modal.modal('loading');
+    e.preventDefault();
+    var params = {
+      first_name: $('#guest_first').val(),
+      last_name: $('#guest_last').val()
+    };
+
+    var url = '/guests/' + id + '/edit';
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: params
+    }).done(function(data) {
+        setTimeout(function(){
+          $modal
+            .modal('loading')
+            .find('.modal-body')
+              .prepend('<div class="alert alert-info fade in">' +
+                'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+              '</div>');
+        }, 1000);
+      });
+    });
 }
+
+
+
+$(document).on('click', 'td.clickable', function(){
+  // create the backdrop and wait for next modal to be triggered
+  $('body').modalmanager('loading');
+
+  setTimeout(function(){
+      $modal.modal();
+  }, 1000);
+});
