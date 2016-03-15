@@ -9,7 +9,9 @@ $(function() {
   $status.slideUp();
   $('#addGuest').click(popUpAddGuest);
   $('#makeSale').click(incrementTicket);
-})
+});
+
+
 
 function popUpAddGuest() {
   $status.slideDown();
@@ -48,7 +50,7 @@ function postGuest() {
       $status.append('<p>' + data.error + '</p>');
       $status.delay(500).slideUp();
     }
-  })
+  });
 }
 
 function loadGuests() {
@@ -61,7 +63,7 @@ function loadGuests() {
       var dat = data[i];
       guestString += '<div>';
       guestString += '<p>' + dat.first_name + ' ' + dat.last_name + '</p>';
-      guestString += '<p>From: ' + dat.school + '</p></div>'
+      guestString += '<p>From: ' + dat.school + '</p></div>';
     }
     $('#guestsSection').html(guestString);
   });

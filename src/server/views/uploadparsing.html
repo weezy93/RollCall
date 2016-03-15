@@ -4,7 +4,8 @@
 
 
 {% block content %}
-<form class="" action="/{{schoolId}}/addstudents/parse" method="post">
+<section>
+<form class="form-horizontal" action="/{{schoolId}}/addstudents/parse" method="post">
   <input type="checkbox" name="ignoreHeaders" value="true">My data has headers
   <table>
     <tr>
@@ -33,3 +34,4 @@
   </table>
   <input type="submit" name="name" value="Submit">
 </form>
+</section>
