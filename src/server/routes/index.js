@@ -29,10 +29,11 @@ router.get('/:school_id', function(req, res, next) {
   queries.getAllEvents(school_id)
   .then(function(result) {
     var params = {
-      title: 'Express',
+      title: 'Littleton High School',
       user: user,
       school_id: school_id,
       messages: messages,
+      image: 'http://pics4.city-data.com/cpicc/cfiles1318.jpg',
       events: result,
     };
     res.render('index', params);
