@@ -61,7 +61,8 @@ function(req, res, next) {
   })
 });
 
-router.get('/event/:eventId/sales/:studentId/getguests', function(req, res, next) {
+router.get('/event/:eventId/sales/:studentId/getguests',
+function(req, res, next) {
   var params = {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
@@ -74,6 +75,25 @@ router.get('/event/:eventId/sales/:studentId/getguests', function(req, res, next
     res.json({error: err});
   })
 });
+router.get('/event/:eventId/getstudents', function(req, res, next) {
+  var searchFor = {
+    eventId: req.params.eventId,
+  }
+  if (req.query.matcher) {
+    searchFor['matcher'] = req.query.matcher;
+  }
+  queries.getStudentsByEvent(searchFor)
+  .then(function(results) {
+    res.json(results);
+  })
+});
+router.get('/events/:eventId/edit', function(req, res, next) {
+  var params = {
+    eventId: req.params.eventId,
+    script: 'editEvent.js',
+  }
+  res.render('editevent', params)
+})
 
 router.get('/:schoolId/addstudents', function(req, res) {
   res.render('addStudents', {

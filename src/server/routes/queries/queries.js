@@ -28,6 +28,81 @@ function addGuest(params) {
   return Guests().insert(params).returning('id');
 }
 
+function getStudentsByEvent(searchFor) {
+  var queryString =
+  'select '
+  + 'students.id, '
+  + 'students.student_id, '
+  + 'students.first_name, '
+  + 'students.middle_name, '
+  + 'students.last_name, '
+  + 'students.grade, '
+  + 'tickets.id as ticket_number, '
+  + 'tickets.sold_timestamp, '
+  + 'tickets.redeemed_on '
+  + 'from students '
+  + 'inner join tickets on tickets.student_id = students.id '
+  + 'inner join events on tickets.event_id = events.id '
+  + 'where events.id = ' + searchFor.eventId;
+  if (searchFor.matcher) {
+    queryString +=
+    ' AND (students.student_id like \'' + searchFor.matcher + '%\''
+    + ' OR students.first_name like \'' + searchFor.matcher + '%'
+    + ' OR students.last_name like \'' + searchFor.matcher + '%)';
+  }
+  queryString += ' order by students.last_name, tickets.id limit 10';
+  return knex.raw(queryString)
+  .then(function(students) {
+    return getGuestsByEventGroupByStudentId(searchFor.eventId)
+    .then(function(guestsObject) {
+      var studentsIdsWithGuests = Object.keys(guestsObject);
+      var count = -1;
+      var returner = [];
+      students.rows.forEach(function(student) {
+        console.log(student.id);
+        if (studentsIdsWithGuests.indexOf(student.id + '') != -1) {
+          count++;
+          if (count > 0) {
+            student['guest_first_name'] =
+              guestsObject[student.id + ''][count - 1][0];
+            student['guest_last_name'] =
+              guestsObject[student.id + ''][count - 1][1];
+            returner.push(student)
+          } else {
+            returner.push(student);
+          }
+        } else {
+          returner.push(student);
+          count = -1;
+        }
+      });
+      return returner;
+    });
+  });
+}
+function getGuestsByEventGroupByStudentId(eventId) {
+  var queryString =
+  'select guests.first_name, guests.last_name, students.id as student_id '
+  + 'from guests '
+  + 'inner join students on guests.student_id = students.id '
+  + 'inner join tickets on tickets.student_id = students.id '
+  + 'inner join events on events.id = tickets.event_id '
+  + 'where events.id = ' + eventId
+  + ' group by guests.id, students.id';
+  return knex.raw(queryString).then(function(results) {
+    var returner = {
+    };
+    results.rows.forEach(function(row) {
+      if (returner[row.student_id]) {
+        returner[row.student_id].push([row.first_name, row.last_name]);
+      } else {
+        returner[row.student_id] = [[row.first_name, row.last_name]];
+      }
+    });
+    return returner;
+  });
+}
+
 
 function addEvent(req, res) {
   return Events().insert({
@@ -44,7 +119,7 @@ function addEvent(req, res) {
 }
 
 
-// This is going to be done in ajax, 
+// This is going to be done in ajax,
 
 // function sellTicket(req, res) {
 //   return Students().where('student_id', req.body.studentId).select()
@@ -74,8 +149,9 @@ function addStudent(params) {
 module.exports = {
   getAllEvents: getAllEvents,
   addEvent: addEvent,
-  sellTicket: sellTicket,
+  // sellTicket: sellTicket,
   addGuest: addGuest,
   getGuests: getGuests,
   addStudent: addStudent,
+  getStudentsByEvent: getStudentsByEvent,
 };
