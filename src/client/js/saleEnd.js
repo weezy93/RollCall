@@ -65,3 +65,18 @@ function loadGuests() {
     $('#guestsSection').html(guestString);
   });
 }
+
+
+// function getStudentInfo() {
+//   var params = {
+//   student_id: studentId
+//   }
+//   $.ajax({
+//     type: 'GET',
+//     url: '/event/' + eventId + '/sales/' + studentId
+//   }).done(function(data) {
+//     console.log(data);
+//     var studentInfo
+//   });
+//
+// }
