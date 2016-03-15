@@ -171,6 +171,15 @@ function addGuest(params) {
   return Guests().insert(params).returning('id');
 }
 
+function editGuest(params, id) {
+  return Guests().where('id', id).update({
+    first_name: params.first_name,
+    last_name: params.last_name
+  }, 'id').then(function(data) {
+    return data;
+  });
+}
+
 module.exports = {
   getAllEvents: getAllEvents,
   addEvent: addEvent,
@@ -182,4 +191,5 @@ module.exports = {
   addStudent: addStudent,
   ticketCount: ticketCount,
   getStudentsByEvent: getStudentsByEvent,
+  editGuest: editGuest,
 };

@@ -50,7 +50,7 @@ router.get('/event/:eventId/sale_start', function(req, res, next) {
 
 router.get('/event/:eventId/sales/',
 function(req, res, next) {
-  var studentId = req.query.studentId
+  var studentId = req.query.studentId;
   var eventId = req.params.eventId;
 
   queries.getStudentInfo(studentId).then(function(student) {
@@ -90,11 +90,11 @@ function(req, res, next) {
   var params = {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
-  }
+  };
   queries.ticketCount(params).then(function(count) {
     res.send(count[0].count);
-  })
-})
+  });
+});
 
 router.post('/event/:eventId/sales/:studentId/addguest',
 function(req, res, next) {
@@ -104,6 +104,14 @@ function(req, res, next) {
   })
   .catch(function(err) {
     res.json({error: err});
+  });
+});
+
+router.post('/guests/:id/edit', function(req, res, next) {
+  var id = req.params.id;
+  queries.editGuest(req.body, id).then(function(data) {
+    console.log(data);
+    res.send('success');
   });
 });
 
@@ -121,26 +129,34 @@ function(req, res, next) {
     res.json({error: err});
   });
 });
+
+router.get('/guest/:id', function(req, res, next) {
+  var id = req.params.id;
+  queries.getGuests({id: id}).then(function(data) {
+    res.json(data);
+  });
+});
+
 router.get('/event/:eventId/getstudents', function(req, res, next) {
   var searchFor = {
     eventId: req.params.eventId,
-  }
+  };
   if (req.query.matcher) {
     searchFor['matcher'] = req.query.matcher;
   }
   queries.getStudentsByEvent(searchFor)
   .then(function(results) {
     res.json(results);
-  })
+  });
 });
 router.get('/events/:eventId/edit', function(req, res, next) {
   var params = {
     eventId: req.params.eventId,
     script: 'editEvent.js',
     stylesheet: 'editEvent.css'
-  }
-  res.render('editevent', params)
-})
+  };
+  res.render('editevent', params);
+});
 
 router.get('/:schoolId/addstudents', function(req, res) {
   res.render('addStudents', {
