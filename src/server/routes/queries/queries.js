@@ -43,8 +43,21 @@ function addEvent(req, res) {
   });
 }
 
+function getStudentInfo(id) {
+  return Students().where('student_id', id)
+}
 
-// This is going to be done in ajax, 
+function getTicketNum(studentId, eventId) {
+  return Tickets().where({
+    student_id: studentId,
+    event_id: eventId,
+  }).then(function(result) {
+    return result.length;
+  })
+}
+
+
+// This is going to be done in ajax,
 
 // function sellTicket(req, res) {
 //   return Students().where('student_id', req.body.studentId).select()
@@ -74,7 +87,9 @@ function addStudent(params) {
 module.exports = {
   getAllEvents: getAllEvents,
   addEvent: addEvent,
-  sellTicket: sellTicket,
+  // A sellTicket: sellTicket,
+  getStudentInfo: getStudentInfo,
+  getTicketNum: getTicketNum,
   addGuest: addGuest,
   getGuests: getGuests,
   addStudent: addStudent,

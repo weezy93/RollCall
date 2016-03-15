@@ -4,11 +4,11 @@
 
 
 {% block content %}
-
+<!-- /events/:eventId/sale_start -->
   <div class="container">
 
     <main>
-      <form class="student-id" action="/sales/{{eventId}}" method="post">
+      <form class="student-id" action="/event/{{ eventId }}/sales/" method="get">
         <input type="text" name="studentId" placeholder="student id">
         <input type="submit" value="GO">
       </form>
