@@ -31,24 +31,63 @@ router.get('/:schoolId', function(req, res, next) {
   })
 });
 
-router.get('/event/:eventId/sales', function(req, res, next) {
+router.get('/event/:eventId/sale_start', function(req, res, next) {
   res.render('saleStart', {
     title: 'Sell Page',
     eventId: req.params.eventId,
+    event_max_tix: '?', // Query event.max_tix
   });
 });
 
-router.post('/event/:eventId/sales', function(req, res, next) {
-  queries.sellTicket(req, res).then(function(ticketNum) {
-    console.log(ticketNum);
-    res.render('saleEnd', {
-      title: 'Ticket Sold',
-      tickets: ticketNum,
-      script: 'saleEnd.js',
-      stylesheet: 'saleEnd.css',
+// router.post('/event/:eventId/sales', function(req, res, next) {
+//   // queries.sellTicket(req, res).then(function(ticketNum) {
+//   //   console.log(ticketNum);
+//     res.render('saleEnd', {
+//       title: 'Ticket Sold',
+//       tickets: ticketNum,
+//       script: 'saleEnd.js',
+//       stylesheet: 'saleEnd.css',
+//     });
+//   // });
+// });
+
+// This works
+router.get('/event/:eventId/sales/',
+function(req, res, next) {
+  var studentId = req.query.studentId
+  var eventId = req.params.eventId;
+
+  queries.getStudentInfo(studentId).then(function(student) {
+      res.render('saleEnd', {
+        name: student[0].first_name + ' ' + student[0].last_name,
+        eventId: eventId,
+        studentId: student[0].id,
+        script: 'saleEnd.js',
+        stylesheet: 'saleEnd.css',
+      });
     });
+});
+
+router.post('/event/:eventId/sales/:studentId',
+function(req, res, next) {
+  var eventId = req.body.event_id;
+  var studentId = req.body.student_id;
+
+  queries.sellTicket(studentId, eventId).then(function() {
+    res.send('success');
   });
 });
+
+router.get('/event/:eventId/sales/:studentId/ticket_count',
+function(req, res, next) {
+  var params = {
+    student_id: req.params.studentId,
+    event_id: req.params.eventId,
+  }
+  queries.ticketCount(params).then(function(count) {
+    res.send(count[0].count);
+  })
+})
 
 router.post('/event/:eventId/sales/:studentId/addguest',
 function(req, res, next) {
@@ -61,7 +100,8 @@ function(req, res, next) {
   })
 });
 
-router.get('/event/:eventId/sales/:studentId/getguests', function(req, res, next) {
+router.get('/event/:eventId/sales/:studentId/getguests',
+function(req, res, next) {
   var params = {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
