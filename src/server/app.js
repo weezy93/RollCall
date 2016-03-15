@@ -15,7 +15,6 @@ var flash = require('connect-flash');
 
 // *** Routes *** //
 var routes = require('./routes/index.js');
-var uploads = require('./routes/throwaway/uploads.js')
 
 
 // *** Express instance *** //
@@ -50,7 +49,6 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** Main routes *** //
 app.use('/', routes);
-app.use('/uploads', uploads);
 
 
 // Catch 404 and forward to error handler

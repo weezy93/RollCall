@@ -4,6 +4,10 @@ var knex = require('../db/knex');
 var helpers = require('../lib/helpers');
 var passport = require('../lib/auth');
 var queries = require('./queries/queries');
+var multer = require('multer');
+var upload = multer({dest: 'uploads/'});
+var studentCsv = require('./studentCsv.js');
+
 
 function Teachers() {
   return knex('teachers');
@@ -27,16 +31,66 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/sales', function(req, res, next) {
-  res.render('saleStart', { title: 'Sell Page' });
+router.get('/sales/:eventId', function(req, res, next) {
+  res.render('saleStart', {
+    title: 'Sell Page',
+    eventId: req.params.eventId,
+  });
 });
 
-router.post('/sales', function(req, res, next) {
+router.post('/sales/:eventId', function(req, res, next) {
   queries.sellTicket(req, res).then(function(ticketNum) {
     console.log(ticketNum);
-    res.render('saleEnd',
-      { title: 'Ticket Sold', tickets: ticketNum, max: eventquery });
+    res.render('saleEnd', {
+      title: 'Ticket Sold',
+      tickets: ticketNum,
+      script: 'saleEnd.js',
+      stylesheet: 'saleEnd.css',
+    });
   });
+});
+router.post('/sales/:eventId/:studentId/addguest', function(req, res, next) {
+  queries.addGuest(req.body)
+  .then(function(guestId) {
+    res.json({success: 'Added guest #' + guestId})
+  })
+  .catch(function(err) {
+    res.json({error: err});
+  })
+});
+
+router.get('/sales/:eventId/:studentId/getguests', function(req, res, next) {
+  var params = {
+    student_id: req.params.studentId,
+    event_id: req.params.eventId,
+  };
+  queries.getGuests(params)
+  .then(function(guests) {
+    res.json(guests);
+  })
+  .catch(function(err) {
+    res.json({error: err});
+  })
+});
+
+router.get('/:schoolId/addstudents', function(req, res) {
+  res.render('addStudents', {
+    title: 'I love files!',
+    schoolId: req.params.schoolId,
+  });
+})
+router.post('/:schoolId/addstudent', function(req, res) {
+  queries.addStudent(req.body)
+  .then(function() {
+    res.redirect('/' + req.params.schoolId);
+  });
+})
+router.post('/:schoolId/addstudents', upload.single('csv'),
+  function(req, res, next) {
+  studentCsv.uploadStudentCsv(req, res, next);
+})
+router.post('/:schoolId/addstudents/parse', function(req, res, next) {
+  studentCsv.studentCsvParser(req, res, next);
 });
 
 router.get('/addStudent', function(req, res, next) {

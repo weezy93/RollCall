@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+  <div class="container">
+
+    <h1>{{ title }}</h1>
+    <section>
+      <form id="fileUpload" method="post" action="/{{schoolId}}/addstudents" enctype="multipart/form-data">
+        <label for="csv">Select a file to upload:</label>
+        <input type="file" name="csv" value="" accept=".csv">
+        <br />
+        <button type="submit">Upload</button>
+      </form>
+    </section>
+    <section>
+      <form class="" action="/addstudent/{{schoolId}}" method="post">
+        <label for="student_id">Student ID</label>
+        <input type="text" name="student_id" placeholder="Student ID">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" placeholder="First">
+        <label for="middle_name">Middle Name</label>
+        <input type="text" name="middle_name" placeholder="Middle">
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" placeholder="Last">
+        <label for="grade"></label>
+        <input type="text" name="grade" placeholder="Grade">
+        <input type="submit" value="GO">
+      </form>
+    </section>
+  </div>
+
+{% endblock %}

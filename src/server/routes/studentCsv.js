@@ -1,19 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var multer = require('multer');
-var upload = multer({dest: 'uploads/'});
-var util = require('util');
 var fs = require('fs');
-var knex = require('../../db/knex.js');
+var knex = require('../db/knex.js');
 var Students = function() {
   return knex('students');
 }
 
-
-router.get('/', function(req, res) {
-  res.render('throwawayform', {title: 'I love files!'});
-})
-router.post('/parsed', function(req, res) {
+function studentCsvParser(req, res, next) {
+  var schoolId = req.params.schoolId;
   var uploadedPath = req.flash('uploadedFile')[0];
   var insertArray = [];
   var formKeys = Object.keys(req.body);
@@ -67,15 +61,18 @@ router.post('/parsed', function(req, res) {
           middle_initial: splitLine[middleNameColumn],
           last_name: splitLine[lastNameColumn],
           grade: splitLine[gradeColumn],
+          school_id: schoolId,
         }
         arrayOfRows.push(tempObject);
       }
     }
+    // Stupid name for delete!
     fs.unlink(uploadedPath, (err) => {
       if (err) {
         console.log('Couldn\'t delete file ' + err);
       }
     })
+    console.log(arrayOfRows);
     knex.batchInsert('students', arrayOfRows, 1000)
     .then(function() {
       res.send('Students uploaded!');
@@ -84,9 +81,9 @@ router.post('/parsed', function(req, res) {
       res.send('Something went wrong! ' + err);
     })
   });
-})
+}
 
-router.post('/upload', upload.single('csv'), function(req, res, next) {
+function uploadStudentCsv(req, res, next) {
   if (req.file) {
     fs.exists(req.file.path, function(exists) {
       if (exists) {
@@ -110,6 +107,7 @@ router.post('/upload', upload.single('csv'), function(req, res, next) {
           var params = {
             columns: columns,
             lines: returnData,
+            schoolId: req.params.schoolId,
           }
           req.flash('uploadedFile', req.file.path);
           res.render('uploadparsing', params);
@@ -121,6 +119,9 @@ router.post('/upload', upload.single('csv'), function(req, res, next) {
   } else {
     res.send('no file, what the fuck?');
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  uploadStudentCsv: uploadStudentCsv,
+  studentCsvParser: studentCsvParser,
+};

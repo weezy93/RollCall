@@ -12,6 +12,10 @@ function Students() {
   return knex('students');
 }
 
+function Guests() {
+  return knex('guests');
+}
+
 function getAllEvents() {
   // Query for school name?
   return Events().select()
@@ -19,6 +23,11 @@ function getAllEvents() {
     console.log(error);
   });
 }
+
+function addGuest(params) {
+  return Guests().insert(params).returning('id');
+}
+
 
 function addEvent(req, res) {
   return Events().insert({
@@ -53,9 +62,18 @@ function sellTicket(req, res) {
       console.log(error);
     });
 }
+function getGuests(params) {
+  return Guests().where(params);
+}
+function addStudent(params) {
+  return Students().insert(params);
+}
 
 module.exports = {
   getAllEvents: getAllEvents,
   addEvent: addEvent,
   sellTicket: sellTicket,
+  addGuest: addGuest,
+  getGuests: getGuests,
+  addStudent: addStudent,
 };
