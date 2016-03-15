@@ -6,7 +6,6 @@ $(function() {
   loadGuests();
   console.log('sanity check');
   $status = $('<div id="status">').appendTo('body');
-  $status.slideUp();
   $('#addGuest').click(popUpAddGuest);
   $('#makeSale').click(incrementTicket);
 });
