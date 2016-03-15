@@ -16,9 +16,9 @@ function Guests() {
   return knex('guests');
 }
 
-function getAllEvents() {
+function getAllEvents(school_id) {
   // Query for school name?
-  return Events().select()
+  return Events().select().where('school_id', school_id)
   .catch(function(error) {
     console.log(error);
   });
