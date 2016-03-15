@@ -58,18 +58,18 @@ function getStudentsByEvent(searchFor) {
       var studentsIdsWithGuests = Object.keys(guestsObject);
       var count = -1;
       var returner = [];
+      var counter = 0;
       students.rows.forEach(function(student) {
-        console.log(student.id);
+        counter++;
         if (studentsIdsWithGuests.indexOf(student.id + '') != -1) {
           count++;
-          if (count > 0) {
+          if (count > 0 && guestsObject[student.id + ''][count - 1]) {
             student['guest_first_name'] =
               guestsObject[student.id + ''][count - 1][0];
             student['guest_last_name'] =
               guestsObject[student.id + ''][count - 1][1];
             student['guest_id'] =
               guestsObject[student.id + ''][count - 1][2];
-            console.log(student);
             returner.push(student)
           } else {
             returner.push(student);
@@ -83,6 +83,7 @@ function getStudentsByEvent(searchFor) {
     });
   });
 }
+
 function getGuestsByEventGroupByStudentId(eventId) {
   var queryString =
   'select guests.first_name, guests.last_name, guests.id as guest_id, ' +
