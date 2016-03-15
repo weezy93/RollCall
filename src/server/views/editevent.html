@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+<form class="" action="index.html" method="post">
+  <input type="text" class="h2" name="name" value="">{{event.name}}</h2>
+  <input type="date" class="h3" name="name" value="">{{event.date|date('m/d/y')}}</h3>
+  <img src="{{event.image_url}}" alt="" />
+  <input type="file" name="name" value="">
+  <input type="submit" value="Save Changes">
+</form>
+<button type="button" onclick="confirmDelete()">Delete</button>
+<input type="button" id="searchStudents" value="">
+<div class="table-responsive">
+  <table id="students" class="table table-striped">
+
+  </table>
+</div>
+<script>
+  var eventId = {{eventId}};
+</script>
+{% endblock %}
