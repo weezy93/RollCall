@@ -67,6 +67,9 @@ function getStudentsByEvent(searchFor) {
               guestsObject[student.id + ''][count - 1][0];
             student['guest_last_name'] =
               guestsObject[student.id + ''][count - 1][1];
+            student['guest_id'] =
+              guestsObject[student.id + ''][count - 1][2];
+            console.log(student);
             returner.push(student)
           } else {
             returner.push(student);
@@ -82,7 +85,8 @@ function getStudentsByEvent(searchFor) {
 }
 function getGuestsByEventGroupByStudentId(eventId) {
   var queryString =
-  'select guests.first_name, guests.last_name, students.id as student_id '
+  'select guests.first_name, guests.last_name, guests.id as guest_id, ' +
+    'students.id as student_id '
   + 'from guests '
   + 'inner join students on guests.student_id = students.id '
   + 'inner join tickets on tickets.student_id = students.id '
@@ -94,9 +98,11 @@ function getGuestsByEventGroupByStudentId(eventId) {
     };
     results.rows.forEach(function(row) {
       if (returner[row.student_id]) {
-        returner[row.student_id].push([row.first_name, row.last_name]);
+        returner[row.student_id].push([row.first_name, row.last_name,
+          row.guest_id,]);
       } else {
-        returner[row.student_id] = [[row.first_name, row.last_name]];
+        returner[row.student_id] = [[row.first_name, row.last_name,
+          row.guest_id,],];
       }
     });
     return returner;
