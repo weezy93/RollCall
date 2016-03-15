@@ -7,11 +7,8 @@
   <h1>{{ title }}</h1>
   <article>
     <section>
-      <h3>{{ student.name }} </h3>
-
-    </section>
-    <section>
-      <h3>{{ tickets }} tickets sold of {{ max }} </h3>
+      <h3>{{ student.name }} bought {{ tickets }}</h3>
+      <h3>{{ event_max_tix }} tickets left</h3> <!-- query event.max_tix -->
     </section>
     <section>
       <button type="button" id="addGuest">Add Guest</button>
@@ -19,9 +16,12 @@
     <section id="guestsSection">
 
     </section>
-      <a href="/event/:eventId/sale_start"><button type="button">Make another Sale</button></a>
+      <a href="/event/{{ eventId }}/sale_start"><button type="button">Make another Sale</button></a>
   </article>
-
+  <script>
+    var eventId = {{ eventId }};
+    var studentId = {{ studentId }};
+  </script>
 </div>
 
 {% endblock %}

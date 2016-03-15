@@ -24,11 +24,6 @@ function getAllEvents() {
   });
 }
 
-function addGuest(params) {
-  return Guests().insert(params).returning('id');
-}
-
-
 function addEvent(req, res) {
   return Events().insert({
     name: req.body.event_name,
@@ -82,6 +77,10 @@ function getGuests(params) {
 
 function addStudent(params) {
   return Students().insert(params);
+}
+
+function addGuest(params) {
+  return Guests().insert(params).returning('id');
 }
 
 module.exports = {

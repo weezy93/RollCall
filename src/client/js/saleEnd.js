@@ -1,7 +1,6 @@
 var $status;
 // These will be set in swig.
-var eventId = 1;
-var studentId = 2;
+
 $(function() {
   loadGuests();
   console.log('sanity check');
@@ -22,7 +21,7 @@ function popUpAddGuest() {
   '<button id="doAddGuest">Add Guest</button>';
   $status.html(guestForm);
   var $doAddGuest = $('#doAddGuest');
-  console.log($doAddGuest);
+  // console.log($doAddGuest);
   $doAddGuest.click(postGuest);
 }
 function postGuest() {
@@ -33,10 +32,9 @@ function postGuest() {
     event_id: eventId,
     student_id: studentId,
   }
-  console.log(params);
   $.ajax({
     type: 'POST',
-    url: '/sales/' + eventId + '/' + studentId + '/addguest',
+    url: '/event/' + eventId + '/sales/' + studentId + '/addguest',
     data: params,
   }).done(function(data) {
     if (data.success) {
@@ -52,9 +50,8 @@ function postGuest() {
 function loadGuests() {
   $.ajax({
     type: 'GET',
-    url: '/sales/' + eventId + '/' + studentId + '/getguests',
+    url: '/event/' + eventId + '/sales/' + studentId + '/getguests',
   }).done(function(data) {
-    console.log(data);
     var guestString = '<h2>Guests</h2>';
     for (var i = 0; i < data.length; i++) {
       var dat = data[i];
@@ -65,18 +62,3 @@ function loadGuests() {
     $('#guestsSection').html(guestString);
   });
 }
-
-
-// function getStudentInfo() {
-//   var params = {
-//   student_id: studentId
-//   }
-//   $.ajax({
-//     type: 'GET',
-//     url: '/event/' + eventId + '/sales/' + studentId
-//   }).done(function(data) {
-//     console.log(data);
-//     var studentInfo
-//   });
-//
-// }

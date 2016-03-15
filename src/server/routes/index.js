@@ -62,8 +62,11 @@ function(req, res, next) {
       res.render('saleEnd', {
         title: student[0].first_name + ' ' + student[0].last_name,
         tickets: ticketNum,
+        eventId: eventId,
+        studentId: student[0].id,
         script: 'saleEnd.js',
         stylesheet: 'saleEnd.css',
+        event_max_tix: '?' // Query event.max_tix
       });
     })
   });
@@ -88,7 +91,8 @@ function(req, res, next) {
   })
 });
 
-router.get('/event/:eventId/sales/:studentId/getguests', function(req, res, next) {
+router.get('/event/:eventId/sales/:studentId/getguests',
+function(req, res, next) {
   var params = {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
