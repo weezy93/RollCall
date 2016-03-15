@@ -100,6 +100,7 @@ router.get('/events/:eventId/edit', function(req, res, next) {
   var params = {
     eventId: req.params.eventId,
     script: 'editEvent.js',
+    stylesheet: 'editEvent.css'
   }
   res.render('editevent', params)
 })
