@@ -16,9 +16,9 @@ function Guests() {
   return knex('guests');
 }
 
-function getAllEvents() {
+function getAllEvents(school_id) {
   // Query for school name?
-  return Events().select()
+  return Events().select().where('school_id', school_id)
   .catch(function(error) {
     console.log(error);
   });
@@ -44,7 +44,7 @@ function addEvent(req, res) {
 }
 
 
-// This is going to be done in ajax, 
+// This is going to be done in ajax,
 
 // function sellTicket(req, res) {
 //   return Students().where('student_id', req.body.studentId).select()
@@ -74,7 +74,6 @@ function addStudent(params) {
 module.exports = {
   getAllEvents: getAllEvents,
   addEvent: addEvent,
-  sellTicket: sellTicket,
   addGuest: addGuest,
   getGuests: getGuests,
   addStudent: addStudent,
