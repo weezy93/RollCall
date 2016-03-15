@@ -57,28 +57,39 @@ function(req, res, next) {
   var eventId = req.params.eventId;
 
   queries.getStudentInfo(studentId).then(function(student) {
-    queries.getTicketNum(studentId, req.params.eventId)
-    .then(function(ticketNum) {
       res.render('saleEnd', {
-        title: student[0].first_name + ' ' + student[0].last_name,
-        tickets: ticketNum,
+        name: student[0].first_name + ' ' + student[0].last_name,
         eventId: eventId,
         studentId: student[0].id,
         script: 'saleEnd.js',
         stylesheet: 'saleEnd.css',
-        event_max_tix: '?' // Query event.max_tix
+        event_max_tix: '?', // Query event.max_tix
       });
-    })
-  });
+    });
 });
-
 
 router.post('/event/:eventId/sales/:studentId',
 function(req, res, next) {
-  // Stuff
+  var eventId = req.body.event_id;
+  var studentId = req.body.student_id;
+
+  queries.sellTicket(studentId, eventId).then(function() {
+    res.send('success');
+  });
 });
 
-
+router.get('/event/:eventId/sales/:studentId/ticket_count',
+function(req, res, next) {
+  var params = {
+    student_id: req.params.studentId,
+    event_id: req.params.eventId,
+  }
+  console.log(params);
+  queries.ticketCount(params).then(function(count) {
+    console.log(count);
+    res.send(count[0].count);
+  })
+})
 
 router.post('/event/:eventId/sales/:studentId/addguest',
 function(req, res, next) {

@@ -2,17 +2,19 @@ var $status;
 // These will be set in swig.
 
 $(function() {
+  loadCount();
   loadGuests();
   console.log('sanity check');
   $status = $('<div id="status">').appendTo('body');
   $status.slideUp();
   $('#addGuest').click(popUpAddGuest);
+  $('#makeSale').click(incrementTicket);
 })
 
 function popUpAddGuest() {
   $status.slideDown();
   var guestForm =
-  '<label for="first_name">First Name</label>' +
+  '<label for="first_name" required autofocus>First Name</label>' +
   '<input type="text" id="guestFirstName" value="" placeholder="First">' +
   '<label for="last_name">Last Name</label>' +
   '<input type="text" id="guestLastName" value="" placeholder="Last">' +
@@ -21,9 +23,9 @@ function popUpAddGuest() {
   '<button id="doAddGuest">Add Guest</button>';
   $status.html(guestForm);
   var $doAddGuest = $('#doAddGuest');
-  // console.log($doAddGuest);
   $doAddGuest.click(postGuest);
 }
+
 function postGuest() {
   var params = {
     first_name: $('#guestFirstName').val(),
@@ -39,6 +41,7 @@ function postGuest() {
   }).done(function(data) {
     if (data.success) {
       loadGuests();
+      incrementTicket();
       $status.append('<p>' + data.success + '</p>');
       $status.delay(500).slideUp();
     } else {
@@ -47,6 +50,7 @@ function postGuest() {
     }
   })
 }
+
 function loadGuests() {
   $.ajax({
     type: 'GET',
@@ -61,4 +65,28 @@ function loadGuests() {
     }
     $('#guestsSection').html(guestString);
   });
+}
+
+function incrementTicket() { // Increments ticket at student.id
+  var params = {
+    student_id: studentId,
+    event_id: eventId,
+  }
+  $.ajax({
+    type: 'POST',
+    url: '/event/' + eventId + '/sales/' + studentId,
+    data: params,
+  }).done(function() {
+    loadCount();
+  });
+}
+
+function loadCount() {
+  console.log('here!');
+  $.ajax({
+    type: 'GET',
+    url: '/event/' + eventId + '/sales/' + studentId + '/ticket_count',
+  }).done(function(data) {
+    $('#ticket_count').html(data)
+  })
 }
