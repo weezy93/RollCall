@@ -8,6 +8,9 @@ $(function() {
   console.log('sanity check');
   $doAddGuest.click(postGuest);
   $('#makeSale').click(incrementTicket);
+  // $('#modalButton').on('click', function() {
+  //   $('#guestFirstName').focus();
+  // });
 });
 
 function postGuest() {
@@ -34,12 +37,13 @@ function loadGuests() {
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/getguests',
   }).done(function(data) {
+    console.log(data);
     var guestString = '<br>';
     for (var i = 0; i < data.length; i++) {
       var dat = data[i];
       guestString += '<div>';
       guestString += '<p>' + dat.first_name + ' ' + dat.last_name + '</p>';
-      guestString += '<p>From: ' + dat.school + '</p></div>';
+      guestString += '<p>From: ' + dat.school + '</p></div><hr>';
     }
     $('#guestsSection').html(guestString);
   });
@@ -60,11 +64,16 @@ function incrementTicket() { // Increments ticket at student.id
 }
 
 function loadCount() {
-  console.log('here');
   $.ajax({
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/ticket_count',
   }).done(function(data) {
-    $('#ticket_count').html(data)
+    console.log(data);
+    $('#ticket_count').html(data.length)
+    $('#ticketNumbers').html('');
+    data.forEach(function(obj) {
+      $('#ticketNumbers').append('<li>' + obj.id +
+      ' sold: ' + new Date(obj.sold_timestamp).toLocaleString() + '</li>');
+    });
   })
 }
