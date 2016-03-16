@@ -78,9 +78,7 @@ function(req, res, next) {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
   };
-  // Z queries.ticketCount(params).then(function(count) {
-  //   res.send(count[0].count);
-  // });
+
   queries.getTickets(params).then(function(tickets) {
     res.send(tickets);
   })
