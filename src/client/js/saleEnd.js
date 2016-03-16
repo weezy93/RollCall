@@ -3,7 +3,7 @@ var $status;
 var $doAddGuest = $('#doAddGuest');
 
 $(function() {
-  loadCount();
+  loadTickets();
   loadGuests();
   console.log('sanity check');
   $doAddGuest.click(postGuest);
@@ -59,21 +59,27 @@ function incrementTicket() { // Increments ticket at student.id
     url: '/event/' + eventId + '/sales/' + studentId,
     data: params,
   }).done(function() {
-    loadCount();
+    loadTickets();
   });
 }
 
-function loadCount() {
+function loadTickets() {
+  $('#head').html('<tr>'
+   + '<th>Ticket Number</th>'
+   + '<th>Sold Date</th>'
+   + '</tr>');
+
   $.ajax({
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/ticket_count',
   }).done(function(data) {
-    console.log(data);
     $('#ticket_count').html(data.length)
-    $('#ticketNumbers').html('');
+    $('#body').html('');
     data.forEach(function(obj) {
-      $('#ticketNumbers').append('<li>' + obj.id +
-      ' sold: ' + new Date(obj.sold_timestamp).toLocaleString() + '</li>');
+      $('#body').append('<tr><td>'
+      + obj.id + '</td>'
+      + '<td>' + new Date(obj.sold_timestamp).toLocaleString() + '</td>'
+      + '</tr>');
     });
   })
 }

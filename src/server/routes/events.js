@@ -73,7 +73,6 @@ function(req, res, next) {
   //   res.send(count[0].count);
   // });
   queries.getTickets(params).then(function(tickets) {
-    console.log('tickets', tickets);
     res.send(tickets);
   })
   .catch(function(err) {
