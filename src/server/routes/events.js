@@ -132,7 +132,7 @@ router.post('/:eventId/edit', helpers.ensureAuthenticated,
 function(req, res, next) {
   queries.editEvent(req.body, req.params.eventId)
   .then(function(data) {
-    res.redirect('/events/' + req.params.eventId + '/edit');
+    res.redirect('/event/' + req.params.eventId + '/edit');
   });
 });
 
