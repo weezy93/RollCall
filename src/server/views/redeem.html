@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+  <section>
+    <div id="inputContainer" class="centered">
+      <input type="text" class="form-control input-lg" onkeyup="getStudents(150)" autofocus onfocus="this.value = ''; getStudents()" id="searchStudents" value="" placeholder="Search by Name or Student ID">
+    </div>
+    <div class="row">
+      <div class="table-responsive">
+        <table id="students" class="table table-striped">
+
+        </table>
+      </div>
+    </div>
+  </section>
+  <script>
+    var eventId = {{eventId}};
+  </script>
+{% endblock %}

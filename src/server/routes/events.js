@@ -24,6 +24,15 @@ function(req, res, next) {
   });
 });
 
+router.get('/:eventId/redeem',
+function(req, res, next) {
+  var params = {
+    eventId: req.params.eventId,
+    script: 'redeem.js',
+    stylesheet: 'redeem.css',
+  }
+  res.render('redeem.html', params)
+})
 // Student info and maybe sale
 // Public facing
 router.get('/:eventId/sales/', helpers.ensureAuthenticated,
@@ -113,7 +122,7 @@ function(req, res, next) {
 });
 
 // Ajax route
-router.get('/:eventId/getstudents', helpers.ensureAuthenticated,
+router.get('/:eventId/getstudents',
 function(req, res, next) {
   var searchFor = {
     eventId: req.params.eventId,
@@ -154,5 +163,16 @@ function(req, res, next) {
     res.json(data);
   });
 });
+
+router.put('/redeem/:ticketNumber/',
+function(req, res, next) {
+  queries.redeemTicket(req.params.ticketNumber)
+  .then(function() {
+    res.json({success: 'yay!'})
+  })
+  .catch(function(err) {
+    res.json({error: err});
+  })
+})
 
 module.exports = router;

@@ -190,6 +190,12 @@ function sellTicket(studentId, eventId) {
     });
 }
 
+function redeemTicket(ticketNumber) {
+  return Tickets().where({id: ticketNumber}).update({
+    redeemed_on: 'now()',
+  })
+}
+
 function ticketCount(params) {
   return Tickets().where(params).count('id');
 }
@@ -243,4 +249,5 @@ module.exports = {
   getEventById: getEventById,
   editEvent: editEvent,
   addTeacher: addTeacher,
+  redeemTicket, redeemTicket,
 };
