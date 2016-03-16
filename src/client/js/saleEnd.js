@@ -44,15 +44,8 @@ function postGuest() {
     url: '/event/' + eventId + '/sales/' + studentId + '/addguest',
     data: params,
   }).done(function(data) {
-    if (data.success) {
-      loadGuests();
-      incrementTicket();
-      $status.append('<p>' + data.success + '</p>');
-      $status.delay(500).slideUp();
-    } else {
-      $status.append('<p>' + data.error + '</p>');
-      $status.delay(500).slideUp();
-    }
+    loadGuests();
+    incrementTicket();
   });
 }
 
@@ -87,7 +80,7 @@ function incrementTicket() { // Increments ticket at student.id
 }
 
 function loadCount() {
-  console.log('here!');
+  console.log('here');
   $.ajax({
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/ticket_count',
