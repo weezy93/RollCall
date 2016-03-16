@@ -1,11 +1,15 @@
+var queries = require('../routes/queries/queries.js');
 var bcrypt = require('bcrypt');
 
 function ensureAuthenticated(req, res, next) {
-  if (!req.user || req.user.school_id != req.params.schoolId) {
-    res.redirect('/login');
-  } else {
-    return next();
-  }
+  queries.getEventById(req.params.eventId)
+  .then(function(event) {
+    if (!req.user || req.user.school_id != event[0].school_id) {
+      res.redirect('/login');
+    } else {
+      return next();
+    }
+  })
 }
 
 function ensureAdmin(req, res, next) {
