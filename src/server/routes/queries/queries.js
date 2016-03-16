@@ -28,7 +28,7 @@ function getAllEvents(school_id) {
   })
   .catch(function(error) {
     console.log('getAllEvents Error: ' + error);
-  })
+  });
 }
 
 function addGuest(params) {
@@ -138,8 +138,27 @@ function addEvent(req, res) {
   });
 }
 
+function editEvent(body, id) {
+  return Events().where('id', id).update({
+    name: body.event_name,
+    event_date: body.event_date,
+    description: body.description,
+    address: body.address,
+    city_state_zip: body.city_state_zip,
+    max_tickets: body.max_tickets,
+  }, 'id').then(function(data) {
+    return data[0];
+  });
+}
+
+function getEventById(id) {
+  return Events().where('id', id).then(function(data) {
+    return data;
+  });
+}
+
 function getStudentInfo(id) {
-  return Students().where('student_id', id)
+  return Students().where('student_id', id);
 }
 
 function getTicketNum(studentId, eventId) {
@@ -148,7 +167,7 @@ function getTicketNum(studentId, eventId) {
     event_id: eventId,
   }).then(function(result) {
     return result.length;
-  })
+  });
 }
 
 function sellTicket(studentId, eventId) {
@@ -207,4 +226,6 @@ module.exports = {
   ticketCount: ticketCount,
   getStudentsByEvent: getStudentsByEvent,
   editGuest: editGuest,
+  getEventById: getEventById,
+  editEvent: editEvent,
 };

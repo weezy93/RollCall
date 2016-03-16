@@ -27,6 +27,7 @@ function getStudents() {
       + '<th> Redeemed Time </th>'
       + '<th> Guest First Name </th>'
       + '<th>Guest Last Name</th>'
+      + '<th></th>'
       + '</tr>');
     for (var i = 0; i < data.length; i++) {
       var dat = data[i];
@@ -49,6 +50,7 @@ function getStudents() {
         row += '<td>' + stripNulls(dat.guest_first_name) + '</td>'
         + '<td>' + stripNulls(dat.guest_last_name) + '</td>'
       }
+      row += '<td><button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete()">X</button></td>';
       row += '</tr>';
       $students.append(row);
     }
