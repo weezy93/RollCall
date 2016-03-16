@@ -24,7 +24,7 @@ function(req, res, next) {
   });
 });
 
-router.get('/:eventId/redeem',
+router.get('/:eventId/redeem', helpers.ensureAuthenticated,
 function(req, res, next) {
   var params = {
     eventId: req.params.eventId,
@@ -127,7 +127,7 @@ function(req, res, next) {
 });
 
 // Ajax route
-router.get('/:eventId/getstudents',
+router.get('/:eventId/getstudents',helpers.ensureAuthenticated,
 function(req, res, next) {
   var searchFor = {
     eventId: req.params.eventId,
