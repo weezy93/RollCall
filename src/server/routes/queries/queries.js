@@ -147,6 +147,7 @@ function editEvent(body, id) {
     address: body.address,
     city_state_zip: body.city_state_zip,
     max_tickets: body.max_tickets,
+    is_public: body.is_public,
   }, 'id').then(function(data) {
     return data[0];
   });
