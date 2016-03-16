@@ -1,4 +1,5 @@
 var knex = require('../../db/knex');
+var helpers = require('../../lib/helpers');
 
 function Events() {
   return knex('events');
@@ -16,6 +17,10 @@ function Guests() {
   return knex('guests');
 }
 
+function Teachers() {
+  return knex('teachers');
+}
+
 function getAllEvents(school_id) {
   // Query for school name?
   return knex.raw('select events.id, events.name, events.event_date, ' +
@@ -28,7 +33,7 @@ function getAllEvents(school_id) {
   })
   .catch(function(error) {
     console.log('getAllEvents Error: ' + error);
-  })
+  });
 }
 
 function addGuest(params) {
@@ -138,8 +143,27 @@ function addEvent(req, res) {
   });
 }
 
+function editEvent(body, id) {
+  return Events().where('id', id).update({
+    name: body.event_name,
+    event_date: body.event_date,
+    description: body.description,
+    address: body.address,
+    city_state_zip: body.city_state_zip,
+    max_tickets: body.max_tickets,
+  }, 'id').then(function(data) {
+    return data[0];
+  });
+}
+
+function getEventById(id) {
+  return Events().where('id', id).then(function(data) {
+    return data;
+  });
+}
+
 function getStudentInfo(id) {
-  return Students().where('student_id', id)
+  return Students().where('student_id', id);
 }
 
 function getTicketNum(studentId, eventId) {
@@ -148,7 +172,7 @@ function getTicketNum(studentId, eventId) {
     event_id: eventId,
   }).then(function(result) {
     return result.length;
-  })
+  });
 }
 
 function sellTicket(studentId, eventId) {
@@ -189,9 +213,22 @@ function addGuest(params) {
 function editGuest(params, id) {
   return Guests().where('id', id).update({
     first_name: params.first_name,
-    last_name: params.last_name
+    last_name: params.last_name,
   }, 'id').then(function(data) {
     return data;
+  });
+}
+
+function addTeacher(body, id) {
+  return Teachers().where('email_address', body.email).then(function(data) {
+    if (data.length) {
+      return new Promise.reject('Email already exists');
+    }
+    var hashedPassword = helpers.hashing(body.password);
+    return Teachers().insert({
+      email_address: body.email,
+      password: hashedPassword,
+    });
   });
 }
 
@@ -207,4 +244,7 @@ module.exports = {
   ticketCount: ticketCount,
   getStudentsByEvent: getStudentsByEvent,
   editGuest: editGuest,
+  getEventById: getEventById,
+  editEvent: editEvent,
+  addTeacher: addTeacher,
 };
