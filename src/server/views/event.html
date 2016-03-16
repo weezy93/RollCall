@@ -10,5 +10,32 @@
 <!-- if logged in as admin, show edit and delete buttons also -->
   <!-- edit route: /event/:eventId/edit -->
   <!-- delete route: ajax to delete event -->
+  <section>
+      <div class="row">
+        <div class="well well-lg">
+          <div class="media">
+            <div class="media-left media-top">
+              <img class="media-object" src="{{ event.image_url }}" alt="event_image">
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading">{{ event.name }}</h2>
+              <h4 class="media-heading">{{ event.description }}</h4>
+              <address>
+                {{ event.address }}<br />
+                {{ event.city_state_zip }}
+              </address>
+              {% if user %}
+                <a href="/event/{{ event.id }}/sale_start" class="btn btn-lg btn-success">Sell Tickets</a>
+                <a href="#" class="btn btn-lg btn-primary">Redeem Tickets</a>
+                {% if user.is_admin %}
+                  <a href="/event/{{ event.id }}/edit" class="btn btn-lg btn-info">Edit Event</a>
+                  <a href="/event/{{ event.id }}/delete" class="btn btn-lg btn-danger">Delete Event</a>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
 
 {% endblock %}

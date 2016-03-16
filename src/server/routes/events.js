@@ -4,6 +4,15 @@ var helpers = require('../lib/helpers');
 var passport = require('../lib/auth');
 var queries = require('./queries/queries');
 
+
+// Public facing
+router.get('/:eventId', function(req, res, next) {
+  var id = req.params.eventId;
+  queries.getEventById(id).then(function(data) {
+    res.render('event', {user: req.user, event: data[0]});
+  });
+});
+
 // Public facing - search student
 router.get('/:eventId/sale_start', helpers.ensureAuthenticated,
 function(req, res, next) {
