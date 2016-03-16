@@ -16,11 +16,32 @@ router.get('/:eventId', function(req, res, next) {
 // Public facing - search student
 router.get('/:eventId/sale_start', helpers.ensureAuthenticated,
 function(req, res, next) {
+  console.log(req.params.eventId);
+  var ticketsBought;
+  var maxTickets;
+  var ticketsRemaining;
+  var params = {
+    event_id: req.params.eventId,
+  }
+
+  queries.getTickets(params).then(function(tickets) {
+    console.log(tickets.length);
+    return ticketsBought = tickets.length;
+  });
+
+  queries.getEventById(req.params.eventId).then(function(event) {
+    console.log(event[0].event_max_tix);
+    return maxTickets = event[0].event_max_tix;
+  });
+
+  ticketsRemaining = maxTickets - ticketsBought;
+
   res.render('saleStart', {
     title: 'Sell Page',
     eventId: req.params.eventId,
-    event_max_tix: '?', // Query event.max_tix
+    event_max_tix: ticketsRemaining, // Query event.max_tix
     user: req.user,
+    stylesheet: 'saleStart.css',
   });
 });
 
