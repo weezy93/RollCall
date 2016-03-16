@@ -122,3 +122,22 @@ router.post('/:eventId/edit', function(req, res, next) {
     res.redirect('/events/' + req.params.eventId + '/edit');
   });
 });
+
+// Ajax
+router.post('/guest/:id/edit', function(req, res, next) {
+  var id = req.params.id;
+  queries.editGuest(req.body, id).then(function(data) {
+    console.log(data);
+    res.send('success');
+  });
+});
+
+// Ajax
+router.get('/guest/:id', function(req, res, next) {
+  var id = req.params.id;
+  queries.getGuests({id: id}).then(function(data) {
+    res.json(data);
+  });
+});
+
+module.exports = router;

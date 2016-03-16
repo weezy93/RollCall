@@ -36,5 +36,5 @@ module.exports = {
   ensureAuthenticated: ensureAuthenticated,
   loginRedirect: loginRedirect,
   hashing: hashing,
-  comparePassword: comparePassword
+  comparePassword: comparePassword,
 };
