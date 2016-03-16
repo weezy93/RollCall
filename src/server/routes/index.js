@@ -1,17 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var knex = require('../db/knex');
 var helpers = require('../lib/helpers');
 var passport = require('../lib/auth');
 var queries = require('./queries/queries');
 var multer = require('multer');
 var upload = multer({dest: 'uploads/'});
 var studentCsv = require('./studentCsv.js');
-
-
-function Teachers() {
-  return knex('teachers');
-}
 
 router.get('/logout', function(req, res, next) {
   var redirect = req.query.redirect;
@@ -179,57 +173,26 @@ router.post('/:schoolId/addstudents', upload.single('csv'),
 router.post('/:schoolId/addstudents/parse', function(req, res, next) {
   studentCsv.studentCsvParser(req, res, next);
 });
-//
-// router.get('/addStudent', function(req, res, next) {
-//   res.render('addStudent', { title: 'Add Student(s)' });
-// });
-//
-// router.get('/addEvent', function(req, res, next) {
-//   res.render('addEvent', { title: 'Create Event' });
-// });
-//
-// router.post('/addEvent', function(req, res, next) {
-//   queries.addEvent(req, res).then(function(result) {
-//     res.redirect('/');
-//   });
-// });
-
-// router.get('/teacher/add', function (req, res, next) {
-//   res.render('addTeacher', {title: 'Add Teacher'});
-// });
-//
-// router.post('/teacher/add', function (req, res, next) {
-//   res.json(req.body);
-// });
-
 
 router.get('/teacher/add', helpers.loginRedirect, function(req, res, next) {
   var message = req.flash('message') || '';
   res.render('addTeacher', {title: 'Add Teacher', messages: message});
 });
 
-router.post('/teacher/add', function(req, res, next) {
-  var email_address = req.body.email;
-  var password = req.body.password;
-  Teachers().where('email_address', req.body.email).then(function(data) {
-    if (data.length) {
+router.post('/teacher/add', helpers.ensureAdmin, function(req, res, next) {
+  queries.addTeacher(req.body, req.user.school_id)
+  .then (function() {
+    req.flash('message', {
+      status: 'success',
+      value: 'Successfully Registered.',
+    });
+    res.redirect('/' + req.user.school_id + '/admin');
+  })
+  .catch(function(err) {
+    if (err) {
       req.flash('message', {
         status: 'danger',
         value: 'Email already exists.  Please try again.',
-      });
-      res.redirect('/teacher/add');
-    } else {
-      // Hash and salt the password
-      var hashedPassword = helpers.hashing(password);
-      Teachers().insert({
-        email_address: email_address,
-        password: hashedPassword,
-      }).then(function() {
-        req.flash('message', {
-          status: 'success',
-          value: 'Successfully Registered.',
-        });
-        res.redirect('/');
       });
     }
   });
