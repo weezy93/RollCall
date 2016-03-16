@@ -65,16 +65,19 @@ function(req, res, next) {
     });
 });
 
-router.post('/event/:eventId/sales', function(req, res, next) {
-  queries.sellTicket(req, res).then(function(ticketNum) {
-    res.render('saleEnd', {
-      title: 'Ticket Sold',
-      tickets: ticketNum,
-      script: 'saleEnd.js',
-      stylesheet: 'saleEnd.css',
-    });
-  });
-});
+// router.post('/event/:eventId/sales', function(req, res, next) {
+//   queries.sellTicket(req, res).then(function(ticketNum) {
+//     res.render('saleEnd', {
+//       title: 'Ticket Sold',
+//       eventId: req.params.eventId,
+//       studentId: req.query.studentId,
+//       tickets: ticketNum,
+//       script: 'saleEnd.js',
+//       stylesheet: 'saleEnd.css',
+//       count: 0,
+//     });
+//   });
+// });
 
 router.post('/event/:eventId/sales/:studentId',
 function(req, res, next) {
@@ -82,7 +85,7 @@ function(req, res, next) {
   var studentId = req.body.student_id;
 
   queries.sellTicket(studentId, eventId).then(function() {
-    res.json('success');
+    res.send();
   });
 });
 
