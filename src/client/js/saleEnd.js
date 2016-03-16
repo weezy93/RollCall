@@ -1,34 +1,37 @@
 var $status;
 // These will be set in swig.
+var $doAddGuest = $('#doAddGuest');
 
 $(function() {
   loadCount();
   loadGuests();
   console.log('sanity check');
-  $status = $('<div id="status">').appendTo('body');
-  $status.slideUp();
-  $('#addGuest').click(popUpAddGuest);
+  // $status = $('<div id="status">').appendTo('body');
+  // Don't need to animate the popup
+  // $('#addGuest').click(popUpAddGuest);
+  $doAddGuest.click(postGuest);
   $('#makeSale').click(incrementTicket);
 });
 
 
 
-function popUpAddGuest() {
-  $status.slideDown();
-  var guestForm =
-  '<label for="first_name" required autofocus>First Name</label>' +
-  '<input type="text" id="guestFirstName" value="" placeholder="First">' +
-  '<label for="last_name">Last Name</label>' +
-  '<input type="text" id="guestLastName" value="" placeholder="Last">' +
-  '<label for="guestSchool">Guest\'s School</label>' +
-  '<input type="text" id="guestSchool" value="" placeholder="School">' +
-  '<button id="doAddGuest">Add Guest</button>';
-  $status.html(guestForm);
-  var $doAddGuest = $('#doAddGuest');
-  $doAddGuest.click(postGuest);
-}
+// function popUpAddGuest() {
+//   $status.slideDown();
+//   var guestForm =
+//   '<label for="first_name" required autofocus>First Name</label>' +
+//   '<input type="text" id="guestFirstName" value="" placeholder="First">' +
+//   '<label for="last_name">Last Name</label>' +
+//   '<input type="text" id="guestLastName" value="" placeholder="Last">' +
+//   '<label for="guestSchool">Guest\'s School</label>' +
+//   '<input type="text" id="guestSchool" value="" placeholder="School">' +
+//   '<button id="doAddGuest">Add Guest</button>';
+//   $status.html(guestForm);
+  // var $doAddGuest = $('#doAddGuest');
+//   $doAddGuest.click(postGuest);
+// }
 
 function postGuest() {
+  console.log('add guest');
   var params = {
     first_name: $('#guestFirstName').val(),
     last_name: $('#guestLastName').val(),

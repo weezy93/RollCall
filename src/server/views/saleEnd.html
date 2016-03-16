@@ -5,7 +5,7 @@
 <div class="container">
 
   <h1>{{ title }}</h1>
-  <article>
+  <section>
     <section>
       <h3>{{ name }} bought <span id="ticket_count">0</span> tickets </h3>
     </section>
@@ -16,14 +16,52 @@
 
     </section>
     <section>
+      <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                  <h4 class="modal-title" id="myModalLabel"><strong>Add Guest</strong></h4>
+                  </div>
+                  <div class="modal-body">
+                      <form method="post">
+                          <label for="first_name" required autofocus>First Name</label>
+                        <br>
+                          <input type="text" id="guestFirstName" value="" placeholder="First">
+                        <br>
+                          <label for="last_name">Last Name</label>
+                        <br>
+                          <input type="text" id="guestLastName" value="" placeholder="Last">
+                        <br>
+                          <label for="guestSchool">Guest's School</label>
+                        <br>
+                          <input type="text" id="guestSchool" value="" placeholder="School">
+                        <br>
+                          <button id="doAddGuest" class="btn btn-success">Add Guest</button>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#" class="btn btn-lg btn-info"
+     data-toggle="modal"
+     data-target="#basicModal">Add Guest</a>
+
+    </section>
+    <section>
       <h3>Tickets not bought: {{ not_bought }}</h3>
     </section>
     <button id="makeSale">Make Sale</button>
       <a href="/event/{{ eventId }}/sale_start"><button>Start New Sale</button></a>
-  </article>
+  </section>
   <script>
-    var eventId = {{ eventId }};
-    var studentId = {{ studentId }};
+    var eventId = {{ eventId }} ;
+    var studentId = {{ studentId }} ;
+    var count = {{ count }} ;
   </script>
 </div>
 

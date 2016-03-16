@@ -60,6 +60,7 @@ function(req, res, next) {
         studentId: student[0].id,
         script: 'saleEnd.js',
         stylesheet: 'saleEnd.css',
+        count: 0,
       });
     });
 });
@@ -81,7 +82,7 @@ function(req, res, next) {
   var studentId = req.body.student_id;
 
   queries.sellTicket(studentId, eventId).then(function() {
-    res.send('success');
+    res.json('success');
   });
 });
 
