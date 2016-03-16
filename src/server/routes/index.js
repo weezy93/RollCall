@@ -150,13 +150,23 @@ router.get('/event/:eventId/getstudents', function(req, res, next) {
   });
 });
 router.get('/events/:eventId/edit', function(req, res, next) {
-  var params = {
-    eventId: req.params.eventId,
-    script: 'editEvent.js',
-    stylesheet: 'editEvent.css',
-  }
-  res.render('editevent', params)
-})
+  queries.getEventById(req.params.eventId).then(function(data) {
+    console.log(data[0]);
+    var params = {
+      eventId: req.params.eventId,
+      script: 'editEvent.js',
+      stylesheet: 'editEvent.css',
+      event: data[0],
+    };
+    res.render('editevent', params);
+  });
+});
+
+router.post('/events/:eventId/edit', function(req, res, next) {
+  queries.editEvent(req.body, req.params.eventId).then(function(data) {
+    res.redirect('/events/'+req.params.eventId+'/edit');
+  });
+});
 
 router.get('/:schoolId/addstudents', function(req, res) {
   res.render('addStudents', {
