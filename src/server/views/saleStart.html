@@ -9,7 +9,7 @@
 <!-- query event.max_tix -->
     <main>
       <form class="student-id" action="/event/{{ eventId }}/sales/" method="get">
-        <legend>{{ event_max_tix }} tickets left for this event</legend>
+        <legend>{{ ticketsRemaining }} tickets left for this event</legend>
         <input type="text" name="studentId" placeholder="student id" required autofocus>
       <br>
         <button type="submit" class="btn btn-default">GO</button>

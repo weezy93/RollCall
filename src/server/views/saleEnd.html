@@ -3,10 +3,7 @@
 {% block content %}
 
 <div class="container">
-
-  <h1>{{ title }}</h1>
-  <section>
-    <section>
+    <sectio id="bought">
       <h3>{{ name }} bought <span id="ticket_count">0</span> tickets </h3>
     <br>
       <div class="table-responsive">
@@ -21,7 +18,7 @@
           </table>
       </div>
     </section>
-    <section>
+    <section id="guests">
       <h2>Guests</h2>
         <div id="guestsSection">
 
@@ -65,13 +62,9 @@
      data-target="#basicModal">Add Guest</a>
 
     </section>
-
-    <section>
-      <h3>{{ not_bought }} ticket(s) not bought</h3>
-    </section>
+<br>
     <button id="makeSale" class="btn btn-lg btn-info">Add {{ name }}'s ticket</button>
       <a href="/event/{{ eventId }}/sale_start"><button class="btn btn-lg btn-default">Start New Sale</button></a>
-  </section>
   <script>
     var eventId = {{ eventId }} ;
     var studentId = {{ studentId }} ;
