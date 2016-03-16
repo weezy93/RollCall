@@ -6,29 +6,9 @@ $(function() {
   loadCount();
   loadGuests();
   console.log('sanity check');
-  // $status = $('<div id="status">').appendTo('body');
-  // Don't need to animate the popup
-  // $('#addGuest').click(popUpAddGuest);
   $doAddGuest.click(postGuest);
   $('#makeSale').click(incrementTicket);
 });
-
-
-
-// function popUpAddGuest() {
-//   $status.slideDown();
-//   var guestForm =
-//   '<label for="first_name" required autofocus>First Name</label>' +
-//   '<input type="text" id="guestFirstName" value="" placeholder="First">' +
-//   '<label for="last_name">Last Name</label>' +
-//   '<input type="text" id="guestLastName" value="" placeholder="Last">' +
-//   '<label for="guestSchool">Guest\'s School</label>' +
-//   '<input type="text" id="guestSchool" value="" placeholder="School">' +
-//   '<button id="doAddGuest">Add Guest</button>';
-//   $status.html(guestForm);
-  // var $doAddGuest = $('#doAddGuest');
-//   $doAddGuest.click(postGuest);
-// }
 
 function postGuest() {
   console.log('add guest');
@@ -44,15 +24,8 @@ function postGuest() {
     url: '/event/' + eventId + '/sales/' + studentId + '/addguest',
     data: params,
   }).done(function(data) {
-    if (data.success) {
-      loadGuests();
-      incrementTicket();
-      $status.append('<p>' + data.success + '</p>');
-      $status.delay(500).slideUp();
-    } else {
-      $status.append('<p>' + data.error + '</p>');
-      $status.delay(500).slideUp();
-    }
+    loadGuests();
+    incrementTicket();
   });
 }
 
@@ -87,7 +60,7 @@ function incrementTicket() { // Increments ticket at student.id
 }
 
 function loadCount() {
-  console.log('here!');
+  console.log('here');
   $.ajax({
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/ticket_count',
