@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.table('events', function(table) {
-    table.boolean('is_public');
+    table.boolean('is_public').defaultsTo(false);
     table.string('image_url');
   });
 };
