@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  margin: auto;
+}
+
+form {
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+}
+input {
+
+}
+
+button {
+  width: 50%;
+  margin: auto;
+}

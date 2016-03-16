@@ -5,7 +5,7 @@
 
 {% block content %}
 <section>
-  <form class="form-horizontal" method="post" action="/events/{{ event.id }}/edit">
+  <form class="form-horizontal" method="post" action="/event/{{ event.id }}/edit">
     <div class="row">
       <div class="col-lg-4">
         <label for="event_name">Event Name</label>
@@ -29,6 +29,19 @@
       <div class="col-lg-4">
         <label for="city_state_zip">City, State Zip</label>
         <input type="text" class="form-control" name="city_state_zip" value="{{ event.city_state_zip }}">
+      </div>
+      <div class="col-lg-4">
+        <label for="is_public">Visible to Public</label>
+        <select id="is_public" name="is_public" class="form-control">
+          {% if event %}
+          <option value="{{ event.is_public }}" selected>{{ event.is_public | capitalize }}</option>
+          <option value="" disabled>-- --</option>
+          {% else %}
+          <option value="" disabled selected>-- Visible to Public --</option>
+          {% endif %}
+          <option value="false">False</option>
+          <option value="true">True</option>
+        </select>
       </div>
     </div>
     <br />

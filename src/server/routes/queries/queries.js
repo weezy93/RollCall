@@ -2,32 +2,34 @@ var knex = require('../../db/knex');
 var helpers = require('../../lib/helpers');
 
 function Events() {
-  return knex('events');
+  return knex('events').where('deleted', false);
 }
 
 function Tickets() {
-  return knex('tickets');
+  return knex('tickets').where('deleted', false);
 }
 
 function Students() {
-  return knex('students');
+  return knex('students').where('deleted', false);
 }
 
 function Guests() {
-  return knex('guests');
+  return knex('guests').where('deleted', false);
 }
 
 function Teachers() {
-  return knex('teachers');
+  return knex('teachers').where('deleted', false);
 }
 
 function getAllEvents(school_id) {
   // Query for school name?
   return knex.raw('select events.id, events.name, events.event_date, ' +
-  'school_id, description, address, count(tickets.id), max_tickets ' +
+  'school_id, description, address, count(tickets.id), max_tickets, ' +
+  'events.is_public ' +
   'from events left join tickets on tickets.event_id = events.id ' +
+  'where events.deleted = false ' +
   'group by events.id, events.name, school_id, description, address, ' +
-  'max_tickets')
+  'max_tickets order by events.event_date')
   .then(function(results) {
     return results.rows;
   })
@@ -55,7 +57,7 @@ function getStudentsByEvent(searchFor) {
   + 'from students '
   + 'inner join tickets on tickets.student_id = students.id '
   + 'inner join events on tickets.event_id = events.id '
-  + 'where events.id = ' + searchFor.eventId;
+  + 'where students.deleted = false and events.id = ' + searchFor.eventId;
   if (searchFor.matcher) {
     queryString +=
     ' AND (LOWER(students.student_id) like LOWER(\'' +
@@ -106,7 +108,7 @@ function getGuestsByEventGroupByStudentId(eventId) {
   + 'inner join students on guests.student_id = students.id '
   + 'inner join tickets on tickets.student_id = students.id '
   + 'inner join events on events.id = tickets.event_id '
-  + 'where events.id = ' + eventId
+  + 'where guests.deleted = false and events.id = ' + eventId
   + ' group by guests.id, students.id';
   return knex.raw(queryString).then(function(results) {
     var returner = {
@@ -146,6 +148,7 @@ function editEvent(body, id) {
     address: body.address,
     city_state_zip: body.city_state_zip,
     max_tickets: body.max_tickets,
+    is_public: body.is_public,
   }, 'id').then(function(data) {
     return data[0];
   });

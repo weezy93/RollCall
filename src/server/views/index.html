@@ -32,7 +32,11 @@
         </thead>
         <tbody>
         {% for event in events %}
+        {% if event.is_public || user.school_id == school_id %}
+        <tr class="clickable" onclick="document.location = '/event/{{ event.id }}/'">
+        {% else %}
         <tr>
+        {% endif %}
           <td>
             {{ event.name }}
           </td>
