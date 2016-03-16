@@ -82,7 +82,7 @@ function(req, res, next) {
   var studentId = req.body.student_id;
 
   queries.sellTicket(studentId, eventId).then(function() {
-    res.json('success');
+    return;
   });
 });
 
