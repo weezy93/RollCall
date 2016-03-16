@@ -2,12 +2,13 @@
 {% block title %}{% endblock %}
 {% block content %}
 
-<div class="container">
+<div class="outer">
 
-  <h1>{{ title }}</h1>
-  <section>
-    <section>
-      <h3>{{ name }} bought <span id="ticket_count">0</span> tickets </h3>
+
+<main>
+  <!-- bought -->
+    <section id="bought">
+      <h1>{{ name }} bought <span id="ticket_count">0</span> tickets </h1>
     <br>
       <div class="table-responsive">
           <table id="ticketNumbers" class="table table-striped">
@@ -21,14 +22,16 @@
           </table>
       </div>
     </section>
-    <section>
+    <!-- guests -->
+    <section id="guests">
       <h2>Guests</h2>
+    <br>
         <div id="guestsSection">
 
         </div>
     </section>
-
-    <section> <!-- modal -->
+<br>
+<!-- modal -->
       <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
           <div class="modal-dialog">
               <div class="modal-content">
@@ -59,24 +62,21 @@
           </div>
         </div>
       </div>
+</main>
+<br>
+  <footer id="buttons">
+      <button data-toggle="modal"
+     data-target="#basicModal" class="btn btn-lg btn-info">Add Guest</button>
 
-      <a href="#" class="btn btn-lg btn-info"
-     data-toggle="modal"
-     data-target="#basicModal">Add Guest</a>
-
-    </section>
-
-    <section>
-      <h3>{{ not_bought }} ticket(s) not bought</h3>
-    </section>
     <button id="makeSale" class="btn btn-lg btn-info">Add {{ name }}'s ticket</button>
-      <a href="/event/{{ eventId }}/sale_start"><button class="btn btn-lg btn-default">Start New Sale</button></a>
-  </section>
+
+      <button class="btn btn-lg btn-default"><a href="/event/{{ eventId }}/sale_start">Start New Sale</a></button>
+  </footer>
+
   <script>
     var eventId = {{ eventId }} ;
     var studentId = {{ studentId }} ;
     var count = {{ count }} ;
   </script>
 </div>
-
 {% endblock %}

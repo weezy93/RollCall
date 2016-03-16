@@ -1,32 +1,46 @@
-#status {
-  position: fixed;
-  width: 400px;
-  height: 300px;
-  border: 1px solid black;
-  box-sizing: border-box;
-  left: 50%;
-  top: 50%;
-  margin-left: -200px;
-  margin-top: -150px;
-  background: white;
-  display: none;
+html {
+  font-size: 16px;
+  height: 100vh;
+  /*text-align: center;*/
 }
-#status label {
-  display: block;
+
+.outer {
+  display: flex;
+  align-content: center;
+  flex-direction: column;
 }
-#status input {
-  display: block;
+
+main {
+  display: flex;
+  font-size: 1.5rem;
+  flex: 1;
+  height: 80vh;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
 }
+
+#bought {
+  flex: 1;
+}
+
 #guestsSection {
-  width: 200px;
-  height: 500px;
-  border: 1px solid black;
-  box-sizing: border-box;
-  padding: 3px;
+  flex: 1;
+  display: flex;
+  margin: 0 auto 1rem;
 }
-#guestsSection div {
-  height: 75px;
-  padding: 5px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
+
+footer {
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+footer a, footer a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+footer button {
+  margin: 1rem;
 }

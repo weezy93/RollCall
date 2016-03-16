@@ -38,10 +38,10 @@ function loadGuests() {
     url: '/event/' + eventId + '/sales/' + studentId + '/getguests',
   }).done(function(data) {
     console.log(data);
-    var guestString = '<br>';
+    var guestString = '';
     for (var i = 0; i < data.length; i++) {
       var dat = data[i];
-      guestString += '<div>';
+      guestString += "<div class='guest'>";
       guestString += '<p>' + dat.first_name + ' ' + dat.last_name + '</p>';
       guestString += '<p>From: ' + dat.school + '</p></div><hr>';
     }
