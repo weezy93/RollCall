@@ -15,7 +15,9 @@ var flash = require('connect-flash');
 
 // *** Routes *** //
 var routes = require('./routes/index.js');
-
+var admin = require('./routes/admin.js');
+var event = require('./routes/events.js');
+var school = require('./routes/schools.js');
 
 // *** Express instance *** //
 var app = express();
@@ -49,7 +51,9 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** Main routes *** //
 app.use('/', routes);
-
+app.use('/event', event);
+app.use('/school', school);
+app.use('/admin', admin);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
