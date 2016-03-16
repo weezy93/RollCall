@@ -6,7 +6,6 @@ function Teachers () {
   return knex('teachers');
 }
 
-
 passport.use(new LocalStrategy({
     usernameField: 'email'
   },
