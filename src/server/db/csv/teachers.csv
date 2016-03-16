@@ -1,0 +1,5 @@
+teacher_id,first_name,last_name,email_address,password,school_id,is_admin
+1111,Test1,One,test1@test.com,$2a$10$nsdSL0BmX8/tMRVZJrflceVjc0EIp5sueyZEVz9QdeUhftx9TeLR6,1,t
+2222,Test2,Two,test2@test.com,$2a$10$Fk4lgbcs5TcWmEJk1X9NaOrsuhUrk6SganBANY/eW4Kn96EbSmAl6,1,f
+3333,Test3,Three,test3@test.com,$2a$10$Sz66T/G99leVoQzfiW6pHucEoCQ2TxyYcBpaU79xqY3ZRF5EuzOXe,1,f
+4444,Test4,Four,test4@test.com,$2a$10$3A5NwLCu0vFXOtDM42fj7eR4OzxLvzKAMpSL8dpRZKM.l3aKB9n4.,2,f

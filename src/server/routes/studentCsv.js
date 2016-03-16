@@ -7,7 +7,8 @@ var Students = function() {
 }
 
 function studentCsvParser(req, res, next) {
-  var schoolId = req.params.schoolId;
+  console.log('id: ' + req.params.schoolId);
+  var schoolId = Number(req.params.schoolId);
   var uploadedPath = req.flash('uploadedFile')[0];
   var insertArray = [];
   var formKeys = Object.keys(req.body);
@@ -58,7 +59,7 @@ function studentCsvParser(req, res, next) {
         var tempObject = {
           student_id: splitLine[studentIdNameColumn],
           first_name: splitLine[firstNameColumn],
-          middle_initial: splitLine[middleNameColumn],
+          middle_name: splitLine[middleNameColumn],
           last_name: splitLine[lastNameColumn],
           grade: splitLine[gradeColumn],
           school_id: schoolId,
