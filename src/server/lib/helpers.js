@@ -37,4 +37,5 @@ module.exports = {
   loginRedirect: loginRedirect,
   hashing: hashing,
   comparePassword: comparePassword,
+  ensureAdmin: ensureAdmin,
 };

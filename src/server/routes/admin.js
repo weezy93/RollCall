@@ -32,13 +32,13 @@ function(req, res, next) {
   studentCsv.studentCsvParser(req, res, next);
 });
 
-router.get('/teacher/add', helpers.loginRedirect,
+router.get('/teacher/add',
 function(req, res, next) {
   var message = req.flash('message') || '';
   res.render('addTeacher', {title: 'Add Teacher', messages: message});
 });
 
-router.post('/teacher/add', helpers.ensureAdmin,
+router.post('/teacher/add',
 function(req, res, next) {
   queries.addTeacher(req.body, req.user.school_id)
   .then (function() {

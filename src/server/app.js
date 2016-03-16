@@ -16,8 +16,8 @@ var helpers = require('./lib/helpers')
 
 // *** Routes *** //
 var routes = require('./routes/index.js');
-var admin = require('./routes/admin.js');
 var event = require('./routes/events.js');
+var admin = require('./routes/admin.js');
 
 // *** Express instance *** //
 var app = express();
