@@ -22,9 +22,9 @@ router.get('/logout', function(req, res, next) {
 });
 
 // Up to the school if they display the events
-router.get('/:school_id', function(req, res, next) {
+router.get('/:schoolId', function(req, res, next) {
   var user = req.user;
-  var school_id = req.params.school_id;
+  var school_id = req.params.schoolId;
   var messages = req.flash('message');
   queries.getAllEvents(school_id)
   .then(function(result) {
