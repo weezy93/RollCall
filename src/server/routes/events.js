@@ -185,7 +185,7 @@ function(req, res, next) {
   });
 });
 
-router.put('/redeem/:ticketNumber/', helpers.ensureAuthenticated,
+router.put('/redeem/:ticketNumber/',
 function(req, res, next) {
   queries.redeemTicket(req.params.ticketNumber)
   .then(function() {

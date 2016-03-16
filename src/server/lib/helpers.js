@@ -4,6 +4,9 @@ var bcrypt = require('bcrypt');
 function ensureAuthenticated(req, res, next) {
   queries.getEventById(req.params.eventId)
   .then(function(event) {
+    console.log('starting:');
+    console.log(event)
+    console.log(req.user);
     if (!req.user || req.user.school_id != event[0].school_id) {
       res.redirect('/login');
     } else {
