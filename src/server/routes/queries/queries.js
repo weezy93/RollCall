@@ -69,8 +69,8 @@ function getStudentsByEvent(searchFor) {
       var count = -1;
       var counter = 0;
       var returner = [];
+      var counter = 0;
       students.rows.forEach(function(student) {
-        console.log(student);
         counter++;
         if (studentsIdsWithGuests.indexOf(student.id + '') != -1) {
           count++;
@@ -97,6 +97,7 @@ function getStudentsByEvent(searchFor) {
     });
   });
 }
+
 function getGuestsByEventGroupByStudentId(eventId) {
   var queryString =
   'select guests.first_name, guests.last_name, guests.id as guest_id, ' +
