@@ -9,6 +9,7 @@
   margin-left: -200px;
   margin-top: -150px;
   background: white;
+  display: none;
 }
 #status label {
   display: block;
