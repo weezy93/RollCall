@@ -34,7 +34,7 @@ function loadGuests() {
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/getguests',
   }).done(function(data) {
-    var guestString = '<h2>Guests</h2>';
+    var guestString = '<br>';
     for (var i = 0; i < data.length; i++) {
       var dat = data[i];
       guestString += '<div>';
