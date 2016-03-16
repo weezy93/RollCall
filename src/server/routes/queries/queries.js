@@ -170,6 +170,16 @@ function getStudentInfo(id) {
   return Students().where('student_id', id);
 }
 
+function getTickets(params) {
+  return Tickets().where(params)
+  .then(function(tickets) {
+    return tickets;
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+}
+
 function getTicketNum(studentId, eventId) {
   return Tickets().where({
     student_id: studentId,
@@ -185,6 +195,7 @@ function sellTicket(studentId, eventId) {
     return Tickets().insert({
       student_id:  student[0].id,
       event_id: eventId,
+      sold_timestamp: 'now()',
     })
     .then(function() {
       return Tickets().where({
@@ -258,4 +269,5 @@ module.exports = {
   editEvent: editEvent,
   addTeacher: addTeacher,
   hashing: hashing,
+  getTickets: getTickets,
 };

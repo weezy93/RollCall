@@ -8,11 +8,27 @@
   <section>
     <section>
       <h3>{{ name }} bought <span id="ticket_count">0</span> tickets </h3>
-    </section>
-    <section id="guestsSection">
+    <br>
+      <div class="table-responsive">
+          <table id="ticketNumbers" class="table table-striped">
+            <thead id="head">
 
+            </thead>
+            <tbody id="body">
+
+            </tbody>
+
+          </table>
+      </div>
     </section>
     <section>
+      <h2>Guests</h2>
+        <div id="guestsSection">
+
+        </div>
+    </section>
+
+    <section> <!-- modal -->
       <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
           <div class="modal-dialog">
               <div class="modal-content">
@@ -22,7 +38,7 @@
                   </div>
                   <div class="modal-body">
                       <form>
-                          <label for="first_name" required autofocus>First Name</label>
+                          <label for="first_name" required>First Name</label>
                         <br>
                           <input type="text" id="guestFirstName" value="" placeholder="First">
                         <br>
@@ -49,11 +65,12 @@
      data-target="#basicModal">Add Guest</a>
 
     </section>
+
     <section>
-      <h3>Tickets not bought: {{ not_bought }}</h3>
+      <h3>{{ not_bought }} ticket(s) not bought</h3>
     </section>
-    <button id="makeSale">Make Sale</button>
-      <a href="/event/{{ eventId }}/sale_start"><button>Start New Sale</button></a>
+    <button id="makeSale" class="btn btn-lg btn-info">Add {{ name }}'s ticket</button>
+      <a href="/event/{{ eventId }}/sale_start"><button class="btn btn-lg btn-default">Start New Sale</button></a>
   </section>
   <script>
     var eventId = {{ eventId }} ;
