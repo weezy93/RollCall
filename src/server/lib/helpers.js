@@ -15,11 +15,15 @@ function ensureAuthenticated(req, res, next) {
 function ensureAdmin(req, res, next) {
   console.log('User: ', req.user);
   console.log('Params: ', req.params);
-  if (req.user.is_admin && req.user.school_id == req.params.schoolId) {
+  if (req.user && req.user.is_admin &&
+      req.user.school_id == req.params.schoolId) {
     return next();
-  } else {
-    res.redirect('/' + req.params.schoolId);
   }
+  req.flash('message', {
+    status: 'danger',
+    value: 'Please use an admin account to continue',
+  });
+  res.redirect('/' + req.user.school_id);
 }
 
 function loginRedirect(req, res, next) {

@@ -50,7 +50,13 @@ router.post('/login', function(req, res, next) {
         status: 'success',
         value: 'Welcome ' + user.first_name,
       });
-      return res.redirect('/' + school_id);
+      if (req.user) {
+        return res.redirect('/' + req.user.school_id);
+      }
+      if (school_id) {
+        return res.redirect('/' + school_id);
+      }
+      return res.send('You broke this so bad!');
     });
   })(req, res, next);
 });

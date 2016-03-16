@@ -12,6 +12,7 @@ router.get('/:schoolId/addstudents', helpers.ensureAdmin, function(req, res) {
   res.render('addStudents', {
     title: 'I love files!',
     schoolId: req.params.schoolId,
+    user: req.user,
   });
 });
 
