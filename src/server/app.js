@@ -51,9 +51,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** Main routes *** //
 app.use('/', routes);
-app.use(helpers.ensureAuthenticated);
 app.use('/event', event);
-app.use(helpers.ensureAdmin);
 app.use('/admin', admin);
 
 // Catch 404 and forward to error handler
