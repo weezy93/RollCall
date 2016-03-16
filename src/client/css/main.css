@@ -24,3 +24,7 @@ section {
 .clickable {
   cursor: pointer;
 }
+
+.padding-top {
+  padding-top: 10px;
+}
