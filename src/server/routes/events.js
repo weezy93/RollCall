@@ -48,7 +48,6 @@ function(req, res, next) {
 router.get('/:eventId/edit', helpers.ensureAuthenticated,
 function(req, res, next) {
   queries.getEventById(req.params.eventId).then(function(data) {
-    console.log(data[0]);
     var params = {
       eventId: req.params.eventId,
       script: 'editEvent.js',
@@ -79,9 +78,15 @@ function(req, res, next) {
     student_id: req.params.studentId,
     event_id: req.params.eventId,
   };
-  queries.ticketCount(params).then(function(count) {
-    res.send(count[0].count);
-  });
+  // Z queries.ticketCount(params).then(function(count) {
+  //   res.send(count[0].count);
+  // });
+  queries.getTickets(params).then(function(tickets) {
+    res.send(tickets);
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
 });
 
 // Ajax route
