@@ -15,6 +15,7 @@ router.get('/logout', function(req, res, next) {
 // Up to the school if they display the events
 router.get('/:schoolId', function(req, res, next) {
   var user = req.user;
+  req.flash('school_id', req.params.schoolId);
   var school_id = req.params.schoolId;
   var messages = req.flash('message');
   queries.getAllEvents(school_id)
@@ -33,8 +34,13 @@ router.get('/:schoolId', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user) {
+    var school_id = req.flash('school_id')[0];
     if (err) {
-      return next(err);
+      req.flash('message', {
+        status: 'danger',
+        value: 'Email or Password is incorrect.  Please try again.',
+      });
+      return res.redirect('/' + school_id);
     }
     req.logIn(user, function(err) {
       if (err) {
@@ -44,7 +50,7 @@ router.post('/login', function(req, res, next) {
         status: 'success',
         value: 'Welcome ' + user.first_name,
       });
-      return res.redirect('/' + user.school_id);
+      return res.redirect('/' + school_id);
     });
   })(req, res, next);
 });

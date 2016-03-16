@@ -32,28 +32,32 @@ function(req, res, next) {
   studentCsv.studentCsvParser(req, res, next);
 });
 
-router.get('/teacher/add', helpers.ensureAdmin,
+router.get('/:schoolId/addteachers', helpers.ensureAdmin,
 function(req, res, next) {
   var message = req.flash('message') || '';
-  res.render('addTeacher', {title: 'Add Teacher', messages: message});
+  res.render('addTeacher', {title: 'Add Teacher', user: req.user, messages: message});
 });
 
-router.post('/teacher/add', helpers.ensureAdmin,
+router.post('/:schoolId/addteachers', helpers.ensureAdmin,
 function(req, res, next) {
-  queries.addTeacher(req.body, req.user.school_id)
+  queries.addTeacher(req.body, req.params.schoolId)
   .then (function() {
+    console.log('success');
     req.flash('message', {
       status: 'success',
       value: 'Successfully Registered.',
     });
-    res.redirect('/' + req.user.school_id + '/admin');
+    res.redirect('/admin/' + req.user.school_id + '/addteachers');
   })
   .catch(function(err) {
     if (err) {
+      console.log('failure');
+      console.log(err);
       req.flash('message', {
         status: 'danger',
         value: 'Email already exists.  Please try again.',
       });
+      res.redirect('/admin/' + req.user.school_id + '/addteachers');
     }
   });
 });

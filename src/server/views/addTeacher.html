@@ -4,19 +4,50 @@
 
 
 {% block content %}
-
-{% for message in messages %}
-  <div class="alert alert-{{ message.status }}">
-    {{ message.value }}
+<section>
+  <div class="margin-top">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.status }}">
+        {{ message.value }}
+      </div>
+    {% endfor %}
   </div>
-{% endfor %}
 
-<div class="container">
-  <form method="POST" action="/teacher/add">
-    <input type="text" name="email" placeholder="Email Address" />
-    <input type="password" name="password" placeholder="Enter password" />
-    <button type="submit">Submit</button>
-  </form>
-</div>
-
+  <div class="container">
+    <form method="POST" action="/admin/{{ user.school_id }}/addteachers" class="form-horizontal">
+      <div class="row">
+        <h3>Personal Info</h3>
+        <div class="col-lg-4">
+          <label for="first_name">First Name</label>
+          <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" />
+        </div>
+        <div class="col-lg-4">
+          <label for="last_name">Last Name</label>
+          <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" />
+        </div>
+        <div class="col-lg-4">
+          <label for="teacher_id">Teacher ID</label>
+          <input type="text" class="form-control" name="teacher_id" id="teacher_id" placeholder="Teacher ID" />
+        </div>
+      </div>
+      <div class="row">
+        <h3>Create Account</h3>
+        <div class="col-lg-4">
+          <label for="email">Email Address</label>
+          <input type="text" class="form-control" name="email" id="email" placeholder="Email Address" />
+        </div>
+        <div class="col-lg-4">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" />
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-4">
+          <button type="submit" class="btn btn-success btn-lg">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
 {% endblock %}

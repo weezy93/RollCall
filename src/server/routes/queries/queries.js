@@ -1,25 +1,31 @@
 var knex = require('../../db/knex');
-var helpers = require('../../lib/helpers');
+var bcrypt = require('bcrypt');
 
 function Events() {
-  return knex('events');
+  return knex('events').where('deleted', false);
 }
 
 function Tickets() {
-  return knex('tickets');
+  return knex('tickets').where('deleted', false);
 }
 
 function Students() {
-  return knex('students');
+  return knex('students').where('deleted', false);
 }
 
 function Guests() {
-  return knex('guests');
+  return knex('guests').where('deleted', false);
 }
 
 function Teachers() {
-  return knex('teachers');
+  return knex('teachers').where('deleted', false);
 }
+
+function hashing(password) {
+  return bcrypt.hashSync(password, 10);
+}
+
+
 
 function getAllEvents(school_id) {
   // Query for school name?
@@ -27,6 +33,7 @@ function getAllEvents(school_id) {
   'school_id, description, address, count(tickets.id), max_tickets, ' +
   'events.is_public ' +
   'from events left join tickets on tickets.event_id = events.id ' +
+  'where events.deleted = false ' +
   'group by events.id, events.name, school_id, description, address, ' +
   'max_tickets order by events.event_date')
   .then(function(results) {
@@ -56,7 +63,7 @@ function getStudentsByEvent(searchFor) {
   + 'from students '
   + 'inner join tickets on tickets.student_id = students.id '
   + 'inner join events on tickets.event_id = events.id '
-  + 'where events.id = ' + searchFor.eventId;
+  + 'where students.deleted = false and events.id = ' + searchFor.eventId;
   if (searchFor.matcher) {
     queryString +=
     ' AND (LOWER(students.student_id) like LOWER(\'' +
@@ -107,7 +114,7 @@ function getGuestsByEventGroupByStudentId(eventId) {
   + 'inner join students on guests.student_id = students.id '
   + 'inner join tickets on tickets.student_id = students.id '
   + 'inner join events on events.id = tickets.event_id '
-  + 'where events.id = ' + eventId
+  + 'where guests.deleted = false and events.id = ' + eventId
   + ' group by guests.id, students.id';
   return knex.raw(queryString).then(function(results) {
     var returner = {
@@ -147,6 +154,7 @@ function editEvent(body, id) {
     address: body.address,
     city_state_zip: body.city_state_zip,
     max_tickets: body.max_tickets,
+    is_public: body.is_public,
   }, 'id').then(function(data) {
     return data[0];
   });
@@ -160,6 +168,16 @@ function getEventById(id) {
 
 function getStudentInfo(id) {
   return Students().where('student_id', id);
+}
+
+function getTickets(params) {
+  return Tickets().where(params)
+  .then(function(tickets) {
+    return tickets;
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 }
 
 function getTicketNum(studentId, eventId) {
@@ -177,6 +195,7 @@ function sellTicket(studentId, eventId) {
     return Tickets().insert({
       student_id:  student[0].id,
       event_id: eventId,
+      sold_timestamp: 'now()',
     })
     .then(function() {
       return Tickets().where({
@@ -221,15 +240,21 @@ function editGuest(params, id) {
   });
 }
 
+
 function addTeacher(body, id) {
   return Teachers().where('email_address', body.email).then(function(data) {
+    console.log('data: ', data);
     if (data.length) {
-      return new Promise.reject('Email already exists');
+      return Promise.reject('Email already exists');
     }
-    var hashedPassword = helpers.hashing(body.password);
+    var hashedPassword = hashing(body.password);
     return Teachers().insert({
       email_address: body.email,
       password: hashedPassword,
+      teacher_id: body.teacher_id,
+      first_name: body.first_name,
+      last_name: body.last_name,
+      school_id: id,
     });
   });
 }
@@ -250,4 +275,6 @@ module.exports = {
   editEvent: editEvent,
   addTeacher: addTeacher,
   redeemTicket, redeemTicket,
+  hashing: hashing,
+  getTickets: getTickets,
 };

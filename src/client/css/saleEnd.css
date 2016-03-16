@@ -27,7 +27,6 @@
 #guestsSection div {
   height: 75px;
   padding: 5px;
-  border: 1px solid blue;
   box-sizing: border-box;
   margin-bottom: 10px;
 }
