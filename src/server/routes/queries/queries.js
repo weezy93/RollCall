@@ -1,5 +1,5 @@
 var knex = require('../../db/knex');
-var helpers = require('../../lib/helpers');
+var bcrypt = require('bcrypt');
 
 function Events() {
   return knex('events').where('deleted', false);
@@ -20,6 +20,12 @@ function Guests() {
 function Teachers() {
   return knex('teachers').where('deleted', false);
 }
+
+function hashing(password) {
+  return bcrypt.hashSync(password, 10);
+}
+
+
 
 function getAllEvents(school_id) {
   // Query for school name?
@@ -228,15 +234,21 @@ function editGuest(params, id) {
   });
 }
 
+
 function addTeacher(body, id) {
   return Teachers().where('email_address', body.email).then(function(data) {
+    console.log('data: ', data);
     if (data.length) {
-      return new Promise.reject('Email already exists');
+      return Promise.reject('Email already exists');
     }
-    var hashedPassword = helpers.hashing(body.password);
+    var hashedPassword = hashing(body.password);
     return Teachers().insert({
       email_address: body.email,
       password: hashedPassword,
+      teacher_id: body.teacher_id,
+      first_name: body.first_name,
+      last_name: body.last_name,
+      school_id: id,
     });
   });
 }
@@ -256,5 +268,6 @@ module.exports = {
   getEventById: getEventById,
   editEvent: editEvent,
   addTeacher: addTeacher,
+  hashing: hashing,
   getTickets: getTickets,
 };

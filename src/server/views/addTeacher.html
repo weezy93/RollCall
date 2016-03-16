@@ -4,19 +4,22 @@
 
 
 {% block content %}
+<section>
+  {% for message in messages %}
+    <div class="alert alert-{{ message.status }}">
+      {{ message.value }}
+    </div>
+  {% endfor %}
 
-{% for message in messages %}
-  <div class="alert alert-{{ message.status }}">
-    {{ message.value }}
+  <div class="container">
+    <form method="POST" action="/admin/{{ user.school_id }}/addteachers">
+      <input type="text" name="first_name" placeholder="First Name" />
+      <input type="text" name="last_name" placeholder="Last Name" />
+      <input type="text" name="teacher_id" placeholder="Teacher ID" />
+      <input type="text" name="email" placeholder="Email Address" />
+      <input type="password" name="password" placeholder="Enter password" />
+      <button type="submit">Submit</button>
+    </form>
   </div>
-{% endfor %}
-
-<div class="container">
-  <form method="POST" action="/teacher/add">
-    <input type="text" name="email" placeholder="Email Address" />
-    <input type="password" name="password" placeholder="Enter password" />
-    <button type="submit">Submit</button>
-  </form>
-</div>
-
+</section>
 {% endblock %}
