@@ -24,7 +24,8 @@ function Teachers() {
 function getAllEvents(school_id) {
   // Query for school name?
   return knex.raw('select events.id, events.name, events.event_date, ' +
-  'school_id, description, address, count(tickets.id), max_tickets ' +
+  'school_id, description, address, count(tickets.id), max_tickets, ' +
+  'events.is_public ' +
   'from events left join tickets on tickets.event_id = events.id ' +
   'group by events.id, events.name, school_id, description, address, ' +
   'max_tickets')
