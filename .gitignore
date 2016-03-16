@@ -2,5 +2,3 @@ node_modules/
 .DS_Store
 npm-debug.log
 .env
-src/server/db/csv/students.csv
-src/server/db/csv/guests.csv
