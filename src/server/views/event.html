@@ -24,9 +24,9 @@
                 {{ event.address }}<br />
                 {{ event.city_state_zip }}
               </address>
-              {% if user %}
+              {% if user.school_id == event.school_id %}
                 <a href="/event/{{ event.id }}/sale_start" class="btn btn-lg btn-success">Sell Tickets</a>
-                <a href="#" class="btn btn-lg btn-primary">Redeem Tickets</a>
+                <a href="/event/{{ event.id }}/redeem/" class="btn btn-lg btn-primary">Redeem Tickets</a>
                 {% if user.is_admin %}
                   <a href="/event/{{ event.id }}/edit" class="btn btn-lg btn-info">Edit Event</a>
                   <a href="/event/{{ event.id }}/delete" class="btn btn-lg btn-danger">Delete Event</a>

@@ -1,0 +1,25 @@
+tr {
+  height: 100px;
+}
+td {
+  font-size: 1.5em;
+}
+.short {
+  height: 30px;
+}
+.iconDiv {
+  height: 30px;
+  width: 30px;
+}
+.centered {
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -25%;
+}
+#searchStudents {
+  background-color: #3e3e3e;
+  color: white;
+  font-size: 36px;
+}

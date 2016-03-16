@@ -41,6 +41,16 @@ function(req, res, next) {
   });
 });
 
+router.get('/:eventId/redeem', helpers.ensureAuthenticated,
+function(req, res, next) {
+  var params = {
+    eventId: req.params.eventId,
+    script: 'redeem.js',
+    stylesheet: 'redeem.css',
+    user: req.user,
+  }
+  res.render('redeem.html', params)
+})
 // Student info and maybe sale
 // Public facing
 router.get('/:eventId/sales/', helpers.ensureAuthenticated,
@@ -62,7 +72,7 @@ function(req, res, next) {
 });
 
 // Public facing
-router.get('/:eventId/edit', helpers.ensureAuthenticated,
+router.get('/:eventId/edit', helpers.ensureAdmin,
 function(req, res, next) {
   queries.getEventById(req.params.eventId).then(function(data) {
     var params = {
@@ -133,7 +143,7 @@ function(req, res, next) {
 });
 
 // Ajax route
-router.get('/:eventId/getstudents', helpers.ensureAuthenticated,
+router.get('/:eventId/getstudents',helpers.ensureAuthenticated,
 function(req, res, next) {
   var searchFor = {
     eventId: req.params.eventId,
@@ -148,7 +158,7 @@ function(req, res, next) {
 });
 
 // Ajax route
-router.post('/:eventId/edit', helpers.ensureAuthenticated,
+router.post('/:eventId/edit', helpers.ensureAdmin,
 function(req, res, next) {
   queries.editEvent(req.body, req.params.eventId)
   .then(function(data) {
@@ -157,7 +167,7 @@ function(req, res, next) {
 });
 
 // Ajax
-router.post('/guest/:id/edit', helpers.ensureAuthenticated,
+router.post('/guest/:id/edit', helpers.ensureAdmin,
 function(req, res, next) {
   var id = req.params.id;
   queries.editGuest(req.body, id).then(function(data) {
@@ -174,5 +184,16 @@ function(req, res, next) {
     res.json(data);
   });
 });
+
+router.put('/redeem/:ticketNumber/', helpers.ensureAuthenticated,
+function(req, res, next) {
+  queries.redeemTicket(req.params.ticketNumber)
+  .then(function() {
+    res.json({success: 'yay!'})
+  })
+  .catch(function(err) {
+    res.json({error: err});
+  })
+})
 
 module.exports = router;
