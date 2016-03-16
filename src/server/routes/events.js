@@ -5,7 +5,7 @@ var passport = require('../lib/auth');
 var queries = require('./queries/queries');
 
 // Public facing - search student
-router.get('/:eventId/sale_start',
+router.get('/:eventId/sale_start', helpers.ensureAuthenticated,
 function(req, res, next) {
   res.render('saleStart', {
     title: 'Sell Page',
@@ -17,7 +17,7 @@ function(req, res, next) {
 
 // Student info and maybe sale
 // Public facing
-router.get('/:eventId/sales/',
+router.get('/:eventId/sales/', helpers.ensureAuthenticated,
 function(req, res, next) {
   var studentId = req.query.studentId;
   var eventId = req.params.eventId;
@@ -36,7 +36,8 @@ function(req, res, next) {
 });
 
 // Public facing
-router.get('/:eventId/edit', function(req, res, next) {
+router.get('/:eventId/edit', helpers.ensureAuthenticated,
+function(req, res, next) {
   queries.getEventById(req.params.eventId).then(function(data) {
     console.log(data[0]);
     var params = {
@@ -51,7 +52,7 @@ router.get('/:eventId/edit', function(req, res, next) {
 });
 
 // Ajax route
-router.post('/:eventId/sales/:studentId',
+router.post('/:eventId/sales/:studentId', helpers.ensureAuthenticated,
 function(req, res, next) {
   var eventId = req.body.event_id;
   var studentId = req.body.student_id;
@@ -63,6 +64,7 @@ function(req, res, next) {
 
 // Ajax route
 router.get('/:eventId/sales/:studentId/ticket_count',
+helpers.ensureAuthenticated,
 function(req, res, next) {
   var params = {
     student_id: req.params.studentId,
@@ -74,7 +76,7 @@ function(req, res, next) {
 });
 
 // Ajax route
-router.post('/:eventId/sales/:studentId/addguest',
+router.post('/:eventId/sales/:studentId/addguest', helpers.ensureAuthenticated,
 function(req, res, next) {
   queries.addGuest(req.body)
   .then(function(guestId) {
@@ -86,7 +88,7 @@ function(req, res, next) {
 });
 
 // Ajax route
-router.get('/:eventId/sales/:studentId/getguests',
+router.get('/:eventId/sales/:studentId/getguests', helpers.ensureAuthenticated,
 function(req, res, next) {
   var params = {
     student_id: req.params.studentId,
@@ -102,7 +104,8 @@ function(req, res, next) {
 });
 
 // Ajax route
-router.get('/:eventId/getstudents', function(req, res, next) {
+router.get('/:eventId/getstudents', helpers.ensureAuthenticated,
+function(req, res, next) {
   var searchFor = {
     eventId: req.params.eventId,
   };
@@ -116,7 +119,8 @@ router.get('/:eventId/getstudents', function(req, res, next) {
 });
 
 // Ajax route
-router.post('/:eventId/edit', function(req, res, next) {
+router.post('/:eventId/edit', helpers.ensureAuthenticated,
+function(req, res, next) {
   queries.editEvent(req.body, req.params.eventId)
   .then(function(data) {
     res.redirect('/events/' + req.params.eventId + '/edit');
@@ -124,7 +128,8 @@ router.post('/:eventId/edit', function(req, res, next) {
 });
 
 // Ajax
-router.post('/guest/:id/edit', function(req, res, next) {
+router.post('/guest/:id/edit', helpers.ensureAuthenticated,
+function(req, res, next) {
   var id = req.params.id;
   queries.editGuest(req.body, id).then(function(data) {
     console.log(data);
@@ -133,7 +138,8 @@ router.post('/guest/:id/edit', function(req, res, next) {
 });
 
 // Ajax
-router.get('/guest/:id', function(req, res, next) {
+router.get('/guest/:id', helpers.ensureAuthenticated,
+function(req, res, next) {
   var id = req.params.id;
   queries.getGuests({id: id}).then(function(data) {
     res.json(data);
