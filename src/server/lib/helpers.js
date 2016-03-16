@@ -9,8 +9,10 @@ function ensureAuthenticated(req, res, next) {
 }
 
 function ensureAdmin(req, res, next) {
-  if (req.user.is_admin) {
-    next();
+  console.log('User: ', req.user);
+  console.log('Params: ', req.params);
+  if (req.user.is_admin && req.user.school_id == req.params.schoolId) {
+    return next();
   } else {
     res.redirect('/' + req.params.schoolId);
   }

@@ -73,7 +73,7 @@ function stripNulls(string) {
 }
 function editGuest(id) {
   guest_id = id;
-  var url = '/guest/' + id;
+  var url = '/event/guest/' + id;
   $.ajax({
     url: url,
     type: 'GET'
@@ -90,7 +90,7 @@ function editGuest(id) {
       last_name: $('#guest_last').val()
     };
 
-    var url = '/guests/' + id + '/edit';
+    var url = '/event/guest/' + id + '/edit';
     $.ajax({
       url: url,
       type: 'POST',

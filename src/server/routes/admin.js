@@ -8,37 +8,37 @@ var upload = multer({dest: 'uploads/'});
 var studentCsv = require('./studentCsv.js');
 
 
-router.get('/:schoolId/addstudents', function(req, res) {
+router.get('/:schoolId/addstudents', helpers.ensureAdmin, function(req, res) {
   res.render('addStudents', {
     title: 'I love files!',
     schoolId: req.params.schoolId,
   });
 });
 
-router.post('/:schoolId/addstudent', function(req, res) {
+router.post('/:schoolId/addstudent', helpers.ensureAdmin, function(req, res) {
   queries.addStudent(req.body)
   .then(function() {
     res.redirect('/' + req.params.schoolId);
   });
 });
 
-router.post('/:schoolId/addstudents', upload.single('csv'),
+router.post('/:schoolId/addstudents', helpers.ensureAdmin, upload.single('csv'),
   function(req, res, next) {
   studentCsv.uploadStudentCsv(req, res, next);
 });
 
-router.post('/:schoolId/addstudents/parse',
+router.post('/:schoolId/addstudents/parse', helpers.ensureAdmin,
 function(req, res, next) {
   studentCsv.studentCsvParser(req, res, next);
 });
 
-router.get('/teacher/add',
+router.get('/teacher/add', helpers.ensureAdmin,
 function(req, res, next) {
   var message = req.flash('message') || '';
   res.render('addTeacher', {title: 'Add Teacher', messages: message});
 });
 
-router.post('/teacher/add',
+router.post('/teacher/add', helpers.ensureAdmin,
 function(req, res, next) {
   queries.addTeacher(req.body, req.user.school_id)
   .then (function() {
