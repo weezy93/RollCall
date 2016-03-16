@@ -1,4 +1,5 @@
 var knex = require('../../db/knex');
+var helpers = require('../../lib/helpers');
 
 function Events() {
   return knex('events');
@@ -14,6 +15,10 @@ function Students() {
 
 function Guests() {
   return knex('guests');
+}
+
+function Teachers() {
+  return knex('teachers');
 }
 
 function getAllEvents(school_id) {
@@ -208,9 +213,22 @@ function addGuest(params) {
 function editGuest(params, id) {
   return Guests().where('id', id).update({
     first_name: params.first_name,
-    last_name: params.last_name
+    last_name: params.last_name,
   }, 'id').then(function(data) {
     return data;
+  });
+}
+
+function addTeacher(body, id) {
+  return Teachers().where('email_address', body.email).then(function(data) {
+    if (data.length) {
+      return new Promise.reject('Email already exists');
+    }
+    var hashedPassword = helpers.hashing(body.password);
+    return Teachers().insert({
+      email_address: body.email,
+      password: hashedPassword,
+    });
   });
 }
 
@@ -228,4 +246,5 @@ module.exports = {
   editGuest: editGuest,
   getEventById: getEventById,
   editEvent: editEvent,
+  addTeacher: addTeacher,
 };

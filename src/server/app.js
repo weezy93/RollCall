@@ -10,12 +10,14 @@ var session = require('express-session');
 var passport = require('./lib/auth');
 var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
+var helpers = require('./lib/helpers')
 
 
 
 // *** Routes *** //
 var routes = require('./routes/index.js');
-
+var event = require('./routes/events.js');
+var admin = require('./routes/admin.js');
 
 // *** Express instance *** //
 var app = express();
@@ -39,7 +41,7 @@ app.use(cookieParser());
 app.use(session({
   secret: process.env.SECRET_KEY || 'secret_awesome_group',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -49,7 +51,10 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** Main routes *** //
 app.use('/', routes);
-
+app.use(helpers.ensureAuthenticated);
+app.use('/event', event);
+app.use(helpers.ensureAdmin);
+app.use('/admin', admin);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
