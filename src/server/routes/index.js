@@ -34,63 +34,6 @@ router.get('/:schoolId', function(req, res, next) {
   });
 });
 
-router.get('/event/:eventId/sale_start', function(req, res, next) {
-  res.render('saleStart', {
-    title: 'Sell Page',
-    eventId: req.params.eventId,
-    event_max_tix: '?', // Query event.max_tix
-  });
-});
-
-router.get('/event/:eventId/sales/',
-function(req, res, next) {
-  var studentId = req.query.studentId;
-  var eventId = req.params.eventId;
-
-  queries.getStudentInfo(studentId).then(function(student) {
-      res.render('saleEnd', {
-        name: student[0].first_name + ' ' + student[0].last_name,
-        eventId: eventId,
-        studentId: student[0].id,
-        script: 'saleEnd.js',
-        stylesheet: 'saleEnd.css',
-        count: 0,
-      });
-    });
-});
-
-router.post('/event/:eventId/sales/:studentId',
-function(req, res, next) {
-  var eventId = req.body.event_id;
-  var studentId = req.body.student_id;
-
-  queries.sellTicket(studentId, eventId).then(function() {
-    res.send();
-  });
-});
-
-router.get('/event/:eventId/sales/:studentId/ticket_count',
-function(req, res, next) {
-  var params = {
-    student_id: req.params.studentId,
-    event_id: req.params.eventId,
-  };
-  queries.ticketCount(params).then(function(count) {
-    res.send(count[0].count);
-  });
-});
-
-router.post('/event/:eventId/sales/:studentId/addguest',
-function(req, res, next) {
-  queries.addGuest(req.body)
-  .then(function(guestId) {
-    res.json({success: 'Added guest #' + guestId});
-  })
-  .catch(function(err) {
-    res.json({error: err});
-  });
-});
-
 router.post('/guests/:id/edit', function(req, res, next) {
   var id = req.params.id;
   queries.editGuest(req.body, id).then(function(data) {
@@ -99,56 +42,10 @@ router.post('/guests/:id/edit', function(req, res, next) {
   });
 });
 
-router.get('/event/:eventId/sales/:studentId/getguests',
-function(req, res, next) {
-  var params = {
-    student_id: req.params.studentId,
-    event_id: req.params.eventId,
-  };
-  queries.getGuests(params)
-  .then(function(guests) {
-    res.json(guests);
-  })
-  .catch(function(err) {
-    res.json({error: err});
-  });
-});
-
 router.get('/guest/:id', function(req, res, next) {
   var id = req.params.id;
   queries.getGuests({id: id}).then(function(data) {
     res.json(data);
-  });
-});
-
-router.get('/event/:eventId/getstudents', function(req, res, next) {
-  var searchFor = {
-    eventId: req.params.eventId,
-  };
-  if (req.query.matcher) {
-    searchFor['matcher'] = req.query.matcher;
-  }
-  queries.getStudentsByEvent(searchFor)
-  .then(function(results) {
-    res.json(results);
-  });
-});
-router.get('/events/:eventId/edit', function(req, res, next) {
-  queries.getEventById(req.params.eventId).then(function(data) {
-    console.log(data[0]);
-    var params = {
-      eventId: req.params.eventId,
-      script: 'editEvent.js',
-      stylesheet: 'editEvent.css',
-      event: data[0],
-    };
-    res.render('editevent', params);
-  });
-});
-
-router.post('/events/:eventId/edit', function(req, res, next) {
-  queries.editEvent(req.body, req.params.eventId).then(function(data) {
-    res.redirect('/events/'+req.params.eventId+'/edit');
   });
 });
 

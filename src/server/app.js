@@ -41,7 +41,7 @@ app.use(cookieParser());
 app.use(session({
   secret: process.env.SECRET_KEY || 'secret_awesome_group',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
 }));
 app.use(flash());
 app.use(passport.initialize());
