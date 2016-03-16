@@ -9,7 +9,7 @@ function ensureAuthenticated(req, res, next) {
     } else {
       return next();
     }
-  })
+  });
 }
 
 function ensureAdmin(req, res, next) {
@@ -30,18 +30,15 @@ function loginRedirect(req, res, next) {
   }
 }
 
-function hashing(password) {
-  return bcrypt.hashSync(password, 10);
-}
-
 function comparePassword(password, hashedPassword) {
   return bcrypt.compareSync(password, hashedPassword);
 }
 
+
+
 module.exports = {
   ensureAuthenticated: ensureAuthenticated,
   loginRedirect: loginRedirect,
-  hashing: hashing,
-  comparePassword: comparePassword,
   ensureAdmin: ensureAdmin,
+  comparePassword: comparePassword,
 };
