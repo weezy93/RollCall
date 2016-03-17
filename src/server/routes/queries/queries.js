@@ -149,15 +149,7 @@ function addEvent(body, id) {
 }
 
 function editEvent(body, id) {
-  return Events().where('id', id).update({
-    name: body.event_name,
-    event_date: body.event_date,
-    description: body.description,
-    address: body.address,
-    city_state_zip: body.city_state_zip,
-    max_tickets: body.max_tickets,
-    is_public: body.is_public,
-  }, 'id').then(function(data) {
+  return Events().where('id', id).update(body, 'id').then(function(data) {
     return data[0];
   });
 }

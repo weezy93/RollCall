@@ -125,13 +125,23 @@ function confirmDelete(studentId, ticketId) {
   }
 }
 
+function previewPicture(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      $('#previewImage')
+          .attr('src', event.target.result)
+          .width('100%');
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
 
-$(document).on('click', 'td.clickable', function(){
-  // create the backdrop and wait for next modal to be triggered
+$(document).on('click', 'td.clickable', function() {
+  // Create the backdrop and wait for next modal to be triggered
   $('body').modalmanager('loading');
-
-  setTimeout(function(){
-      $modal.modal();
+  setTimeout(function() {
+    $modal.modal();
   }, 1000);
 });

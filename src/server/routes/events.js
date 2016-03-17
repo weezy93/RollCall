@@ -3,6 +3,8 @@ var router = express.Router();
 var helpers = require('../lib/helpers');
 var passport = require('../lib/auth');
 var queries = require('./queries/queries');
+var multer = require('multer');
+var upload = multer({dest: 'src/client/images/'});
 
 
 // Public facing
@@ -84,7 +86,7 @@ function(req, res, next) {
 });
 
 // Public facing
-router.get('/:eventId/edit', helpers.ensureAdmin,
+router.get('/:eventId/edit',
 function(req, res, next) {
   queries.getEventById(req.params.eventId).then(function(data) {
     var params = {
@@ -189,8 +191,14 @@ router.put('/:eventId/delete', function(req, res, next) {
 });
 
 // Ajax route
-router.post('/:eventId/edit', helpers.ensureAdmin,
+router.post('/:eventId/edit', helpers.ensureAdmin, upload.single('picture'),
 function(req, res, next) {
+  delete req.body.picture;
+  if (req.file) {
+    console.log(req.file);
+    req.body['image_url'] = req.file.path.substring(10)
+  }
+  console.log(req.body);
   queries.editEvent(req.body, req.params.eventId)
   .then(function(data) {
     res.redirect('/event/' + req.params.eventId);

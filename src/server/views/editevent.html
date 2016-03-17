@@ -5,11 +5,11 @@
 
 {% block content %}
 <section>
-  <form class="form-horizontal" method="post" action="/event/{{ event.id }}/edit">
+  <form class="form-horizontal" method="post" action="/event/{{ event.id }}/edit" enctype="multipart/form-data">
     <div class="row">
       <div class="col-lg-4">
         <label for="event_name">Event Name</label>
-        <input type="text" class="form-control" name="event_name" value="{{ event.name }}">
+        <input type="text" class="form-control" name="name" value="{{ event.name }}">
       </div>
       <div class="col-lg-4">
         <label for="event_date">Event Date</label>
@@ -46,9 +46,13 @@
     </div>
     <br />
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-6">
         <label for="description">Description</label>
-        <textarea name="description" class="form-control" rows="10">{{ event.description }}</textarea>
+        <textarea name="description" class="form-control" rows="6">{{ event.description }}</textarea>
+      </div>
+      <div class="col-lg-6">
+        <input type="file" onchange="previewPicture(this)" name="picture" value="">
+        <img id="previewImage" src="{{event.image_url}}" alt="" />
       </div>
     </div>
     <br />
