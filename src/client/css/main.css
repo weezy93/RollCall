@@ -28,3 +28,8 @@ section {
 .padding-top {
   padding-top: 10px;
 }
+
+.centered {
+  margin: 0 auto;
+  display: block;
+}
