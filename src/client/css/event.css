@@ -7,3 +7,12 @@
   font-size: 1.5rem;
   width: 50%;
 }
+
+.media-container {
+  height: 400px;
+  width: 800px;
+}
+
+.media-container img {
+  width: 100%;
+}
