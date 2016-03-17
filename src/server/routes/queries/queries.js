@@ -132,14 +132,16 @@ function getGuestsByEventGroupByStudentId(eventId) {
   });
 }
 
-function addEvent(req, res) {
+function addEvent(body, id) {
   return Events().insert({
-    name: req.body.event_name,
-    event_date: req.body.event_date,
-    // School_id:
-    description: req.body.description,
-    address: req.body.event_address,
-    city_state_zip: req.body.city_state_zip,
+    name: body.event_name,
+    event_date: body.event_date,
+    school_id: id,
+    description: body.description,
+    address: body.event_address,
+    city_state_zip: body.city_state_zip,
+    is_public: body.is_public,
+    max_tickets: body.max_tickets
   })
   .catch(function(error) {
     console.log(error);

@@ -69,4 +69,21 @@ function(req, res, next) {
   });
 });
 
+router.get('/:schoolId/addevents', helpers.ensureAdmin, function(req, res, next) {
+  var messages = req.flash('message');
+  var user = req.user;
+  res.render('addEvent', {messages: messages, user: user});
+});
+
+router.post('/:schoolId/addevents', helpers.ensureAdmin, function(req, res, next) {
+  queries.addEvent(req.body, req.params.schoolId)
+  .then(function(data) {
+    req.flash('message', {
+      status: 'success',
+      value: 'Event successfully added.',
+    });
+    res.redirect('/' + req.user.school_id);
+  });
+});
+
 module.exports = router;

@@ -4,35 +4,58 @@
 
 
 {% block content %}
-
+<section>
   <div class="container">
-
-    <h1>{{ title }}</h1>
-    <main>
-      <form action="/addEvent" method="post">
-        <label for="name">Event Name</label>
-        <input type="text" name="event_name" placeholder="Homecoming">
-      <br>
-        <label for="date">Date</label>
-        <input type="date" name="event_date" placeholder="dd/mm/yyyy">
-      <br>
-        <label for="">description</label>
-        <input type="text" name="event_description" placeholder="something dreamy">
-      <br>
-        <label for="max_tickets">Tickets Available</label>
-        <input type="text" name="max_tickets" placeholder="millions">
-      <br>
-        <label for="address">Address</label>
-        <input type="address" name="event_address" placeholder="123 Main St.">
-      <br>
-        <label for="city_state_zip">City, State, Zip</label>
-      <br>
-        <textarea name="city_state_zip" rows="2" cols="40">Denver, CO, 80203</textarea>
-      <br>
-          <button type="submit">GO</button>
-      </form>
-    </main>
-
+    <form action="/admin/{{ user.school_id }}/addevents" method="post" class="form-horizontal">
+      <div class="row">
+        <div class="col-lg-4">
+          <label for="name">Event Name</label>
+          <input type="text" name="event_name" class="form-control" placeholder="Homecoming">
+        </div>
+        <div class="col-lg-4">
+          <label for="date">Date</label>
+          <input type="date" name="event_date" class="form-control" placeholder="dd/mm/yyyy">
+        </div>
+        <div class="col-lg-4">
+          <label for="description">Description</label>
+          <input type="text" name="description" class="form-control" placeholder="something dreamy">
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-3">
+          <label for="max_tickets">Tickets Available</label>
+          <input type="number" name="max_tickets" class="form-control" value="1" minvalue="1">
+        </div>
+        <div class="col-lg-3">
+          <label for="address">Address</label>
+          <input type="address" name="event_address" class="form-control" placeholder="123 Main St.">
+        </div>
+        <div class="col-lg-3">
+          <label for="city_state_zip">City, State Zip</label>
+          <input type="text" name="city_state_zip" class="form-control" placeholder="Denver, CO 80203">
+        </div>
+        <div class="col-lg-3">
+          <label for="is_public">Visible to Public</label>
+          <select id="is_public" name="is_public" class="form-control">
+            {% if event %}
+            <option value="{{ event.is_public }}" selected>{{ event.is_public | capitalize }}</option>
+            <option value="" disabled>-- --</option>
+            {% else %}
+            <option value="" disabled selected>-- Visible to Public --</option>
+            {% endif %}
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-4">
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </form>
   </div>
-
+</section>
 {% endblock %}
