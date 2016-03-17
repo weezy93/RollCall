@@ -12,6 +12,11 @@ router.get('/logout', function(req, res, next) {
   res.redirect(redirect);
 });
 
+router.get('/login', function(req, res, next) {
+  var messages = req.flash('message');
+  res.render('login', {messages: messages});
+});
+
 // Up to the school if they display the events
 router.get('/:schoolId', function(req, res, next) {
   var user = req.user;
@@ -31,6 +36,7 @@ router.get('/:schoolId', function(req, res, next) {
     res.render('index', params);
   });
 });
+
 
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user) {
