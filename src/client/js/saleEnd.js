@@ -8,8 +8,8 @@ $(function() {
   console.log('sanity check');
   $doAddGuest.click(postGuest);
   $('#makeSale').click(incrementTicket);
-  // $('#modalButton').on('click', function() {
-  //   $('#guestFirstName').focus();
+  // $('#modalButton').on('shown', function() {
+  //   $(this).find('#guestFirstName').focus();
   // });
 });
 
