@@ -22,6 +22,7 @@ router.get('/:eventId', function(req, res, next) {
         user: req.user,
         event: data[0],
         tickets_bought: tickets.length,
+        stylesheet: 'event.css',
       });
     });
   })
