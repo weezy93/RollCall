@@ -7,7 +7,6 @@ var ticketNumber;
 
 $(function() {
   loadTickets();
-  console.log('sanity check');
   $doAddGuest.click(postGuest);
   $('#makeSale').click(incrementTicket);
   // $('#modalButton').on('shown', function() {

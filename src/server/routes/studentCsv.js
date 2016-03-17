@@ -7,7 +7,6 @@ var Students = function() {
 }
 
 function studentCsvParser(req, res, next) {
-  console.log('id: ' + req.params.schoolId);
   var schoolId = Number(req.params.schoolId);
   var uploadedPath = req.flash('uploadedFile')[0];
   var insertArray = [];
@@ -73,7 +72,6 @@ function studentCsvParser(req, res, next) {
         console.log('Couldn\'t delete file ' + err);
       }
     })
-    console.log(arrayOfRows);
     knex.batchInsert('students', arrayOfRows, 1000)
     .then(function() {
       req.flash('message', {
@@ -100,7 +98,6 @@ function uploadStudentCsv(req, res, next) {
           var previewLinesCount = Math.min(10, lines.length);
           for (var i = 0; i < previewLinesCount; i++) {
             var splitLine = lines[i].split(',');
-            console.log(splitLine);
             if (first) {
               for (var j = 0; j < splitLine.length; j++) {
                 columns.push(j);

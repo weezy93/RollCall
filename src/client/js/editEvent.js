@@ -111,7 +111,6 @@ function confirmDelete(studentId, ticketId) {
     + '?')
   if (input) {
     var url = '/event/deleteTicket/' + studentId + '/' + ticketId;
-    console.log(url);
     $.ajax({
       type: 'DELETE',
       url: url,

@@ -9,14 +9,10 @@ function ensureAuthenticated(req, res, next) {
 }
 function ensureAdmin(req, res, next) {
   if (req.user) {
-    console.log(req.originalUrl + ': req.user (Admin)');
     if (req.params.eventId) {
-      console.log('what the fuck?');
-      console.log(req.user.events + ' / ' + req.params.eventId);
       if (req.user.events.indexOf(Number(req.params.eventId)) === -1) {
         return res.redirect('/login');
       }
-      console.log(req.originalUrl + ': eventId (Admin)');
     }
     if (req.params.schoolId) {
       if (!req.user.is_admin || req.user.school_id != req.params.schoolId) {
@@ -27,7 +23,6 @@ function ensureAdmin(req, res, next) {
         return res.redirect('/login');
       }
     }
-    console.log(req.originalUrl + ': success (Admin)');
     return next();
   }
   return res.redirect('/login');

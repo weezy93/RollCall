@@ -185,7 +185,6 @@ router.put('/:eventId/delete', function(req, res, next) {
   var id = req.params.eventId;
   var user = req.user;
   queries.deleteEvent(id).then(function(data) {
-    console.log('data: ', data);
     res.end();
   });
 });
@@ -195,10 +194,8 @@ router.post('/:eventId/edit', helpers.ensureAdmin, upload.single('picture'),
 function(req, res, next) {
   delete req.body.picture;
   if (req.file) {
-    console.log(req.file);
     req.body['image_url'] = req.file.path.substring(10)
   }
-  console.log(req.body);
   queries.editEvent(req.body, req.params.eventId)
   .then(function(data) {
     res.redirect('/event/' + req.params.eventId);
@@ -210,7 +207,6 @@ router.post('/:eventId/guest/:id/edit', helpers.ensureAdmin,
 function(req, res, next) {
   var id = req.params.id;
   queries.editGuest(req.body, id).then(function(data) {
-    console.log(data);
     res.send('success');
   });
 });

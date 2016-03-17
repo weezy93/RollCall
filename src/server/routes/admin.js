@@ -49,7 +49,6 @@ router.post('/:schoolId/addteachers', helpers.ensureAdmin,
 function(req, res, next) {
   queries.addTeacher(req.body, req.params.schoolId)
   .then (function() {
-    console.log('success');
     req.flash('message', {
       status: 'success',
       value: 'Successfully Registered.',
@@ -58,8 +57,6 @@ function(req, res, next) {
   })
   .catch(function(err) {
     if (err) {
-      console.log('failure');
-      console.log(err);
       req.flash('message', {
         status: 'danger',
         value: 'Email already exists.  Please try again.',

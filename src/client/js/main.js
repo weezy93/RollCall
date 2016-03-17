@@ -1,7 +1,6 @@
 // add scripts
 
 $(document).on('ready', function() {
-  console.log('sanity check!');
 });
 
 $("#menu-toggle").click(function(e) {
@@ -12,7 +11,7 @@ $("#menu-toggle").click(function(e) {
 $(document).on('click', '#delete', function(event) {
   event.preventDefault();
   var confirmation = confirm('Are you sure you want to delete this event?');
-  console.log(confirmation);
+
   if (confirmation) {
     var href = $('#delete').attr('href');
     $.ajax({
