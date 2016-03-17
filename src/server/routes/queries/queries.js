@@ -71,7 +71,13 @@ function getStudentsByEvent(searchFor) {
     + ' OR LOWER(students.first_name) like LOWER(\'' +
       searchFor.matcher + '%\')'
     + ' OR LOWER(students.last_name) like LOWER(\'' +
-      searchFor.matcher + '%\'))';
+      searchFor.matcher + '%\')'
+    if (!isNaN(Number(searchFor.matcher))) {
+      queryString += ' OR tickets.id = ' +
+      Number(searchFor.matcher) + ')';
+    } else {
+      queryString += ')';
+    }
   }
   queryString += ' order by students.last_name, tickets.id limit 10';
   return knex.raw(queryString)

@@ -26,12 +26,15 @@
                 {{ event.address }}<br />
                 {{ event.city_state_zip }}
               </address>
+              <div>
+                <h4>{{ tickets_bought }} tickets bought of {{ event.max_tickets }}</h4>
+              </div>
               {% if user.school_id == event.school_id %}
-                <a href="/event/{{ event.id }}/sale_start" class="btn btn-lg btn-success">Sell Tickets</a>
-                <a href="/event/{{ event.id }}/redeem/" class="btn btn-lg btn-primary">Redeem Tickets</a>
+                <a href="/event/{{ event.id }}/sale_start" class="btn btn-lg btn-success">SELL TICKETS</a>
+                <a href="/event/{{ event.id }}/redeem/" class="btn btn-lg btn-primary">REDEEM TICKETS</a>
                 {% if user.is_admin %}
-                  <a href="/event/{{ event.id }}/edit" class="btn btn-lg btn-info">Edit Event</a>
-                  <a href="/event/{{ event.id }}/delete" class="btn btn-lg btn-danger" id="delete">Delete Event</a>
+                  <a href="/event/{{ event.id }}/edit" class="btn btn-lg btn-info">EDIT EVENT</a>
+                  <a href="/event/{{ event.id }}/delete" class="btn btn-lg btn-danger">DELETE EVENT</a>
                 {% endif %}
               {% endif %}
             </div>
