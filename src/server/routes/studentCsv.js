@@ -76,7 +76,11 @@ function studentCsvParser(req, res, next) {
     console.log(arrayOfRows);
     knex.batchInsert('students', arrayOfRows, 1000)
     .then(function() {
-      res.send('Students uploaded!');
+      req.flash('message', {
+        status: 'success',
+        value: 'Students uploaded successfully.'
+      });
+      res.redirect('/');
     })
     .catch(function(err) {
       res.send('Something went wrong! ' + err);
@@ -108,6 +112,7 @@ function uploadStudentCsv(req, res, next) {
           var params = {
             columns: columns,
             lines: returnData,
+            user: req.user,
             schoolId: req.params.schoolId,
           }
           req.flash('uploadedFile', req.file.path);
