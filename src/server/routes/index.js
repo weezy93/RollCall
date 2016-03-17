@@ -19,6 +19,10 @@ router.get('/login', function(req, res, next) {
   res.render('login', {messages: messages});
 });
 
+router.get('/', function(req, res, next) {
+  res.redirect('/1');
+});
+
 // Up to the school if they display the events
 router.get('/:schoolId', function(req, res, next) {
   var user = req.user;
