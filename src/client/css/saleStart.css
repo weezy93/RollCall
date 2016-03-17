@@ -1,23 +1,30 @@
 .container {
   display: flex;
+  width: 80%auto;margin-left: 10%;
   height: 100vh;
+  font-size: 16px;
 }
 
 main {
   display: flex;
   margin: auto;
+  font-size: 4rem;
+}
+
+legend {
+  font-size:4rem;
 }
 
 form {
   margin: auto;
   display: flex;
   flex-flow: column;
+  font-size: 3rem;
+  align-items: center;
 }
-input {
 
-}
-
-button {
-  width: 50%;
+#go {
+  font-size: 2.5rem;
+  width: 18rem;
   margin: auto;
 }

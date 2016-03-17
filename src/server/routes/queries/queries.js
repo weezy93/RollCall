@@ -224,7 +224,7 @@ function getGuests(params) {
 }
 
 function addStudent(params) {
-  return Students().insert(params);
+  return Students().insert(params).returning('id');
 }
 
 function addGuest(params) {
