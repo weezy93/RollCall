@@ -7,19 +7,30 @@
 <section>
   <form class="form-horizontal" method="post" action="/event/{{ event.id }}/edit">
     <div class="row">
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <label for="event_name">Event Name</label>
         <input type="text" class="form-control" name="event_name" value="{{ event.name }}">
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <label for="event_date">Event Date</label>
         <input type="date" class="form-control" name="event_date" value="{{ event.event_date | date('Y-m-d') }}">
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <label for="max_tickets">Maximum Tickets</label>
         <input type="number" class="form-control" name="max_tickets" value="{{ event.max_tickets }}">
       </div>
-      <div class="col-lg-3">
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-lg-4">
+        <label for="address">Event Address</label>
+        <input type="text" class="form-control" name="address" value="{{ event.address }}">
+      </div>
+      <div class="col-lg-4">
+        <label for="city_state_zip">City, State Zip</label>
+        <input type="text" class="form-control" name="city_state_zip" value="{{ event.city_state_zip }}">
+      </div>
+      <div class="col-lg-4">
         <label for="is_public">Visible to Public</label>
         <select id="is_public" name="is_public" class="form-control">
           {% if event %}
@@ -35,17 +46,9 @@
     </div>
     <br />
     <div class="row">
-      <div class="col-lg-4">
-        <label for="address">Event Address</label>
-        <input type="text" class="form-control" name="address" value="{{ event.address }}">
-      </div>
-      <div class="col-lg-4">
-        <label for="city_state_zip">City, State Zip</label>
-        <input type="text" class="form-control" name="city_state_zip" value="{{ event.city_state_zip }}">
-      </div>
-      <div class="col-lg-4">
+      <div class="col-lg-12">
         <label for="description">Description</label>
-        <textarea name="description" class="form-control" rows="2">{{ event.description }}</textarea>
+        <textarea name="description" class="form-control" rows="10">{{ event.description }}</textarea>
       </div>
     </div>
     <br />
