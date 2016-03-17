@@ -63,7 +63,7 @@ function getStudentsByEvent(searchFor) {
   + 'from students '
   + 'inner join tickets on tickets.student_id = students.id '
   + 'inner join events on tickets.event_id = events.id '
-  + 'where students.deleted = false and events.id = ' + searchFor.eventId;
+  + 'where tickets.deleted = false and events.id = ' + searchFor.eventId;
   if (searchFor.matcher) {
     queryString +=
     ' AND (LOWER(students.student_id) like LOWER(\'' +
@@ -217,6 +217,28 @@ function redeemTicket(ticketNumber) {
   })
 }
 
+function deleteTicket(studentId, ticketId) {
+  return Tickets().where({student_id: studentId})
+  .then(function(tickets) {
+    for (var i = 0; i < tickets.length; i++) {
+      var ticket = tickets[i];
+      if (ticket.id == ticketId) {
+        if (i === 0) {
+          return Tickets().where({student_id: studentId})
+            .update({
+              deleted: true,
+              deleted_date: 'now()',
+            });
+        }
+        return Tickets().where({id: ticketId}).update({
+          deleted: true,
+          deleted_date: 'now()',
+        });
+      }
+    }
+  })
+}
+
 function ticketCount(params) {
   return Tickets().where(params).count('id');
 }
@@ -279,4 +301,5 @@ module.exports = {
   redeemTicket, redeemTicket,
   hashing: hashing,
   getTickets: getTickets,
+  deleteTicket: deleteTicket,
 };

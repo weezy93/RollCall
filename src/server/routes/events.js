@@ -126,6 +126,16 @@ function(req, res, next) {
   })
 });
 
+router.delete('/deleteTicket/:studentId/:ticketNumber', function(req, res, next) {
+  queries.deleteTicket(req.params.studentId, req.params.ticketNumber)
+  .then(function() {
+    res.json({success: 'Ticket deleted'});
+  })
+  .catch(function(err) {
+    res.json({error: 'Error: ' + err});
+  })
+});
+
 // Ajax route
 router.post('/:eventId/sales/:studentId/addguest', helpers.ensureAuthenticated,
 function(req, res, next) {

@@ -50,7 +50,9 @@ function getStudents() {
         row += '<td>' + stripNulls(dat.guest_first_name) + '</td>'
         + '<td>' + stripNulls(dat.guest_last_name) + '</td>'
       }
-      row += '<td><button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete()">X</button></td>';
+      row += '<td><button type="button" class="btn btn-danger btn-sm"' +
+        'onclick="confirmDelete(' + dat.id + ',' + dat.ticket_number +
+        ')">X</button></td>';
       row += '</tr>';
       $students.append(row);
     }
@@ -102,6 +104,25 @@ function editGuest(id) {
       }, 100);
     });
   });
+}
+
+function confirmDelete(studentId, ticketId) {
+  var input = confirm('Are you sure you want to delete ticket #' + ticketId
+    + '?')
+  if (input) {
+    var url = '/event/deleteTicket/' + studentId + '/' + ticketId;
+    console.log(url);
+    $.ajax({
+      type: 'DELETE',
+      url: url,
+    })
+    .done(function(data) {
+      getStudents();
+      if (data.error) {
+        console.log(data.error);
+      }
+    });
+  }
 }
 
 
