@@ -33,33 +33,31 @@
 <br>
 <!-- modal -->
       <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                  <h4 class="modal-title" id="myModalLabel"><strong>Add Guest</strong></h4>
-                  </div>
-                  <div class="modal-body">
-                      <form>
-                          <label for="first_name" required>First Name</label>
-                        <br>
-                          <input type="text" id="guestFirstName" value="" placeholder="First">
-                        <br>
-                          <label for="last_name">Last Name</label>
-                        <br>
-                          <input type="text" id="guestLastName" value="" placeholder="Last">
-                        <br>
-                          <label for="guestSchool">Guest's School</label>
-                        <br>
-                          <input type="text" id="guestSchool" value="" placeholder="School">
-                        <br>
-                          <button id="doAddGuest" class="btn btn-success" type="submit" data-dismiss="modal">Add Guest</button>
-                      </form>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              </div>
-          </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title" id="myModalLabel"><strong>Add Guest</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <label for="first_name" required>First Name</label>
+                      <br>
+                        <input type="text" id="guestFirstName" class="form-control" placeholder="First">
+                      <br>
+                        <label for="last_name">Last Name</label>
+                      <br>
+                        <input type="text" id="guestLastName" class="form-control" placeholder="Last">
+                      <br>
+                        <label for="guestSchool">Guest's School</label>
+                      <br>
+                        <input type="text" id="guestSchool" class="form-control" placeholder="School">
+                      <br>
+                        <button id="doAddGuest" class="btn btn-lg btn-success" type="submit" data-dismiss="modal">Add Guest</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Close</button>
+            </div>
         </div>
       </div>
 </main>
