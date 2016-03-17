@@ -13,7 +13,7 @@ function ensureAdmin(req, res, next) {
     if (req.params.eventId) {
       console.log('what the fuck?');
       console.log(req.user.events + ' / ' + req.params.eventId);
-      if (req.user.events.indexOf(Number(req.params.eventId)) !== -1) {
+      if (req.user.events.indexOf(Number(req.params.eventId)) === -1) {
         return res.redirect('/login');
       }
       console.log(req.originalUrl + ': eventId (Admin)');
