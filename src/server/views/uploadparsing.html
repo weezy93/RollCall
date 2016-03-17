@@ -5,14 +5,18 @@
 
 {% block content %}
 <section>
-<form class="form-horizontal" action="/{{schoolId}}/addstudents/parse" method="post">
-  <input type="checkbox" name="ignoreHeaders" value="true">My data has headers
-  <table>
+<form class="form-horizontal" action="/admin/{{schoolId}}/addstudents/parse" method="post">
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" id="ignoreHeaders" name="ignoreHeaders" value="true">First row contains column names
+    </label>
+  </div>
+  <table class="table table-striped">
     <tr>
       {% for column in columns %}
         <td>
-          <select class="" name="{{column}}">
-            <option value="">Ignore</option>
+          <select class="form-control" name="{{column}}">
+            <option value="" selected>Ignore</option>
             <option value="firstname">First Name</option>
             <option value="middlename">Middle Name</option>
             <option value="lastname">Last Name</option>
@@ -32,6 +36,6 @@
     </tr>
     {% endfor %}
   </table>
-  <input type="submit" name="name" value="Submit">
+  <button type="submit" class="btn btn-md btn-success">Submit</button>
 </form>
 </section>
