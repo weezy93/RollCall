@@ -8,9 +8,9 @@ var queries = require('./queries/queries');
 // Public facing
 router.get('/:eventId', function(req, res, next) {
   var id = req.params.eventId;
-  event[0].description = event[0].description.split('\n').join('<br>')
-    .split('\r').join('<br>')
   queries.getEventById(id).then(function(data) {
+    data[0].description = data[0].description.split('\n').join('<br>')
+      .split('\r').join('<br>')
     res.render('event', {user: req.user, event: data[0]});
   });
 });

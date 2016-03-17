@@ -19,7 +19,9 @@
             </div>
             <div class="media-body">
               <h2 class="media-heading">{{ event.name }}</h2>
+              {% autoescape false %}
               <h4 class="media-heading">{{ event.description }}</h4>
+              {% endautoescape %}
               <address>
                 {{ event.address }}<br />
                 {{ event.city_state_zip }}

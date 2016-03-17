@@ -31,11 +31,8 @@
           <th>
             Address
           </th>
-          <th>
-            Description
-          </th>
-          <th>
-            TicketsSold/Max
+          <th class="text-center">
+            Tickets Sold / Max
           </th>
         </thead>
         <tbody>
@@ -54,10 +51,7 @@
           <td>
             {{ event.address }}, {{ event.city_state_zip }}
           </td>
-          <td>
-            {{ event.description }}
-          </td>
-          <td>
+          <td class="text-center">
             {{ event.count }} / {{ event.max_tickets }}
           </td>
         </tr>
