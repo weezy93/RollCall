@@ -174,7 +174,7 @@ router.post('/:eventId/edit', helpers.ensureAdmin,
 function(req, res, next) {
   queries.editEvent(req.body, req.params.eventId)
   .then(function(data) {
-    res.redirect('/event/' + req.params.eventId + '/edit');
+    res.redirect('/event/' + req.params.eventId);
   });
 });
 
