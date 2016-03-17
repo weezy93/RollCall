@@ -44,3 +44,7 @@ footer a, footer a:hover {
 footer button {
   margin: 1rem;
 }
+
+.modal {
+  width: 40%;;
+}
