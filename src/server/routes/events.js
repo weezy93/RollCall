@@ -99,7 +99,7 @@ function(req, res, next) {
 });
 
 // Public facing
-router.get('/:eventId/edit',
+router.get('/:eventId/edit', helpers.ensureAdmin,
 function(req, res, next) {
   queries.getEventById(req.params.eventId).then(function(data) {
     var params = {
@@ -141,7 +141,8 @@ function(req, res, next) {
   })
 });
 
-router.get('/:eventId/ticketExport', function(req, res, next) {
+router.get('/:eventId/ticketExport', helpers.ensureAdmin,
+function(req, res, next) {
   var searchFor = {
     eventId: req.params.eventId,
   };
@@ -189,7 +190,8 @@ function stripNulls(string) {
   return string;
 }
 
-router.delete('/deleteTicket/:studentId/:ticketNumber', function(req, res, next) {
+router.delete('/deleteTicket/:studentId/:ticketNumber', helpers.ensureAdmin,
+function(req, res, next) {
   queries.deleteTicket(req.params.studentId, req.params.ticketNumber)
   .then(function() {
     res.json({success: 'Ticket deleted'});
@@ -245,7 +247,7 @@ function(req, res, next) {
   });
 });
 
-router.put('/:eventId/delete', function(req, res, next) {
+router.put('/:eventId/delete', helpers.ensureAdmin, function(req, res, next) {
   var id = req.params.eventId;
   var user = req.user;
   queries.deleteEvent(id).then(function(data) {

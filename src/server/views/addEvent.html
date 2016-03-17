@@ -6,11 +6,11 @@
 {% block content %}
 <section>
   <div class="container">
-    <form action="/admin/{{ user.school_id }}/addevents" method="post" class="form-horizontal">
+    <form action="/admin/{{ user.school_id }}/addevents" method="post" class="form-horizontal" enctype="multipart/form-data">
       <div class="row">
         <div class="col-lg-4">
           <label for="name">Event Name</label>
-          <input type="text" name="event_name" class="form-control" placeholder="Homecoming" autofocus>
+          <input type="text" name="name" class="form-control" placeholder="Homecoming" autofocus>
         </div>
         <div class="col-lg-4">
           <label for="date">Date</label>
@@ -23,7 +23,7 @@
             <option value="{{ event.is_public }}" selected>{{ event.is_public | capitalize }}</option>
             <option value="" disabled>-- --</option>
             {% else %}
-            <option value="" disabled selected>-- Visible to Public --</option>
+            <option value="" disabled selected>-- Choose --</option>
             {% endif %}
             <option value="false">False</option>
             <option value="true">True</option>
@@ -38,7 +38,7 @@
         </div>
         <div class="col-lg-4">
           <label for="address">Address</label>
-          <input type="address" name="event_address" class="form-control" placeholder="123 Main St.">
+          <input type="address" name="address" class="form-control" placeholder="123 Main St.">
         </div>
         <div class="col-lg-4">
           <label for="city_state_zip">City, State Zip</label>
@@ -47,9 +47,13 @@
       </div>
       <br />
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
           <label for="description">Description</label>
           <textarea name="description" class="form-control" placeholder="Something dreamy" rows="10"></textarea>
+        </div>
+        <div class="col-lg-6">
+          <input type="file" onchange="previewPicture(this)" name="picture" value="">
+          <img id="previewImage" src="{{event.image_url}}" alt="" />
         </div>
       </div>
       <br />

@@ -142,16 +142,7 @@ function getGuestsByEventGroupByStudentId(eventId) {
 }
 
 function addEvent(body, id) {
-  return Events().insert({
-    name: body.event_name,
-    event_date: body.event_date,
-    school_id: id,
-    description: body.description,
-    address: body.event_address,
-    city_state_zip: body.city_state_zip,
-    is_public: body.is_public,
-    max_tickets: body.max_tickets
-  })
+  return Events().insert(body)
   .catch(function(error) {
     console.log(error);
   });

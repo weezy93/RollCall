@@ -4,7 +4,7 @@ var helpers = require('../lib/helpers');
 var passport = require('../lib/auth');
 var queries = require('./queries/queries');
 var multer = require('multer');
-var upload = multer({dest: 'uploads/'});
+var upload = multer({dest: 'src/client/images/'});
 var studentCsv = require('./studentCsv.js');
 
 
@@ -69,10 +69,20 @@ function(req, res, next) {
 router.get('/:schoolId/addevents', helpers.ensureAdmin, function(req, res, next) {
   var messages = req.flash('message');
   var user = req.user;
-  res.render('addEvent', {messages: messages, user: user});
+  res.render('addEvent', {
+    messages: messages,
+    user: user,
+    script: 'addEvent.js',
+  });
 });
 
-router.post('/:schoolId/addevents', helpers.ensureAdmin, function(req, res, next) {
+router.post('/:schoolId/addevents', helpers.ensureAdmin,
+upload.single('picture'), function(req, res, next) {
+  delete req.body.picture;
+  req.body['school_id'] = req.params.schoolId;
+  if (req.file) {
+    req.body['image_url'] = req.file.path.substring(10)
+  }
   queries.addEvent(req.body, req.params.schoolId)
   .then(function(data) {
     req.flash('message', {
@@ -82,5 +92,6 @@ router.post('/:schoolId/addevents', helpers.ensureAdmin, function(req, res, next
     res.redirect('/' + req.user.school_id);
   });
 });
+
 
 module.exports = router;
