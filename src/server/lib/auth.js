@@ -2,8 +2,11 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var knex = require('../db/knex');
 var helpers = require('./helpers');
-function Teachers () {
+function Teachers() {
   return knex('teachers');
+}
+function Events() {
+  return knex('events');
 }
 
 passport.use(new LocalStrategy({
@@ -34,8 +37,13 @@ passport.serializeUser(function(user, done) {
 // used on subsequent requests to update 'req.user' and update session
 passport.deserializeUser(function(id, done) {
   // find user and return by id
-  Teachers().where('id', id).then(function(data) {
-    return done(null, data[0]);
+  Teachers().where('id', id)
+  .then(function(user) {
+    Events().where({school_id: data[0].school_id})
+    .then(function(events) {
+      console.log(events);
+      return done(null, user[0]);
+    })
   }).catch(function(err) {
     return done(err);
   });
