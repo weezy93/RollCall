@@ -16,7 +16,7 @@ router.get('/logout', function(req, res, next) {
 
 router.get('/login', function(req, res, next) {
   var messages = req.flash('message');
-  res.render('login', {messages: messages});
+  res.render('login', {messages: messages, stylesheet: 'login.css'});
 });
 
 // Up to the school if they display the events

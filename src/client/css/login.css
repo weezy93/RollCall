@@ -1,0 +1,12 @@
+.container {
+  font-size: 36px;
+  text-align: center;
+}
+input {
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.form-control, #submit {
+  font-size: 2rem;
+}
