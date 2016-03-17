@@ -23,6 +23,10 @@ form {
   align-items: center;
 }
 
+.input-lg {
+  font-size: 3rem;
+}
+
 #go {
   font-size: 2.5rem;
   width: 18rem;

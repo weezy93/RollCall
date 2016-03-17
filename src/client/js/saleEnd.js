@@ -1,12 +1,12 @@
 var $status;
 // These will be set in swig.
 var $doAddGuest = $('#doAddGuest');
-var guestNumber = 0;
+var guestNumber;
+var ticketNumber;
 
 
 $(function() {
   loadTickets();
-  loadGuests();
   console.log('sanity check');
   $doAddGuest.click(postGuest);
   $('#makeSale').click(incrementTicket);
@@ -38,10 +38,10 @@ function loadGuests() {
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/getguests',
   }).done(function(data) {
-    console.log(data);
+    guestNumber = data.length;
+    disableAddTicket(data);
     var guestString = '';
     for (var i = 0; i < data.length; i++) {
-      guestNumber += 1;
       var dat = data[i];
       guestString += "<div class='guest'>";
       guestString += '<p>' + dat.first_name + ' ' + dat.last_name + '</p>';
@@ -75,7 +75,8 @@ function loadTickets() {
     type: 'GET',
     url: '/event/' + eventId + '/sales/' + studentId + '/ticket_count',
   }).done(function(data) {
-    disableAddTicket(data);
+    ticketNumber = data.length;
+    loadGuests();
     $('#ticket_count').html(data.length)
     $('#body').html('');
     data.forEach(function(obj) {
@@ -87,10 +88,9 @@ function loadTickets() {
   })
 }
 
-function disableAddTicket(data) {
-  console.log(guestNumber);
+function disableAddTicket() {
   // Data is ticket array
-  if (data.length === (guestNumber + 1)) {
+  if (ticketNumber >= (guestNumber + 1)) {
     $('#makeSale').addClass('disabled');
   }
 }
