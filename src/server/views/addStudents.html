@@ -4,31 +4,67 @@
 
 
 {% block content %}
-  <div class="container">
-
-    <h1>{{ title }}</h1>
-    <section>
-      <form id="fileUpload" method="post" action="/{{schoolId}}/addstudents" enctype="multipart/form-data">
-        <label for="csv">Select a file to upload:</label>
-        <input type="file" name="csv" value="" accept=".csv">
-        <br />
-        <button type="submit">Upload</button>
-      </form>
-    </section>
-    <section>
-      <form class="" action="/addstudent/{{schoolId}}" method="post">
-        <label for="student_id">Student ID</label>
-        <input type="text" name="student_id" placeholder="Student ID">
-        <label for="first_name">First Name</label>
-        <input type="text" name="first_name" placeholder="First">
-        <label for="middle_name">Middle Name</label>
-        <input type="text" name="middle_name" placeholder="Middle">
-        <label for="last_name">Last Name</label>
-        <input type="text" name="last_name" placeholder="Last">
-        <label for="grade"></label>
-        <input type="text" name="grade" placeholder="Grade">
-        <input type="submit" value="GO">
-      </form>
-    </section>
+<section>
+  <div class="margin-top">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.status }}">
+        {{ message.value }}
+      </div>
+    {% endfor %}
   </div>
+  <div class="container">
+    <h1>{{ title }}</h1>
+    <div class="col-lg-6">
+        <form class="form-horizontal" id="fileUpload" method="post" action="/admin/{{schoolId}}/addstudents" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-lg-12">
+              <label for="csv">Select a file to upload:</label>
+              <input type="file" name="csv" value="" accept=".csv" class="form-control">
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-lg-6">
+              <button type="submit" class="btn btn-md btn-success">Upload</button>
+            </div>
+          </div>
+        </form>
+    </div>
+    <div class="col-lg-6">
+      <form class="" action="/admin/{{schoolId}}/addstudent" method="post">
+        <div class="row">
+          <div class="col-lg-6">
+            <label for="student_id">Student ID</label>
+            <input type="text" class="form-control" name="student_id" placeholder="Student ID">
+          </div>
+          <div class="col-lg-6">
+            <label for="grade">Grade</label>
+            <input type="text" class="form-control" name="grade" placeholder="Grade">
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-lg-4">
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control" name="first_name" placeholder="First">
+          </div>
+          <div class="col-lg-4">
+            <label for="middle_name">Middle Name</label>
+            <input type="text" class="form-control" name="middle_name" placeholder="Middle">
+          </div>
+          <div class="col-lg-4">
+            <label for="last_name">Last Name</label>
+            <input type="text" class="form-control" name="last_name" placeholder="Last">
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-lg-4">
+            <button type="submit" class="btn btn-md btn-success">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 {% endblock %}

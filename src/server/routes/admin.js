@@ -9,17 +9,23 @@ var studentCsv = require('./studentCsv.js');
 
 
 router.get('/:schoolId/addstudents', helpers.ensureAdmin, function(req, res) {
+  var messages = req.flash('message');
   res.render('addStudents', {
-    title: 'I love files!',
+    title: 'Upload Students',
     schoolId: req.params.schoolId,
     user: req.user,
+    messages: messages,
   });
 });
 
 router.post('/:schoolId/addstudent', helpers.ensureAdmin, function(req, res) {
   queries.addStudent(req.body)
-  .then(function() {
-    res.redirect('/' + req.params.schoolId);
+  .then(function(data) {
+    req.flash('message', {
+      status: 'success',
+      value: 'Student added successfully'
+    });
+    res.redirect('/admin/' + req.params.schoolId + '/addstudents');
   });
 });
 
