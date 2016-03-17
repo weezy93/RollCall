@@ -106,13 +106,13 @@
 #main_icon
 {
     float:right;
-    padding-right: 5px;
+    padding-right: 15px;
     padding-top:20px;
 }
 .sub_icon
 {
     float:right;
-    padding-right: 5px;
+    padding-right: 15px;
     padding-top:10px;
 }
 .content-header {
