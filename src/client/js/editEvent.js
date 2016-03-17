@@ -6,10 +6,10 @@ $(function() {
 });
 
 function getStudents() {
-  var url = '/event/' + eventId + '/getstudents';
+  var url = '/event/' + eventId + '/getstudents?limit=10';
   var $searchStudents = $('#searchStudents');
   if ($searchStudents.val() != '') {
-    url += '?matcher=' + $searchStudents.val();
+    url += '&matcher=' + $searchStudents.val();
   }
   $.ajax({
     type: 'GET',

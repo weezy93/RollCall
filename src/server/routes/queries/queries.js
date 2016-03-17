@@ -79,7 +79,10 @@ function getStudentsByEvent(searchFor) {
       queryString += ')';
     }
   }
-  queryString += ' order by students.last_name, tickets.id limit 10';
+  queryString += ' order by students.last_name, tickets.id ';
+  if (searchFor.limit) {
+    queryString += 'limit ' + searchFor.limit;
+  }
   return knex.raw(queryString)
   .then(function(students) {
     return getGuestsByEventGroupByStudentId(searchFor.eventId)

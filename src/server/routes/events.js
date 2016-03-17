@@ -5,6 +5,8 @@ var passport = require('../lib/auth');
 var queries = require('./queries/queries');
 var multer = require('multer');
 var upload = multer({dest: 'src/client/images/'});
+var fs = require('fs');
+var path = require('path');
 
 
 // Public facing
@@ -139,6 +141,54 @@ function(req, res, next) {
   })
 });
 
+router.get('/:eventId/ticketExport', function(req, res, next) {
+  var searchFor = {
+    eventId: req.params.eventId,
+  };
+  queries.getStudentsByEvent(searchFor)
+  .then(function(tickets) {;
+    var writer = 'Student ID,First Name,Last Name,Grade,Ticket #,Sold Time,' +
+    'Redeemed Time,Guest First Name,Guest Second Name';
+    for (var i = 0; i < tickets.length; i++) {
+      var ticket = tickets[i];
+      writer += '\n' + stripNulls(ticket.student_id) + ','
+      + stripNulls(ticket.first_name) + ',' + stripNulls(ticket.last_name)
+      + ',' + stripNulls(ticket.grade) + ',' + stripNulls(ticket.ticket_number)
+      + ',' + formatDate(ticket.sold_timestamp) + ','
+      + stripNulls(ticket.guest_first_name) + ','
+      + stripNulls(ticket.guest_last_name);
+    }
+    var fileName = new Date().valueOf() + 'event' + req.params.eventId + '.csv';
+    console.log(fileName);
+    fs.writeFile(path.join(__dirname, fileName), writer, function(err) {
+      console.log('here!');
+      if (err) {
+        return res.send('Something went wrong, please contact support:' + err)
+      }
+      res.sendFile(path.join(__dirname, fileName), '',function() {
+        fs.unlink(path.join(__dirname, fileName), function(err) {
+          if (err) {
+            console.log('Couldn\'t delete export: (' + fileName + ') ' + err);
+          }
+        });
+      });
+    });
+  });
+});
+function formatDate(dateString) {
+  if (dateString === null) {
+    return '';
+  }
+  var date = new Date(dateString);
+  return date.toLocaleString();
+}
+function stripNulls(string) {
+  if (string === null || string == undefined) {
+    return '';
+  }
+  return string;
+}
+
 router.delete('/deleteTicket/:studentId/:ticketNumber', function(req, res, next) {
   queries.deleteTicket(req.params.studentId, req.params.ticketNumber)
   .then(function() {
@@ -185,6 +235,9 @@ function(req, res, next) {
   };
   if (req.query.matcher) {
     searchFor['matcher'] = req.query.matcher;
+  }
+  if (req.query.limit) {
+    searchFor['limit'] = req.query.limit;
   }
   queries.getStudentsByEvent(searchFor)
   .then(function(results) {

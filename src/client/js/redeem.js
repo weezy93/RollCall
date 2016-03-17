@@ -12,7 +12,7 @@ function getStudents(time) {
     $('#inputContainer').removeClass('large');
     keyMap = {};
     searchTimeout = setTimeout(function() {
-      var url = '/event/' + eventId + '/getstudents?matcher=' +
+      var url = '/event/' + eventId + '/getstudents?limit=10&matcher=' +
         $searchStudents.val();
       $.ajax({
         type: 'GET',
