@@ -4,6 +4,15 @@
 
 
 {% block content %}
+  <div class="padding-top">
+    <section>
+      {% for message in messages %}
+        <div class="alert alert-{{ message.status }}">
+          {{ message.value }}
+        </div>
+      {% endfor %}
+    </section>
+  </div>
 <!-- /events/:eventId/sale_start -->
   <div class="container">
 <!-- query event.max_tix -->

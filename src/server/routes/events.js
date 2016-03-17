@@ -16,6 +16,7 @@ router.get('/:eventId', function(req, res, next) {
 // Public facing - search student
 router.get('/:eventId/sale_start', helpers.ensureAuthenticated,
 function(req, res, next) {
+  var messages = req.flash('message');
   var ticketsBought;
   var maxTickets;
   var ticketsRemaining;
@@ -27,6 +28,7 @@ function(req, res, next) {
     eventId: req.params.eventId,
     user: req.user,
     stylesheet: 'saleStart.css',
+    messages: messages,
   }
   queries.getTickets(params)
   .then(function(tickets) {
@@ -59,6 +61,7 @@ function(req, res, next) {
   var eventId = req.params.eventId;
 
   queries.getStudentInfo(studentId).then(function(student) {
+    if (student.length) {
       res.render('saleEnd', {
         name: student[0].first_name + ' ' + student[0].last_name,
         eventId: eventId,
@@ -68,7 +71,14 @@ function(req, res, next) {
         count: 0,
         user: req.user,
       });
-    });
+    } else {
+      req.flash('message', {
+        status: 'warning',
+        value: 'That student doesn\'t exist',
+      })
+      res.redirect('/event/' + eventId + '/sale_start');
+    }
+  });
 });
 
 // Public facing
@@ -167,7 +177,7 @@ function(req, res, next) {
 });
 
 // Ajax
-router.post('/guest/:id/edit', helpers.ensureAdmin,
+router.post('/:eventId/guest/:id/edit', helpers.ensureAdmin,
 function(req, res, next) {
   var id = req.params.id;
   queries.editGuest(req.body, id).then(function(data) {
@@ -177,7 +187,7 @@ function(req, res, next) {
 });
 
 // Ajax
-router.get('/guest/:id', helpers.ensureAuthenticated,
+router.get('/:eventId/guest/:id', helpers.ensureAuthenticated,
 function(req, res, next) {
   var id = req.params.id;
   queries.getGuests({id: id}).then(function(data) {
@@ -185,7 +195,7 @@ function(req, res, next) {
   });
 });
 
-router.put('/redeem/:ticketNumber/',
+router.put('/:eventId/redeem/:ticketNumber/', helpers.ensureAuthenticated,
 function(req, res, next) {
   queries.redeemTicket(req.params.ticketNumber)
   .then(function() {

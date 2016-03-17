@@ -39,9 +39,13 @@ passport.deserializeUser(function(id, done) {
   // find user and return by id
   Teachers().where('id', id)
   .then(function(user) {
-    Events().where({school_id: data[0].school_id})
+    Events().where({school_id: user[0].school_id})
     .then(function(events) {
-      console.log(events);
+      var eventsArray = [];
+      events.forEach(function(event) {
+        eventsArray.push(event.id);
+      })
+      user[0]['events'] = eventsArray;
       return done(null, user[0]);
     })
   }).catch(function(err) {

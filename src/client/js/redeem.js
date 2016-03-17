@@ -95,7 +95,7 @@ function processKeys(event) {
   }
 }
 function redeem(ticketNumber) {
-  var url = '/event/redeem/' + ticketNumber;
+  var url = '/event/' + eventId + '/redeem/' + ticketNumber;
   $.ajax({
     method: 'PUT',
     url: url,

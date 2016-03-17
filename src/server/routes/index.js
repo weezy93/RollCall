@@ -4,6 +4,8 @@ var helpers = require('../lib/helpers');
 var passport = require('../lib/auth');
 var queries = require('./queries/queries');
 
+
+
 router.get('/logout', function(req, res, next) {
   var redirect = req.query.redirect;
   console.log('redirect: ', redirect);
