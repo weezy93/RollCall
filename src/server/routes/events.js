@@ -179,6 +179,15 @@ function(req, res, next) {
   });
 });
 
+router.put('/:eventId/delete', function(req, res, next) {
+  var id = req.params.eventId;
+  var user = req.user;
+  queries.deleteEvent(id).then(function(data) {
+    console.log('data: ', data);
+    res.end();
+  });
+});
+
 // Ajax route
 router.post('/:eventId/edit', helpers.ensureAdmin,
 function(req, res, next) {

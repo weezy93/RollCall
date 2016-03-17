@@ -162,6 +162,14 @@ function editEvent(body, id) {
   });
 }
 
+function deleteEvent(id) {
+  return Events().where('id', id).update({
+    deleted: true
+  }, '*').then(function(data) {
+    return data[0];
+  });
+}
+
 function getEventById(id) {
   return Events().where('id', id).then(function(data) {
     return data;
@@ -298,8 +306,9 @@ module.exports = {
   getEventById: getEventById,
   editEvent: editEvent,
   addTeacher: addTeacher,
-  redeemTicket, redeemTicket,
+  redeemTicket: redeemTicket,
   hashing: hashing,
   getTickets: getTickets,
   deleteTicket: deleteTicket,
+  deleteEvent: deleteEvent,
 };
