@@ -10,32 +10,13 @@
       <div class="row">
         <div class="col-lg-4">
           <label for="name">Event Name</label>
-          <input type="text" name="event_name" class="form-control" placeholder="Homecoming">
+          <input type="text" name="event_name" class="form-control" placeholder="Homecoming" autofocus>
         </div>
         <div class="col-lg-4">
           <label for="date">Date</label>
           <input type="date" name="event_date" class="form-control" placeholder="dd/mm/yyyy">
         </div>
         <div class="col-lg-4">
-          <label for="description">Description</label>
-          <input type="text" name="description" class="form-control" placeholder="something dreamy">
-        </div>
-      </div>
-      <br />
-      <div class="row">
-        <div class="col-lg-3">
-          <label for="max_tickets">Tickets Available</label>
-          <input type="number" name="max_tickets" class="form-control" value="1" minvalue="1">
-        </div>
-        <div class="col-lg-3">
-          <label for="address">Address</label>
-          <input type="address" name="event_address" class="form-control" placeholder="123 Main St.">
-        </div>
-        <div class="col-lg-3">
-          <label for="city_state_zip">City, State Zip</label>
-          <input type="text" name="city_state_zip" class="form-control" placeholder="Denver, CO 80203">
-        </div>
-        <div class="col-lg-3">
           <label for="is_public">Visible to Public</label>
           <select id="is_public" name="is_public" class="form-control">
             {% if event %}
@@ -47,6 +28,28 @@
             <option value="false">False</option>
             <option value="true">True</option>
           </select>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-4">
+          <label for="max_tickets">Tickets Available</label>
+          <input type="number" name="max_tickets" class="form-control" value="1" minvalue="1">
+        </div>
+        <div class="col-lg-4">
+          <label for="address">Address</label>
+          <input type="address" name="event_address" class="form-control" placeholder="123 Main St.">
+        </div>
+        <div class="col-lg-4">
+          <label for="city_state_zip">City, State Zip</label>
+          <input type="text" name="city_state_zip" class="form-control" placeholder="Denver, CO 80203">
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-lg-12">
+          <label for="description">Description</label>
+          <textarea name="description" class="form-control" placeholder="Something dreamy" rows="10"></textarea>
         </div>
       </div>
       <br />
