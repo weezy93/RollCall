@@ -16,10 +16,12 @@ The target market for this app is school administrators and teachers who are pla
 10. Ticket counts are easily accessible so announcements can be made about dances selling out.
 
 ![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss1.png "Welcome Screen")
-![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss1.png "Welcome Screen")
-![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss1.png "Welcome Screen")
-![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss1.png "Welcome Screen")
-![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss1.png "Welcome Screen")
+![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss2.png "Sell Tickets")
+![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss3.png "Tickets Sold")
+![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss4.png "Add Guest")
+![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss5.png "Administer Event")
+![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss6.png "Edit Students")
+![alt text](https://raw.githubusercontent.com/BenAychh/ticketSales/master/ss7.png "Redeem Tickets")
 
 
 
