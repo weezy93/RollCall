@@ -1,4 +1,4 @@
-# ticketSales
+# RollCall
 
 ### Users
 The target market for this app is school administrators and teachers who are planning upcoming events.
@@ -9,6 +9,3 @@ The target market for this app is school administrators and teachers who are pla
 3. Quick check-in facilitated by fuzzy search against database
 4. CSV export/backup of ticket sales
 5. Events can be private or public facing.
-
-
-
